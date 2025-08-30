@@ -1,0 +1,29 @@
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { TabBar } from 'zarm'
+
+import styles from './styles.module.less'
+
+const NavBar = () => {
+  const navigate = useNavigate()
+  const [activeKey, setActiveKey] = useState('/')
+
+  const changeTab = (value: string | number) => {
+    if (typeof value === 'string') {
+      setActiveKey(value)
+      navigate(value)
+    } else {
+      console.error('导航类型不为String')
+    }
+  }
+  return (
+    <>
+      <TabBar className={styles.tab} activeKey={activeKey} onChange={changeTab}>
+        <TabBar.Item itemKey='/' title='账单' />
+        <TabBar.Item itemKey='/data' title='统计' />
+        <TabBar.Item itemKey='/user' title='我的' />
+      </TabBar>
+    </>
+  )
+}
+export default NavBar

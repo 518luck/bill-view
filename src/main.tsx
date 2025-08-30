@@ -13,7 +13,7 @@ import router from '@/router'
 import 'zarm/dist/zarm.css'
 
 createRoot(document.getElementById('root')!).render(
-  <ConfigProvider primaryColor={'#007fff'} locale={zhCN}>
+  <ConfigProvider primaryColor='#146cbd' theme='dark' locale={zhCN}>
     <RouterProvider router={router} />
   </ConfigProvider>
 )
