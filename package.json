@@ -10,21 +10,25 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "modern-normalize": "^3.0.1",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1",
-    "react-router-dom": "^7.8.2"
+    "consola": "^3.4.2",
+    "postcss-px-to-viewport": "^1.1.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^7.8.2",
+    "zarm": "^3.3.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.33.0",
     "@types/node": "^24.3.0",
-    "@types/react": "^19.1.10",
-    "@types/react-dom": "^19.1.7",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
     "@vitejs/plugin-react": "^5.0.0",
+    "@zarm-design/bem": "^0.0.9",
     "eslint": "^9.33.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^16.3.0",
+    "less": "^4.4.1",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.39.1",
     "vite": "^7.1.2"
