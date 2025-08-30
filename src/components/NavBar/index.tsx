@@ -26,7 +26,7 @@ const NavBar = ({ show }: { show: boolean }) => {
           activeKey={activeKey}
           onChange={changeTab}>
           <TabBar.Item
-            itemKey='/'
+            itemKey='/home'
             title='账单'
             icon={<CustomIcon type='zhangdan' />}
           />

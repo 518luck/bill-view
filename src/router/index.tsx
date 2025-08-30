@@ -4,6 +4,7 @@ import Home from '@/container/Home'
 import Data from '@/container/Data'
 import User from '@/container/User'
 import Detail from '@/container/Detail'
+import Login from '@/container/Login'
 
 const router = createBrowserRouter([
   {
@@ -11,7 +12,11 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        index: true,
+        path: '/login',
+        element: <Login />,
+      },
+      {
+        path: '/home',
         element: <Home />,
       },
       {
