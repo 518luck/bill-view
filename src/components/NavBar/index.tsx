@@ -3,9 +3,11 @@ import { useNavigate } from 'react-router-dom'
 import { TabBar } from 'zarm'
 
 import styles from './styles.module.less'
+import CustomIcon from '../CustomIcon'
 
-const NavBar = () => {
+const NavBar = ({ show }: { show: boolean }) => {
   const navigate = useNavigate()
+
   const [activeKey, setActiveKey] = useState('/')
 
   const changeTab = (value: string | number) => {
@@ -18,11 +20,28 @@ const NavBar = () => {
   }
   return (
     <>
-      <TabBar className={styles.tab} activeKey={activeKey} onChange={changeTab}>
-        <TabBar.Item itemKey='/' title='账单' />
-        <TabBar.Item itemKey='/data' title='统计' />
-        <TabBar.Item itemKey='/user' title='我的' />
-      </TabBar>
+      {show && (
+        <TabBar
+          className={styles.tab}
+          activeKey={activeKey}
+          onChange={changeTab}>
+          <TabBar.Item
+            itemKey='/'
+            title='账单'
+            icon={<CustomIcon type='zhangdan' />}
+          />
+          <TabBar.Item
+            itemKey='/data'
+            title='统计'
+            icon={<CustomIcon type='tongji' />}
+          />
+          <TabBar.Item
+            itemKey='/user'
+            title='我的'
+            icon={<CustomIcon type='wode' />}
+          />
+        </TabBar>
+      )}
     </>
   )
 }
