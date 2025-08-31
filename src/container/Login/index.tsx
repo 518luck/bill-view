@@ -1,5 +1,8 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
+import { Button, Input, Radio } from 'zarm'
+import classNames from 'classnames'
+import Captcha from 'react-captcha-code'
 
 import styles from './styles.module.less'
 import logo from '@/assets/logo.svg'
@@ -19,7 +22,7 @@ const Login = () => {
       ease: 'bounce.out',
       stagger: 0.2,
     })
-  })
+  }, [])
 
   return (
     <div className={styles.login}>
@@ -36,6 +39,36 @@ const Login = () => {
           </span>
           <div className={styles.placeholder} />
         </div>
+      </div>
+      <div className={styles.describe}>数字之间，藏着人生的喜怒哀乐。</div>
+      <div className={styles.message}>
+        <div className={styles.message_label}>账号</div>
+        <div className={styles.message_input}>
+          <Input placeholder='请输入账号' />
+        </div>
+      </div>
+      <div className={classNames(styles.message)}>
+        <div className={styles.message_passwordText}>密码</div>
+        <div className={styles.message_input}>
+          <Input placeholder='请输入密码' />
+        </div>
+      </div>
+      {/* 验证码 */}
+      <div className={styles.captcha}>
+        <Captcha bgColor='#202338' />
+      </div>
+
+      <div className={styles.interaction}>
+        <div className={styles.interaction_btn}>
+          <Button theme='primary'>primary</Button>
+        </div>
+      </div>
+
+      <div className={styles.footer}>
+        <div>
+          <Radio defaultChecked>记住我</Radio>
+        </div>
+        <div>忘记密码</div>
       </div>
     </div>
   )

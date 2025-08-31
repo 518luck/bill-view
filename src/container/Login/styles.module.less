@@ -1,5 +1,12 @@
 @import '../../styles/fonts.less';
 
+.canvas_bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
 .placeholder {
   height: 12px;
 }
@@ -7,7 +14,6 @@
 .login {
   height: 100%;
   width: 100%;
-  color: #7B3AEB;
 
   &_title {
     display: flex;
@@ -18,6 +24,7 @@
     &_text {
       font-size: 24px;
       font-family: 'YouSheBiaoTiYuan';
+      color: #7B3AEB;
     }
   }
 
@@ -29,9 +36,104 @@
   }
 }
 
-.canvas_bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: -1;
+.describe {
+  font-size: 16px;
+  font-family: 'YouSheBiaoTiYuan';
+  margin-top: 5px;
+  display: flex;
+  justify-content: center;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+
+
+  &_label {
+    margin: 29px 0 18px 0;
+    width: 338px;
+    padding-left: 18px;
+    font-weight: 700;
+  }
+
+  &_passwordText {
+    margin: 20px 0 18px 0;
+    width: 338px;
+    padding-left: 18px;
+    font-weight: 700;
+  }
+
+  &_input {
+
+    :global {
+      .za-input {
+        input {
+          width: 338px;
+          height: 40px;
+          background: rgba(255, 255, 255, 0.17);
+          backdrop-filter: blur(4px);
+          border-radius: 50px;
+          padding: 0 10px;
+        }
+      }
+    }
+  }
+}
+
+.captcha {
+  width: 338px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.interaction {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+
+  &_btn {
+    :global {
+      .za-button {
+        width: 338px;
+        height: 40px;
+        border-radius: 50px;
+        background: rgba(125, 57, 235, 1);
+        backdrop-filter: blur(4px);
+        transition: transform 0.15s ease-in-out;
+        transform: scale(1);
+      }
+
+      .za-button--primary {
+        border-color: transparent;
+      }
+
+      .za-button:focus,
+      .za-button:active,
+      .za-button--primary:focus,
+      .za-button--primary:active {
+        outline: none;
+        border-color: transparent;
+        background: rgba(125, 57, 235, 1);
+      }
+    }
+  }
+}
+
+.footer {
+  width: 338px;
+  margin: 30px auto 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+
+  :global {
+    .za-radio--checked .za-radio__tick {
+      border-color: #fff;
+    }
+  }
 }
