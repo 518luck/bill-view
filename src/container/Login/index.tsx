@@ -8,8 +8,15 @@ import Captcha from 'react-captcha-code'
 import styles from './styles.module.less'
 import logo from '@/assets/logo.svg'
 import { useCanvasBreathingEffect } from '@/hook/useCanvasBreathingEffect'
+import { useLogin } from '@/api/http'
 
 const Login = () => {
+  const loginApi = useLogin(() => {
+    Toast.show({
+      icon: 'success',
+      content: '登录成功',
+    })
+  })
   const textRef = useRef<HTMLSpanElement>(null)
   const canvasRef = useCanvasBreathingEffect()
   const text = '小账童'
@@ -56,6 +63,11 @@ const Login = () => {
       })
       return
     }
+
+    loginApi.mutate({
+      username,
+      password,
+    })
   }
   return (
     <div className={styles.login}>
