@@ -9,9 +9,9 @@ const Login = () => {
   return (
     <>
       <canvas ref={canvasRef} className={styles.canvas_bg}></canvas>
-      <div className={styles.login}>
-        <div>
-          <img src={logo} alt='' />
+      <div className={styles.login_header}>
+        <div className={styles.login_logo}>
+          <img src={logo} alt='login' />
         </div>
         <div>小账童</div>
       </div>
