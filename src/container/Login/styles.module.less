@@ -83,10 +83,37 @@
   }
 }
 
-.captcha {
+.captcha_box {
   width: 338px;
+  margin: 20px auto 0;
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
+
+  :global {
+    .za-input {
+      >input {
+        padding: 0 10px;
+      }
+    }
+  }
+
+  .captcha {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 5px;
+
+    span {
+      font-size: 12px;
+      font-weight: 600;
+      color: #7B3AEB;
+      cursor: pointer;
+    }
+  }
+
+
 }
 
 .interaction {

@@ -1,6 +1,7 @@
-import { useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
-import { Button, Input, Radio } from 'zarm'
+import { Button, Input, Radio, Toast } from 'zarm'
+import type { ChangeEvent } from 'react'
 import classNames from 'classnames'
 import Captcha from 'react-captcha-code'
 
@@ -13,6 +14,18 @@ const Login = () => {
   const canvasRef = useCanvasBreathingEffect()
   const text = '小账童'
 
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [showCaptcha, setShowCaptcha] = useState(false)
+  const [captcha, setCaptcha] = useState('')
+  const [verifyCaptcha, setVerifyCaptcha] = useState('')
+
+  useEffect(() => {
+    if (username && password) {
+      setShowCaptcha(true)
+    }
+  }, [username, password])
+
   useEffect(() => {
     const char = textRef.current?.querySelectorAll('span')
     if (!char) return
@@ -24,6 +37,26 @@ const Login = () => {
     })
   }, [])
 
+  const handleChange = useCallback((captcha: string) => {
+    setCaptcha(captcha)
+  }, [])
+
+  const handleLogin = () => {
+    if (username?.length > 10 && password?.length > 20) {
+      Toast.show({
+        icon: 'fail',
+        content: '账号或者密码不正确',
+      })
+      return
+    }
+    if (captcha !== verifyCaptcha) {
+      Toast.show({
+        icon: 'fail',
+        content: '验证码错误',
+      })
+      return
+    }
+  }
   return (
     <div className={styles.login}>
       <canvas ref={canvasRef} className={styles.canvas_bg}></canvas>
@@ -44,23 +77,48 @@ const Login = () => {
       <div className={styles.message}>
         <div className={styles.message_label}>账号</div>
         <div className={styles.message_input}>
-          <Input placeholder='请输入账号' />
+          <Input
+            placeholder='请输入账号'
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setUsername(e.target.value)
+            }
+          />
         </div>
       </div>
       <div className={classNames(styles.message)}>
         <div className={styles.message_passwordText}>密码</div>
         <div className={styles.message_input}>
-          <Input placeholder='请输入密码' />
+          <Input
+            placeholder='请输入密码'
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setPassword(e.target.value)
+            }
+          />
         </div>
       </div>
-      {/* 验证码 */}
-      <div className={styles.captcha}>
-        <Captcha bgColor='#202338' />
-      </div>
+
+      {showCaptcha && (
+        <div className={styles.captcha_box}>
+          <div>
+            <Input
+              placeholder='请输入验证码'
+              onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                setVerifyCaptcha(e.target.value)
+              }}
+            />
+          </div>
+          <div className={styles.captcha}>
+            <Captcha bgColor='#202338' charNum={4} onChange={handleChange} />
+            <span>看不清,点击切换</span>
+          </div>
+        </div>
+      )}
 
       <div className={styles.interaction}>
         <div className={styles.interaction_btn}>
-          <Button theme='primary'>primary</Button>
+          <Button theme='primary' onClick={handleLogin}>
+            登录
+          </Button>
         </div>
       </div>
 
