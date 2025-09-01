@@ -1,5 +1,5 @@
 // src/api/hooks/useMutation.tsx
-import { useQueryClient, useMutation } from 'react-query'
+import { useQueryClient, useMutation } from '@tanstack/react-query'
 import axios from '@/utils/axios'
 
 interface UseMutationOptions {

@@ -56,6 +56,7 @@ const Login = () => {
       })
       return
     }
+    setVerifyCaptcha(captcha)
     if (captcha !== verifyCaptcha) {
       Toast.show({
         icon: 'fail',
@@ -114,6 +115,7 @@ const Login = () => {
           <div>
             <Input
               placeholder='请输入验证码'
+              value={captcha}
               onChange={(e: ChangeEvent<HTMLInputElement>) => {
                 setVerifyCaptcha(e.target.value)
               }}
