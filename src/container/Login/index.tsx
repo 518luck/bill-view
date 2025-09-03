@@ -1,7 +1,6 @@
+import { Button, Input, Toast, Radio, Form } from 'antd-mobile'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
-import { Button, Input, Toast, Radio } from 'antd-mobile'
-import type { ChangeEvent } from 'react'
 import classNames from 'classnames'
 import Captcha from 'react-captcha-code'
 
@@ -97,47 +96,49 @@ const Login = () => {
         </div>
       </div>
       <div className={styles.describe}>数字之间，藏着人生的喜怒哀乐。</div>
-      <div className={styles.message}>
-        <div className={styles.message_label}>账号</div>
-        <div className={styles.message_input}>
-          <Input
-            placeholder='请输入账号'
-            /*   onChange={(e: ChangeEvent<HTMLInputElement>) =>
+      <Form>
+        <div className={styles.message}>
+          <div className={styles.message_label}>账号</div>
+          <div className={styles.message_input}>
+            <Input
+              placeholder='请输入账号'
+              /*   onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setUsername(e.target.value)
             } */
-          />
-        </div>
-      </div>
-      <div className={classNames(styles.message)}>
-        <div className={styles.message_passwordText}>密码</div>
-        <div className={styles.message_input}>
-          <Input
-            placeholder='请输入密码'
-            /*  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setPassword(e.target.value)
-            } */
-          />
-        </div>
-      </div>
-
-      {showCaptcha && (
-        <div className={styles.captcha_box}>
-          <div>
-            <Input
-              placeholder='请输入验证码'
-              value={captcha}
-              /*  onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                setVerifyCaptcha(e.target.value)
-              }} */
             />
           </div>
-          <div className={styles.captcha}>
-            <Captcha bgColor='#202338' charNum={4} onChange={handleChange} />
-            <span>看不清,点击切换</span>
+        </div>
+
+        <div className={classNames(styles.message)}>
+          <div className={styles.message_passwordText}>密码</div>
+          <div className={styles.message_input}>
+            <Input
+              placeholder='请输入密码'
+              /*  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setPassword(e.target.value)
+            } */
+            />
           </div>
         </div>
-      )}
 
+        {showCaptcha && (
+          <div className={styles.captcha_box}>
+            <div>
+              <Input
+                placeholder='请输入验证码'
+                value={captcha}
+                /*  onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                setVerifyCaptcha(e.target.value)
+              }} */
+              />
+            </div>
+            <div className={styles.captcha}>
+              <Captcha bgColor='#202338' charNum={4} onChange={handleChange} />
+              <span>看不清,点击切换</span>
+            </div>
+          </div>
+        )}
+      </Form>
       <div className={styles.interaction}>
         <div className={styles.interaction_btn}>
           <Button onClick={handleLogin}>登录</Button>
