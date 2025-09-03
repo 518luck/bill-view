@@ -26,8 +26,10 @@ const Login = () => {
   const canvasRef = useCanvasBreathingEffect()
   const text = '小账童'
 
-  const [captcha, setCaptcha] = useState('')
-  const [verifyCaptcha, setVerifyCaptcha] = useState('')
+  const [captcha, setCaptcha] = useState('') //验证码
+  const [verifyCaptcha, setVerifyCaptcha] = useState('') //验证码校验
+  const [showCaptcha, setShowCaptcha] = useState(false) //是否显示验证码
+  const [formValues, setFormValues] = useState({ username: '', password: '' }) //表单值
 
   useEffect(() => {
     const char = textRef.current?.querySelectorAll('span')
@@ -44,6 +46,18 @@ const Login = () => {
     setCaptcha(captcha)
   }, [])
 
+  const handleValuesChange = (allValues: {
+    username: string
+    password: string
+  }) => {
+    setFormValues({ ...formValues, ...allValues })
+    if (formValues.username && formValues.password) {
+      setShowCaptcha(true)
+    } else {
+      setShowCaptcha(false)
+    }
+  }
+
   const handleLogin = () => {
     setVerifyCaptcha(captcha)
     if (captcha !== verifyCaptcha) {
@@ -55,7 +69,7 @@ const Login = () => {
     }
 
     if (data) {
-      // console.log('🚀 ~ handleLogin ~ data:', data)
+      console.log('🚀 ~ handleLogin ~ formValues:', formValues)
       // useAuthStore.getState().setToken(data?.token as string)
     }
   }
@@ -76,7 +90,7 @@ const Login = () => {
         </div>
       </div>
       <div className={styles.describe}>数字之间，藏着人生的喜怒哀乐。</div>
-      <Form>
+      <Form onValuesChange={handleValuesChange}>
         <div className={styles.message}>
           <div className={styles.message_label}>账号</div>
           <div className={styles.message_input}>
@@ -95,7 +109,7 @@ const Login = () => {
           </div>
         </div>
 
-        {'showCaptcha' && (
+        {showCaptcha && (
           <div className={styles.captcha_box}>
             <div>
               <Form.Item name='captcha'>
