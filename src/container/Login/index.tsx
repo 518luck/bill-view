@@ -23,6 +23,7 @@ const Login = () => {
     })
   })
   const textRef = useRef<HTMLSpanElement>(null)
+  const captchaRef = useRef<HTMLDivElement>(null)
   const canvasRef = useCanvasBreathingEffect()
   const text = '小账童'
 
@@ -42,8 +43,31 @@ const Login = () => {
     })
   }, [])
 
+  useEffect(() => {
+    if (showCaptcha && captchaRef.current) {
+      gsap.set(captchaRef.current, {
+        opacity: 0,
+        x: -100, // 从左侧开始
+        scaleX: 0.3, // 水平压缩
+        scaleY: 1.2, // 垂直拉伸（果冻效果）
+        transformOrigin: 'left center', // 从左侧开始变形
+      })
+
+      // 果冻弹出动画
+      gsap.to(captchaRef.current, {
+        opacity: 1,
+        x: 0, // 滑到原位置
+        scaleX: 1, // 恢复水平尺寸
+        scaleY: 1, // 恢复垂直尺寸
+        duration: 0.8,
+        ease: 'elastic.out(1, 5)', // 弹性缓动
+      })
+    }
+  }, [showCaptcha])
+
   const handleChange = useCallback((captcha: string) => {
     setCaptcha(captcha)
+    setVerifyCaptcha(captcha)
   }, [])
 
   const handleValuesChange = (allValues: {
@@ -59,7 +83,6 @@ const Login = () => {
   }
 
   const handleLogin = () => {
-    setVerifyCaptcha(captcha)
     if (captcha !== verifyCaptcha) {
       Toast.show({
         icon: 'fail',
@@ -110,14 +133,21 @@ const Login = () => {
         </div>
 
         {showCaptcha && (
-          <div className={styles.captcha_box}>
+          <div ref={captchaRef} className={styles.captcha_box}>
             <div>
-              <Form.Item name='captcha'>
-                <Input placeholder='请输入验证码' value={captcha} />
-              </Form.Item>
+              <Input
+                placeholder='请输入验证码'
+                value={verifyCaptcha}
+                onChange={(e) => setVerifyCaptcha(e)}
+              />
             </div>
             <div className={styles.captcha}>
-              <Captcha bgColor='#202338' charNum={4} onChange={handleChange} />
+              <Captcha
+                bgColor='#202338'
+                charNum={4}
+                onChange={handleChange}
+                className={styles.captcha_style}
+              />
               <span>看不清,点击切换</span>
             </div>
           </div>
