@@ -1,9 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { TabBar } from 'zarm'
-
+import { TabBar } from 'antd-mobile'
+import { ContentOutline } from 'antd-mobile-icons'
 import styles from './styles.module.less'
-import CustomIcon from '../CustomIcon'
 
 const NavBar = ({ show }: { show: boolean }) => {
   const navigate = useNavigate()
@@ -25,21 +24,9 @@ const NavBar = ({ show }: { show: boolean }) => {
           className={styles.tab}
           activeKey={activeKey}
           onChange={changeTab}>
-          <TabBar.Item
-            itemKey='/home'
-            title='账单'
-            icon={<CustomIcon type='zhangdan' />}
-          />
-          <TabBar.Item
-            itemKey='/data'
-            title='统计'
-            icon={<CustomIcon type='tongji' />}
-          />
-          <TabBar.Item
-            itemKey='/user'
-            title='我的'
-            icon={<CustomIcon type='wode' />}
-          />
+          <TabBar.Item key='/home' title='账单' icon={<ContentOutline />} />
+          <TabBar.Item key='/data' title='统计' icon={<ContentOutline />} />
+          <TabBar.Item key='/user' title='我的' icon={<ContentOutline />} />
         </TabBar>
       )}
     </>

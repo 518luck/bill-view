@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
-import { Button, Input, Radio, Toast } from 'zarm'
+import { Button, Input, Toast, Radio } from 'antd-mobile'
 import type { ChangeEvent } from 'react'
 import classNames from 'classnames'
 import Captcha from 'react-captcha-code'
@@ -9,9 +9,15 @@ import styles from './styles.module.less'
 import logo from '@/assets/logo.svg'
 import { useCanvasBreathingEffect } from '@/hook/useCanvasBreathingEffect'
 import { useLogin } from '@/api/http'
+import { useAuthStore } from '@/store/login'
 
 const Login = () => {
-  const loginApi = useLogin(() => {
+  // const { clearToken } = useAuthStore()
+  const {
+    data,
+    mutate: loginMutate,
+    // isPending,
+  } = useLogin(() => {
     Toast.show({
       icon: 'success',
       content: '登录成功',
@@ -65,10 +71,14 @@ const Login = () => {
       return
     }
 
-    loginApi.mutate({
+    loginMutate({
       username,
       password,
     })
+    if (data) {
+      // console.log('🚀 ~ handleLogin ~ data:', data)
+      // useAuthStore.getState().setToken(data?.token as string)
+    }
   }
   return (
     <div className={styles.login}>
@@ -92,9 +102,9 @@ const Login = () => {
         <div className={styles.message_input}>
           <Input
             placeholder='请输入账号'
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            /*   onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setUsername(e.target.value)
-            }
+            } */
           />
         </div>
       </div>
@@ -103,9 +113,9 @@ const Login = () => {
         <div className={styles.message_input}>
           <Input
             placeholder='请输入密码'
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            /*  onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setPassword(e.target.value)
-            }
+            } */
           />
         </div>
       </div>
@@ -116,9 +126,9 @@ const Login = () => {
             <Input
               placeholder='请输入验证码'
               value={captcha}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => {
+              /*  onChange={(e: ChangeEvent<HTMLInputElement>) => {
                 setVerifyCaptcha(e.target.value)
-              }}
+              }} */
             />
           </div>
           <div className={styles.captcha}>
@@ -130,9 +140,7 @@ const Login = () => {
 
       <div className={styles.interaction}>
         <div className={styles.interaction_btn}>
-          <Button theme='primary' onClick={handleLogin}>
-            登录
-          </Button>
+          <Button onClick={handleLogin}>登录</Button>
         </div>
       </div>
 
