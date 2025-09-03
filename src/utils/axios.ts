@@ -4,9 +4,8 @@ import { Toast } from 'zarm'
 axios.defaults.baseURL = ''
 axios.defaults.withCredentials = true
 axios.defaults.headers['X-Requested-With'] = 'XMLHttpRequest'
-axios.defaults.headers['Authorization'] = `${
-  localStorage.getItem('token') || null
-}`
+axios.defaults.headers['Authorization'] = `${localStorage.getItem('token') || null
+  }`
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 
 axios.interceptors.response.use((res) => {
