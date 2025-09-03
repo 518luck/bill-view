@@ -44,13 +44,11 @@
   justify-content: center;
 }
 
-/* .message {
+.message {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-
 
   &_label {
     margin: 29px 0 18px 0;
@@ -69,7 +67,7 @@
   &_input {
 
     :global {
-      .za-input {
+      .adm-input {
         input {
           width: 338px;
           height: 40px;
@@ -114,7 +112,7 @@
   }
 
 
-} */
+}
 
 .interaction {
   display: flex;
@@ -124,7 +122,7 @@
 
   &_btn {
     :global {
-      .za-button {
+      .adm-button {
         width: 338px;
         height: 40px;
         border-radius: 50px;
@@ -132,19 +130,6 @@
         backdrop-filter: blur(4px);
         transition: transform 0.15s ease-in-out;
         transform: scale(1);
-      }
-
-      .za-button--primary {
-        border-color: transparent;
-      }
-
-      .za-button:focus,
-      .za-button:active,
-      .za-button--primary:focus,
-      .za-button--primary:active {
-        outline: none;
-        border-color: transparent;
-        background: rgba(125, 57, 235, 1);
       }
     }
   }
@@ -158,9 +143,16 @@
   align-items: center;
   font-size: 12px;
 
-  :global {
-    .za-radio--checked .za-radio__tick {
-      border-color: #fff;
+  &_checkbox {
+    :global {
+      .adm-checkbox.adm-checkbox-checked .adm-checkbox-icon {
+        border-color: transparent;
+        background-color: transparent;
+      }
+
+      .adm-checkbox-content {
+        font-size: 12px;
+      }
     }
   }
 }

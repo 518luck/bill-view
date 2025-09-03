@@ -1,4 +1,4 @@
-import { Button, Input, Toast, Radio, Form } from 'antd-mobile'
+import { Button, Input, Toast, Form, Checkbox } from 'antd-mobile'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import classNames from 'classnames'
@@ -26,17 +26,8 @@ const Login = () => {
   const canvasRef = useCanvasBreathingEffect()
   const text = '小账童'
 
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [showCaptcha, setShowCaptcha] = useState(false)
   const [captcha, setCaptcha] = useState('')
   const [verifyCaptcha, setVerifyCaptcha] = useState('')
-
-  useEffect(() => {
-    if (username && password) {
-      setShowCaptcha(true)
-    }
-  }, [username, password])
 
   useEffect(() => {
     const char = textRef.current?.querySelectorAll('span')
@@ -54,13 +45,6 @@ const Login = () => {
   }, [])
 
   const handleLogin = () => {
-    if (username?.length > 10 && password?.length > 20) {
-      Toast.show({
-        icon: 'fail',
-        content: '账号或者密码不正确',
-      })
-      return
-    }
     setVerifyCaptcha(captcha)
     if (captcha !== verifyCaptcha) {
       Toast.show({
@@ -70,10 +54,6 @@ const Login = () => {
       return
     }
 
-    loginMutate({
-      username,
-      password,
-    })
     if (data) {
       // console.log('🚀 ~ handleLogin ~ data:', data)
       // useAuthStore.getState().setToken(data?.token as string)
@@ -100,37 +80,21 @@ const Login = () => {
         <div className={styles.message}>
           <div className={styles.message_label}>账号</div>
           <div className={styles.message_input}>
-            <Input
-              placeholder='请输入账号'
-              /*   onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setUsername(e.target.value)
-            } */
-            />
+            <Input placeholder='请输入账号' />
           </div>
         </div>
 
         <div className={classNames(styles.message)}>
           <div className={styles.message_passwordText}>密码</div>
           <div className={styles.message_input}>
-            <Input
-              placeholder='请输入密码'
-              /*  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setPassword(e.target.value)
-            } */
-            />
+            <Input placeholder='请输入密码' />
           </div>
         </div>
 
-        {showCaptcha && (
+        {'showCaptcha' && (
           <div className={styles.captcha_box}>
             <div>
-              <Input
-                placeholder='请输入验证码'
-                value={captcha}
-                /*  onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                setVerifyCaptcha(e.target.value)
-              }} */
-              />
+              <Input placeholder='请输入验证码' value={captcha} />
             </div>
             <div className={styles.captcha}>
               <Captcha bgColor='#202338' charNum={4} onChange={handleChange} />
@@ -146,8 +110,8 @@ const Login = () => {
       </div>
 
       <div className={styles.footer}>
-        <div>
-          <Radio defaultChecked>记住我</Radio>
+        <div className={styles.footer_checkbox}>
+          <Checkbox defaultChecked>记住我</Checkbox>
         </div>
         <div>忘记密码</div>
       </div>
