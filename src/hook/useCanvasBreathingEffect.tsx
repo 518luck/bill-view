@@ -11,8 +11,9 @@ export const useCanvasBreathingEffect = () => {
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
-    canvas.width = window.innerWidth
-    canvas.height = window.innerHeight
+    const dpr = window.devicePixelRatio || 1
+    canvas.width = window.innerWidth * dpr
+    canvas.height = window.innerHeight * dpr
 
     const startTime = Date.now()
 
@@ -22,7 +23,7 @@ export const useCanvasBreathingEffect = () => {
 
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-      const radius = 1.4 + breathCycle * 0.2
+      const radius = 1.2 + breathCycle * 0.2
 
       const gradient = ctx.createRadialGradient(
         canvas.width,

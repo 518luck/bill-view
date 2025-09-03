@@ -80,21 +80,27 @@ const Login = () => {
         <div className={styles.message}>
           <div className={styles.message_label}>账号</div>
           <div className={styles.message_input}>
-            <Input placeholder='请输入账号' />
+            <Form.Item name='username'>
+              <Input placeholder='请输入账号' />
+            </Form.Item>
           </div>
         </div>
 
         <div className={classNames(styles.message)}>
           <div className={styles.message_passwordText}>密码</div>
           <div className={styles.message_input}>
-            <Input placeholder='请输入密码' />
+            <Form.Item name='password'>
+              <Input placeholder='请输入密码' />
+            </Form.Item>
           </div>
         </div>
 
         {'showCaptcha' && (
           <div className={styles.captcha_box}>
             <div>
-              <Input placeholder='请输入验证码' value={captcha} />
+              <Form.Item name='captcha'>
+                <Input placeholder='请输入验证码' value={captcha} />
+              </Form.Item>
             </div>
             <div className={styles.captcha}>
               <Captcha bgColor='#202338' charNum={4} onChange={handleChange} />
@@ -102,19 +108,22 @@ const Login = () => {
             </div>
           </div>
         )}
-      </Form>
-      <div className={styles.interaction}>
-        <div className={styles.interaction_btn}>
-          <Button onClick={handleLogin}>登录</Button>
-        </div>
-      </div>
 
-      <div className={styles.footer}>
-        <div className={styles.footer_checkbox}>
-          <Checkbox defaultChecked>记住我</Checkbox>
+        <div className={styles.interaction}>
+          <div className={styles.interaction_btn}>
+            <Button onClick={handleLogin}>登录</Button>
+          </div>
         </div>
-        <div>忘记密码</div>
-      </div>
+
+        <div className={styles.footer}>
+          <div className={styles.footer_checkbox}>
+            <Form.Item name='remember'>
+              <Checkbox defaultChecked>记住我</Checkbox>
+            </Form.Item>
+          </div>
+          <div>忘记密码</div>
+        </div>
+      </Form>
     </div>
   )
 }
