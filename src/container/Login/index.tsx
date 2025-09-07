@@ -1,5 +1,5 @@
-import { Button, Input, Toast, Form, Checkbox } from 'antd-mobile'
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { Button, Input, Toast, Form, Checkbox } from 'antd-mobile'
 import gsap from 'gsap'
 import classNames from 'classnames'
 import Captcha from 'react-captcha-code'
@@ -12,6 +12,8 @@ import { useCanvasBreathingEffect } from '@/hook/useCanvasBreathingEffect'
 import { useLogin } from '@/api/http'
 import { useAuthStore } from '@/store/login'
 
+import type { FormInstance } from 'antd-mobile/es/components/form'
+
 const Login = () => {
   const { clearToken } = useAuthStore()
   const { mutate: loginMutate, isPending } = useLogin(() => {
@@ -22,6 +24,7 @@ const Login = () => {
   })
   const textRef = useRef<HTMLSpanElement>(null)
   const captchaRef = useRef<HTMLDivElement>(null)
+  const formRef = useRef<FormInstance>(null)
   const canvasRef = useCanvasBreathingEffect()
   const text = '小账童'
 
@@ -86,7 +89,7 @@ const Login = () => {
     setFormValues({ ...newFormValues, ...allValues })
   }
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (captcha !== verifyCaptcha) {
       Toast.show({
         icon: 'fail',
@@ -94,6 +97,8 @@ const Login = () => {
       })
       return
     }
+    await formRef.current?.validateFields()
+
     clearToken() //还没有获取后面需要获取
     loginMutate(newFormValues)
   }
@@ -114,7 +119,7 @@ const Login = () => {
         </div>
       </div>
       <div className={styles.describe}>数字之间，藏着人生的喜怒哀乐。</div>
-      <Form onValuesChange={handleValuesChange}>
+      <Form onValuesChange={handleValuesChange} ref={formRef}>
         <div className={styles.message}>
           <div className={styles.message_label}>账号</div>
           <div className={styles.message_input}>
