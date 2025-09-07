@@ -1,6 +1,15 @@
 import { useApiMutation } from '@/utils/useMutation'
 
-export const useLogin = (onSuccess: () => void) => {
+
+interface LoginResponse {
+  code: number;
+  msg: string;
+  data: {
+    token: string;
+  };
+}
+
+export const useLogin = (onSuccess: (data: LoginResponse) => void) => {
   return useApiMutation({
     url: '/api/user/login',
     method: 'POST',

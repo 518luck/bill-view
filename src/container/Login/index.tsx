@@ -17,15 +17,17 @@ import { showDevelopingToast } from '@/utils'
 import type { FormInstance } from 'antd-mobile/es/components/form'
 
 const Login = () => {
-  const { mutate: loginMutate, isPending } = useLogin(() => {
+  const navigate = useNavigate()
+  const { setToken } = useAuthStore()
+
+  const { mutate: loginMutate, isPending } = useLogin((token) => {
     Toast.show({
       icon: 'success',
       content: '登录成功',
     })
+    setToken(token.data.token)
+    navigate('/home')
   })
-
-  const navigate = useNavigate()
-  const { clearToken } = useAuthStore()
 
   const textRef = useRef<HTMLSpanElement>(null)
   const captchaRef = useRef<HTMLDivElement>(null)
@@ -105,9 +107,9 @@ const Login = () => {
 
     try {
       await formRef.current?.validateFields()
-      clearToken() //还没有获取后面需要获取
+
       loginMutate(newFormValues)
-      navigate('/home')
+
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (error: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
