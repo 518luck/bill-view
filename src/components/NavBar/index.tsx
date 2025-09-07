@@ -1,13 +1,18 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { TabBar } from 'antd-mobile'
 import { ContentOutline, ReceivePaymentOutline } from 'antd-mobile-icons'
 import styles from './styles.module.less'
 
 const NavBar = ({ show }: { show: boolean }) => {
+  const location = useLocation()
   const navigate = useNavigate()
 
-  const [activeKey, setActiveKey] = useState('/')
+  const [activeKey, setActiveKey] = useState('/home')
+
+  useEffect(() => {
+    setActiveKey(location.pathname)
+  }, [location.pathname])
 
   const changeTab = (value: string | number) => {
     if (typeof value === 'string') {
