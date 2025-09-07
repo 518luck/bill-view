@@ -28,7 +28,10 @@ const Login = () => {
   const [captcha, setCaptcha] = useState('') //验证码
   const [verifyCaptcha, setVerifyCaptcha] = useState('') //验证码校验
   const [showCaptcha, setShowCaptcha] = useState(false) //是否显示验证码
-  const [formValues, setFormValues] = useState({ username: '', password: '' }) //表单值
+  const [newFormValues, setFormValues] = useState({
+    username: '',
+    password: '',
+  }) //表单值
 
   useEffect(() => {
     const char = textRef.current?.querySelectorAll('span')
@@ -63,6 +66,14 @@ const Login = () => {
     }
   }, [showCaptcha])
 
+  useEffect(() => {
+    if (newFormValues.username && newFormValues.password) {
+      setShowCaptcha(true)
+    } else {
+      setShowCaptcha(false)
+    }
+  }, [newFormValues])
+
   const handleChange = useCallback((captcha: string) => {
     setCaptcha(captcha)
     setVerifyCaptcha(captcha)
@@ -72,12 +83,7 @@ const Login = () => {
     username: string
     password: string
   }) => {
-    setFormValues({ ...formValues, ...allValues })
-    if (formValues.username && formValues.password) {
-      setShowCaptcha(true)
-    } else {
-      setShowCaptcha(false)
-    }
+    setFormValues({ ...newFormValues, ...allValues })
   }
 
   const handleLogin = () => {
@@ -89,7 +95,7 @@ const Login = () => {
       return
     }
     clearToken() //还没有获取后面需要获取
-    loginMutate(formValues)
+    loginMutate(newFormValues)
   }
   return (
     <div className={styles.login}>
