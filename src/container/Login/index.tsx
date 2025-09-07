@@ -11,9 +11,8 @@ import { useLogin } from '@/api/http'
 import { useAuthStore } from '@/store/login'
 
 const Login = () => {
-  // const { clearToken } = useAuthStore()
+  const { clearToken } = useAuthStore()
   const {
-    data,
     mutate: loginMutate,
     // isPending,
   } = useLogin(() => {
@@ -90,11 +89,9 @@ const Login = () => {
       })
       return
     }
-
-    if (data) {
-      console.log('🚀 ~ handleLogin ~ formValues:', formValues)
-      // useAuthStore.getState().setToken(data?.token as string)
-    }
+    clearToken()
+    // useAuthStore.getState().setToken(data?.token as string)
+    loginMutate(formValues)
   }
   return (
     <div className={styles.login}>

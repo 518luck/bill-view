@@ -1,17 +1,23 @@
 import axios from 'axios'
 import { Toast } from 'antd-mobile'
 
+const token = localStorage.getItem('token')
+const baseURL = import.meta.env.VITE_API_URL
+
 const server = axios.create({
-  baseURL: '',
+  baseURL,
   timeout: 5000,
-  withCredentials: true
+  withCredentials: true,
+  headers: {
+    'Content-Type': 'application/json',
+    'X-Requested-With': 'XMLHttpRequest',
+  }
 })
 
+
 server.interceptors.request.use((config) => {
-  config.headers['Authorization'] = `Bearer ${localStorage.getItem('token') || null
+  config.headers['Authorization'] = `Bearer ${token || null
     } `
-  config.headers['X-Requested-With'] = 'XMLHttpRequest'
-  config.headers.post['Content-Type'] = 'application/json'
   return config
 
 }, (error) => {

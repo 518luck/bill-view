@@ -6,5 +6,8 @@ export const useLogin = (onSuccess: () => void) => {
     method: 'POST',
     invalidateKeys: ['user'],
     onSuccess,
+    onError: (error) => {
+      console.error('🚀 ~ useLogin ~ error:', error)
+    },
   })
 }
