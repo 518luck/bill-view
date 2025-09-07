@@ -1,4 +1,3 @@
-// hooks/useCanvasBreathingEffect.ts
 import { useRef, useEffect } from 'react'
 
 export const useCanvasBreathingEffect = () => {
