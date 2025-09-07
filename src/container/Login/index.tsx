@@ -12,10 +12,7 @@ import { useAuthStore } from '@/store/login'
 
 const Login = () => {
   const { clearToken } = useAuthStore()
-  const {
-    mutate: loginMutate,
-    // isPending,
-  } = useLogin(() => {
+  const { mutate: loginMutate, isPending } = useLogin(() => {
     Toast.show({
       icon: 'success',
       content: '登录成功',
@@ -89,8 +86,7 @@ const Login = () => {
       })
       return
     }
-    clearToken()
-    // useAuthStore.getState().setToken(data?.token as string)
+    clearToken() //还没有获取后面需要获取
     loginMutate(formValues)
   }
   return (
@@ -156,7 +152,9 @@ const Login = () => {
 
         <div className={styles.interaction}>
           <div className={styles.interaction_btn}>
-            <Button onClick={handleLogin}>登录</Button>
+            <Button onClick={handleLogin} loading={isPending}>
+              登录
+            </Button>
           </div>
         </div>
 
