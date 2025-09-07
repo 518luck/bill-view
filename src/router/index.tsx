@@ -1,10 +1,13 @@
 import { createBrowserRouter } from 'react-router-dom'
+import { lazy, Suspense } from 'react'
+import ProtectedRoute from '@/components/ProtectedRoute'
+
 import App from '@/App'
-import Home from '@/container/Home'
-import Data from '@/container/Data'
-import User from '@/container/User'
-import Detail from '@/container/Detail'
-import Login from '@/container/Login'
+const Home = lazy(() => import('@/container/Home'))
+const Data = lazy(() => import('@/container/Data'))
+const User = lazy(() => import('@/container/User'))
+const Detail = lazy(() => import('@/container/Detail'))
+const Login = lazy(() => import('@/container/Login'))
 
 const router = createBrowserRouter([
   {
@@ -14,23 +17,43 @@ const router = createBrowserRouter([
       {
         // path: '/login',
         index: true,
-        element: <Login />,
+        element: (
+          <Suspense fallback={<div>加载中...</div>}>
+            <Login />
+          </Suspense>
+        ),
       },
       {
         path: '/home',
-        element: <Home />,
+        element: (
+          <ProtectedRoute>
+            <Home />
+          </ProtectedRoute>
+        ),
       },
       {
         path: '/data',
-        element: <Data />,
+        element: (
+          <ProtectedRoute>
+            <Data />
+          </ProtectedRoute>
+        ),
       },
       {
         path: '/user',
-        element: <User />,
+        element: (
+          <ProtectedRoute>
+            <User />
+          </ProtectedRoute>
+        ),
       },
       {
         path: '/detail',
-        element: <Detail />,
+        element: (
+          <ProtectedRoute>
+            <Detail />
+          </ProtectedRoute>
+        ),
       },
     ],
   },
