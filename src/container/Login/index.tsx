@@ -5,7 +5,9 @@ import classNames from 'classnames'
 import Captcha from 'react-captcha-code'
 
 import styles from './styles.module.less'
-import logo from '@/assets/logo.svg'
+import logo from '@/assets/svg/logo.svg'
+import arrows from '@/assets/svg/arrows.svg'
+
 import { useCanvasBreathingEffect } from '@/hook/useCanvasBreathingEffect'
 import { useLogin } from '@/api/http'
 import { useAuthStore } from '@/store/login'
@@ -151,9 +153,21 @@ const Login = () => {
         )}
 
         <div className={styles.interaction}>
-          <div className={styles.interaction_btn}>
+          <div className={styles.interaction_loginBtn}>
             <Button onClick={handleLogin} loading={isPending}>
               登录
+            </Button>
+          </div>
+
+          <div className={styles.interaction_arrows}>
+            <img src={arrows} alt='arrows' />
+          </div>
+
+          <div className={styles.interaction_registerBtn}>
+            <Button
+              onClick={handleLogin}
+              className={styles.interaction_registerBtn_text}>
+              注册
             </Button>
           </div>
         </div>

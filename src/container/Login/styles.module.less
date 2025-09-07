@@ -123,14 +123,16 @@
 
 .interaction {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  margin-top: 40px;
+  margin: 20px auto 0;
+  width: 338px;
 
-  &_btn {
+
+  &_loginBtn {
     :global {
       .adm-button {
-        width: 338px;
+        width: 200px;
         height: 40px;
         border-radius: 50px;
         background: rgba(125, 57, 235, 1);
@@ -139,6 +141,28 @@
         transform: scale(1);
         border: transparent;
         color: white;
+      }
+    }
+  }
+
+
+  &_registerBtn {
+    &_text {
+      font-size: 12px;
+      color: #fff;
+      white-space: nowrap;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    :global {
+      .adm-button {
+        width: 40px;
+        height: 40px;
+        border-radius: 50px;
+        background-color: #7D39EB;
+        --border-width: 0px;
       }
     }
   }
