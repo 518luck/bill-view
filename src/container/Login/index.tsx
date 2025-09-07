@@ -117,7 +117,9 @@ const Login = () => {
         <div className={styles.message}>
           <div className={styles.message_label}>账号</div>
           <div className={styles.message_input}>
-            <Form.Item name='username'>
+            <Form.Item
+              name='username'
+              rules={[{ required: true, message: '账号不能为空' }]}>
               <Input placeholder='请输入账号' />
             </Form.Item>
           </div>
@@ -126,7 +128,9 @@ const Login = () => {
         <div className={classNames(styles.message)}>
           <div className={styles.message_passwordText}>密码</div>
           <div className={styles.message_input}>
-            <Form.Item name='password'>
+            <Form.Item
+              name='password'
+              rules={[{ required: true, message: '密码不能为空' }]}>
               <Input placeholder='请输入密码' />
             </Form.Item>
           </div>

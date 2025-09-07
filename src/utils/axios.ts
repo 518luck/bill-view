@@ -1,14 +1,24 @@
 import axios from 'axios'
 import { Toast } from 'antd-mobile'
 
-axios.defaults.baseURL = ''
-axios.defaults.withCredentials = true
-axios.defaults.headers['X-Requested-With'] = 'XMLHttpRequest'
-axios.defaults.headers['Authorization'] = `${localStorage.getItem('token') || null
-  }`
-axios.defaults.headers.post['Content-Type'] = 'application/json'
+const server = axios.create({
+  baseURL: '',
+  timeout: 5000,
+  withCredentials: true
+})
 
-axios.interceptors.response.use((res) => {
+server.interceptors.request.use((config) => {
+  config.headers['Authorization'] = `Bearer ${localStorage.getItem('token') || null
+    } `
+  config.headers['X-Requested-With'] = 'XMLHttpRequest'
+  config.headers.post['Content-Type'] = 'application/json'
+  return config
+
+}, (error) => {
+  return Promise.reject(error)
+})
+
+server.interceptors.response.use((res) => {
   if (typeof res.data !== 'object') {
     Toast.show('服务端异常！')
     return Promise.reject(res)
@@ -24,4 +34,4 @@ axios.interceptors.response.use((res) => {
   return res.data
 })
 
-export default axios
+export default server
