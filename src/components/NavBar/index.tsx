@@ -24,7 +24,7 @@ const NavBar = ({ show }: { show: boolean }) => {
           className={styles.tab}
           activeKey={activeKey}
           onChange={changeTab}>
-          <TabBar.Item key='/home' title='账单' icon={<ContentOutline />} />
+          <TabBar.Item key='/home' title='首页' icon={<ContentOutline />} />
           <TabBar.Item key='/data' title='统计' icon={<ContentOutline />} />
           <TabBar.Item key='/user' title='我的' icon={<ContentOutline />} />
         </TabBar>
