@@ -17,6 +17,7 @@
     "classnames": "^2.5.1",
     "consola": "^3.4.2",
     "gsap": "^3.13.0",
+    "modern-normalize": "^3.0.1",
     "postcss-px-to-viewport": "^1.1.1",
     "react": "^18.2.0",
     "react-captcha-code": "^1.0.7",
