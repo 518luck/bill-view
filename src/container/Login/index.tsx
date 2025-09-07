@@ -11,6 +11,7 @@ import arrows from '@/assets/svg/arrows.svg'
 import { useCanvasBreathingEffect } from '@/hook/useCanvasBreathingEffect'
 import { useLogin } from '@/api/http'
 import { useAuthStore } from '@/store/login'
+import { showDevelopingToast } from '@/utils'
 
 import type { FormInstance } from 'antd-mobile/es/components/form'
 
@@ -176,7 +177,9 @@ const Login = () => {
 
           <div className={styles.interaction_registerBtn}>
             <Button
-              onClick={handleLogin}
+              onClick={() => {
+                showDevelopingToast()
+              }}
               className={styles.interaction_registerBtn_text}>
               注册
             </Button>
@@ -186,10 +189,21 @@ const Login = () => {
         <div className={styles.footer}>
           <div className={styles.footer_checkbox}>
             <Form.Item name='remember'>
-              <Checkbox defaultChecked>记住我</Checkbox>
+              <Checkbox
+                defaultChecked
+                onClick={() => {
+                  showDevelopingToast()
+                }}>
+                记住我
+              </Checkbox>
             </Form.Item>
           </div>
-          <div>忘记密码</div>
+          <div
+            onClick={() => {
+              showDevelopingToast()
+            }}>
+            忘记密码
+          </div>
         </div>
       </Form>
     </div>
