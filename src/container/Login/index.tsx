@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Button, Input, Toast, Form, Checkbox } from 'antd-mobile'
 import gsap from 'gsap'
 import classNames from 'classnames'
@@ -16,13 +17,16 @@ import { showDevelopingToast } from '@/utils'
 import type { FormInstance } from 'antd-mobile/es/components/form'
 
 const Login = () => {
-  const { clearToken } = useAuthStore()
   const { mutate: loginMutate, isPending } = useLogin(() => {
     Toast.show({
       icon: 'success',
       content: '登录成功',
     })
   })
+
+  const navigate = useNavigate()
+  const { clearToken } = useAuthStore()
+
   const textRef = useRef<HTMLSpanElement>(null)
   const captchaRef = useRef<HTMLDivElement>(null)
   const formRef = useRef<FormInstance>(null)
@@ -98,11 +102,29 @@ const Login = () => {
       })
       return
     }
-    await formRef.current?.validateFields()
 
-    clearToken() //还没有获取后面需要获取
-    loginMutate(newFormValues)
+    try {
+      await formRef.current?.validateFields()
+      clearToken() //还没有获取后面需要获取
+      loginMutate(newFormValues)
+      navigate('/home')
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (error: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      if (error?.errorFields.length >= 2) {
+        Toast.show({
+          icon: 'fail',
+          content: '请输入账号和密码',
+        })
+      } else {
+        Toast.show({
+          icon: 'fail',
+          content: error.errorFields[0].errors[0],
+        })
+      }
+    }
   }
+
   return (
     <div className={styles.login}>
       <canvas ref={canvasRef} className={styles.canvas_bg}></canvas>
