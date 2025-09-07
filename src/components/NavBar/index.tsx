@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { TabBar } from 'antd-mobile'
 import { ContentOutline, ReceivePaymentOutline } from 'antd-mobile-icons'
+
 import styles from './styles.module.less'
 
 const NavBar = ({ show }: { show: boolean }) => {
@@ -22,6 +23,7 @@ const NavBar = ({ show }: { show: boolean }) => {
       console.error('导航类型不为String')
     }
   }
+
   return (
     <>
       {show && (
