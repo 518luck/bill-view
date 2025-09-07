@@ -1,5 +1,6 @@
 import { useRef, useEffect } from 'react'
 
+// 呼吸背景
 export const useCanvasBreathingEffect = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const animationRef = useRef<number>()

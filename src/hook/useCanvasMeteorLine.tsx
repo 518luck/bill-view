@@ -1,6 +1,7 @@
 import { useRef, useEffect } from 'react'
 import gsap from 'gsap'
 
+// 流星线条
 export const MeteorLine = () => {
   const canvasLineRef = useRef<HTMLCanvasElement>(null)
   const offsetRef = useRef(0)
@@ -22,13 +23,6 @@ export const MeteorLine = () => {
     ctx.lineWidth = 2
     ctx.strokeRect(0, 0, W, H)
 
-    // GSAP 动画偏移量
-    /*   gsap.to(offsetRef, {
-      current: 20, // 虚线长度
-      duration: 1,
-      ease: 'none',
-      repeat: -1,
-    }) */
     gsap.to(offsetRef, {
       current: 40,
       duration: 2,
