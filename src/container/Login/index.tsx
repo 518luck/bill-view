@@ -38,7 +38,6 @@ const Login = () => {
 
   const [captcha, setCaptcha] = useState('') //验证码
   const [showCaptcha, setShowCaptcha] = useState(false) //是否显示验证码
-
   const canvasRef = useCanvasBreathingEffect()
   const captchaRef = useJellyAnimation(showCaptcha)
   const textRef = useRef<HTMLSpanElement>(null)
@@ -83,7 +82,6 @@ const Login = () => {
   const handleChange = useCallback((captcha: string) => {
     setCaptcha(captcha)
 
-    // 自动填充验证码到表单
     formRef.current?.setFieldValue('verifyCaptcha', captcha)
   }, [])
 
@@ -100,7 +98,6 @@ const Login = () => {
 
       if (values.remember) {
         setCredentials(values.username, values.password)
-
         loginMutate({ username: values.username, password: values.password })
       } else {
         setRememberPassword(false)
