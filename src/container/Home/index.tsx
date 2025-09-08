@@ -1,9 +1,9 @@
-import { MeteorLine } from '@/hook/useCanvasMeteorLine'
+import { useCanvasMeteorLine } from '@/hook'
 
 import styles from './styles.module.less'
 
 const Home = () => {
-  const canvasLineRef = MeteorLine()
+  const canvasLineRef = useCanvasMeteorLine()
   return (
     <div className={styles.commonBackground}>
       <div className={styles.header}>
