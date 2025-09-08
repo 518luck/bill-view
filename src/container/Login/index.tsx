@@ -17,8 +17,20 @@ import { showDevelopingToast } from '@/utils'
 import type { FormInstance } from 'antd-mobile/es/components/form'
 
 const Login = () => {
+  const textRef = useRef<HTMLSpanElement>(null)
+  const captchaRef = useRef<HTMLDivElement>(null)
+  const formRef = useRef<FormInstance>(null)
+  const canvasRef = useCanvasBreathingEffect()
+  const text = '小账童'
+
   const navigate = useNavigate()
-  const { setToken } = useAuthStore()
+  const {
+    setToken,
+    savedCredentials,
+    rememberPassword,
+    setCredentials,
+    setRememberPassword,
+  } = useAuthStore()
 
   const { mutate: loginMutate, isPending } = useLogin((token) => {
     Toast.show({
@@ -29,12 +41,6 @@ const Login = () => {
     navigate('/home')
   })
 
-  const textRef = useRef<HTMLSpanElement>(null)
-  const captchaRef = useRef<HTMLDivElement>(null)
-  const formRef = useRef<FormInstance>(null)
-  const canvasRef = useCanvasBreathingEffect()
-  const text = '小账童'
-
   const [captcha, setCaptcha] = useState('') //验证码
   const [verifyCaptcha, setVerifyCaptcha] = useState('') //验证码校验
   const [showCaptcha, setShowCaptcha] = useState(false) //是否显示验证码
@@ -42,6 +48,17 @@ const Login = () => {
     username: '',
     password: '',
   }) //表单值
+
+  useEffect(() => {
+    if (savedCredentials && rememberPassword) {
+      formRef.current?.setFieldsValue({
+        username: savedCredentials.username,
+        password: savedCredentials.password,
+        remember: true,
+      })
+      setFormValues(savedCredentials)
+    }
+  }, [savedCredentials, rememberPassword])
 
   useEffect(() => {
     const char = textRef.current?.querySelectorAll('span')
@@ -97,16 +114,23 @@ const Login = () => {
   }
 
   const handleLogin = async () => {
-    if (captcha !== verifyCaptcha) {
-      Toast.show({
-        icon: 'fail',
-        content: '验证码错误',
-      })
-      return
-    }
-
     try {
       await formRef.current?.validateFields()
+
+      if (captcha !== verifyCaptcha) {
+        Toast.show({
+          icon: 'fail',
+          content: '验证码错误',
+        })
+        return
+      }
+
+      const rememberMe = formRef.current?.getFieldValue('remember')
+      if (rememberMe) {
+        setCredentials(newFormValues.username, newFormValues.password)
+      } else {
+        setRememberPassword(false)
+      }
 
       loginMutate(newFormValues)
 
@@ -144,6 +168,7 @@ const Login = () => {
         </div>
       </div>
       <div className={styles.describe}>数字之间，藏着人生的喜怒哀乐。</div>
+
       <Form onValuesChange={handleValuesChange} ref={formRef}>
         <div className={styles.message}>
           <div className={styles.message_label}>账号</div>
