@@ -2,7 +2,7 @@ import { useRef, useEffect } from 'react'
 import gsap from 'gsap'
 
 // 流星线条
-export const MeteorLine = () => {
+export const useCanvasMeteorLine = () => {
   const canvasLineRef = useRef<HTMLCanvasElement>(null)
   const offsetRef = useRef(0)
 

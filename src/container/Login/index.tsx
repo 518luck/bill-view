@@ -9,7 +9,7 @@ import styles from './styles.module.less'
 import logo from '@/assets/svg/logo.svg'
 import arrows from '@/assets/svg/arrows.svg'
 
-import { useCanvasBreathingEffect } from '@/hook/useCanvasBreathingEffect'
+import { useCanvasBreathingEffect, useJellyAnimation } from '@/hook'
 import { useLogin } from '@/api/http'
 import { useAuthStore } from '@/store/login'
 import { showDevelopingToast } from '@/utils'
@@ -17,12 +17,7 @@ import { showDevelopingToast } from '@/utils'
 import type { FormInstance } from 'antd-mobile/es/components/form'
 
 const Login = () => {
-  const textRef = useRef<HTMLSpanElement>(null)
-  const captchaRef = useRef<HTMLDivElement>(null)
-  const formRef = useRef<FormInstance>(null)
-  const canvasRef = useCanvasBreathingEffect()
   const text = '小账童'
-
   const navigate = useNavigate()
   const {
     setToken,
@@ -49,6 +44,11 @@ const Login = () => {
     password: '',
   }) //表单值
 
+  const canvasRef = useCanvasBreathingEffect()
+  const captchaRef = useJellyAnimation(showCaptcha)
+  const textRef = useRef<HTMLSpanElement>(null)
+  const formRef = useRef<FormInstance>(null)
+
   useEffect(() => {
     if (savedCredentials && rememberPassword) {
       formRef.current?.setFieldsValue({
@@ -70,28 +70,6 @@ const Login = () => {
       stagger: 0.2,
     })
   }, [])
-
-  useEffect(() => {
-    if (showCaptcha && captchaRef.current) {
-      gsap.set(captchaRef.current, {
-        opacity: 0,
-        x: -100, // 从左侧开始
-        scaleX: 0.3, // 水平压缩
-        scaleY: 1.2, // 垂直拉伸（果冻效果）
-        transformOrigin: 'left center', // 从左侧开始变形
-      })
-
-      // 果冻弹出动画
-      gsap.to(captchaRef.current, {
-        opacity: 1,
-        x: 0, // 滑到原位置
-        scaleX: 1, // 恢复水平尺寸
-        scaleY: 1, // 恢复垂直尺寸
-        duration: 0.8,
-        ease: 'elastic.out(1, 5)', // 弹性缓动
-      })
-    }
-  }, [showCaptcha])
 
   useEffect(() => {
     if (newFormValues.username && newFormValues.password) {
@@ -238,13 +216,7 @@ const Login = () => {
         <div className={styles.footer}>
           <div className={styles.footer_checkbox}>
             <Form.Item name='remember'>
-              <Checkbox
-                defaultChecked
-                onClick={() => {
-                  showDevelopingToast()
-                }}>
-                记住我
-              </Checkbox>
+              <Checkbox defaultChecked>记住我</Checkbox>
             </Form.Item>
           </div>
           <div
