@@ -32,7 +32,7 @@ const Home = () => {
       }
       chartRef.current.setOption(option)
     }
-    // 卸载时销毁实例，防止内存泄漏
+
     return () => {
       chartRef.current?.dispose()
     }
