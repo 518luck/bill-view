@@ -37,12 +37,7 @@ const Login = () => {
   })
 
   const [captcha, setCaptcha] = useState('') //验证码
-  const [verifyCaptcha, setVerifyCaptcha] = useState('') //验证码校验
   const [showCaptcha, setShowCaptcha] = useState(false) //是否显示验证码
-  const [newFormValues, setFormValues] = useState({
-    username: '',
-    password: '',
-  }) //表单值
 
   const canvasRef = useCanvasBreathingEffect()
   const captchaRef = useJellyAnimation(showCaptcha)
@@ -56,7 +51,10 @@ const Login = () => {
         password: savedCredentials.password,
         remember: true,
       })
-      setFormValues(savedCredentials)
+      // 当自动填充账号密码时显示验证码
+      if (savedCredentials.username && savedCredentials.password) {
+        setShowCaptcha(true)
+      }
     }
   }, [savedCredentials, rememberPassword])
 
@@ -71,31 +69,28 @@ const Login = () => {
     })
   }, [])
 
-  useEffect(() => {
-    if (newFormValues.username && newFormValues.password) {
+  const handleFormWatchValuesChange = (
+    _: Record<string, string>,
+    allValues: Record<string, string>
+  ) => {
+    if (allValues.username && allValues.password) {
       setShowCaptcha(true)
     } else {
       setShowCaptcha(false)
     }
-  }, [newFormValues])
+  }
 
   const handleChange = useCallback((captcha: string) => {
     setCaptcha(captcha)
-    setVerifyCaptcha(captcha)
-  }, [])
 
-  const handleValuesChange = (allValues: {
-    username: string
-    password: string
-  }) => {
-    setFormValues({ ...newFormValues, ...allValues })
-  }
+    // 自动填充验证码到表单
+    formRef.current?.setFieldValue('verifyCaptcha', captcha)
+  }, [])
 
   const handleLogin = async () => {
     try {
-      await formRef.current?.validateFields()
-
-      if (captcha !== verifyCaptcha) {
+      const values = await formRef.current?.validateFields()
+      if (captcha !== values.verifyCaptcha) {
         Toast.show({
           icon: 'fail',
           content: '验证码错误',
@@ -103,14 +98,13 @@ const Login = () => {
         return
       }
 
-      const rememberMe = formRef.current?.getFieldValue('remember')
-      if (rememberMe) {
-        setCredentials(newFormValues.username, newFormValues.password)
+      if (values.remember) {
+        setCredentials(values.username, values.password)
+
+        loginMutate({ username: values.username, password: values.password })
       } else {
         setRememberPassword(false)
       }
-
-      loginMutate(newFormValues)
 
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (error: any) {
@@ -147,7 +141,7 @@ const Login = () => {
       </div>
       <div className={styles.describe}>数字之间，藏着人生的喜怒哀乐。</div>
 
-      <Form onValuesChange={handleValuesChange} ref={formRef}>
+      <Form onValuesChange={handleFormWatchValuesChange} ref={formRef}>
         <div className={styles.message}>
           <div className={styles.message_label}>账号</div>
           <div className={styles.message_input}>
@@ -173,11 +167,9 @@ const Login = () => {
         {showCaptcha && (
           <div ref={captchaRef} className={styles.captcha_box}>
             <div>
-              <Input
-                placeholder='请输入验证码'
-                value={verifyCaptcha}
-                onChange={(e) => setVerifyCaptcha(e)}
-              />
+              <Form.Item name='verifyCaptcha'>
+                <Input placeholder='请输入验证码' />
+              </Form.Item>
             </div>
             <div className={styles.captcha}>
               <Captcha
