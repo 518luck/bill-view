@@ -1,4 +1,5 @@
-const expend = [
+import { defineMock } from 'vite-plugin-mock-dev-server'
+const expend: [string, number][] = [
   ['2025-08-01', 820],
   ['2025-08-02', 930],
   ['2025-08-03', 1040],
@@ -32,7 +33,7 @@ const expend = [
   ['2025-08-31', 4500],
 ]
 
-const income = [
+const income: [string, number][] = [
   ['2025-08-01', 200],
   ['2025-08-02', 200],
   ['2025-08-03', 200],
@@ -66,5 +67,19 @@ const income = [
   ['2025-08-31', 4200],
 ]
 
+export default defineMock(
+  {
+    url: '/api/chart-data',
+    method: 'GET',
+    body: {
+      code: 200,
+      msg: 'success',
+      data: {
+        expend,
+        income,
+      }
+    }
+  })
 
-export { income, expend }
+
+
