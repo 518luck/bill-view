@@ -2,12 +2,16 @@ import { useEffect, useRef } from 'react'
 import * as echarts from 'echarts'
 
 import { useCanvasMeteorLine } from '@/hook'
+import { useChartDataQuery } from '@/api'
 
 import styles from './styles.module.less'
 
 const Home = () => {
   const domRef = useRef<HTMLDivElement>(null)
   const chartRef = useRef<echarts.ECharts | null>(null)
+
+  const { data } = useChartDataQuery()
+  console.log('🚀 ~ Home ~ data:', data)
 
   const canvasLineRef = useCanvasMeteorLine()
 

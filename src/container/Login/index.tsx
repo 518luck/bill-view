@@ -10,7 +10,7 @@ import logo from '@/assets/svg/logo.svg'
 import arrows from '@/assets/svg/arrows.svg'
 
 import { useCanvasBreathingEffect, useJellyAnimation } from '@/hook'
-import { useLogin } from '@/api/http'
+import { useLoginMutation } from '@/api'
 import { useAuthStore } from '@/store/login'
 import { showDevelopingToast } from '@/utils'
 
@@ -27,14 +27,7 @@ const Login = () => {
     setRememberPassword,
   } = useAuthStore()
 
-  const { mutate: loginMutate, isPending } = useLogin((token) => {
-    Toast.show({
-      icon: 'success',
-      content: '登录成功',
-    })
-    setToken(token.data.token)
-    navigate('/home')
-  })
+  const { mutate: loginMutate, isPending } = useLoginMutation()
 
   const [captcha, setCaptcha] = useState('') //验证码
   const [showCaptcha, setShowCaptcha] = useState(false) //是否显示验证码
@@ -98,7 +91,16 @@ const Login = () => {
 
       if (values.remember) {
         setCredentials(values.username, values.password)
-        loginMutate({ username: values.username, password: values.password })
+        loginMutate(
+          { username: values.username, password: values.password },
+          {
+            onSuccess: (token) => {
+              Toast.show({ icon: 'success', content: '登录成功' })
+              setToken(token.data.token)
+              navigate('/home')
+            },
+          }
+        )
       } else {
         setRememberPassword(false)
       }
