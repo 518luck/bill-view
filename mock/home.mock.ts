@@ -67,19 +67,16 @@ const income: [string, number][] = [
   ['2025-08-31', 4200],
 ]
 
-export default defineMock(
-  {
-    url: '/mock/chart-data',
-    method: 'GET',
-    body: {
-      code: 200,
-      msg: 'success',
-      data: {
-        expend,
-        income,
-      }
+export default defineMock({
+  url: '/mock/chart-data',
+  method: 'GET',
+  body: {
+    code: 201,
+    msg: 'success',
+    data: {
+      expend,
+      income
     }
-  })
-
-
+  }
+})
 
