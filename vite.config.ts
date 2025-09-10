@@ -7,7 +7,7 @@ import { mockDevServerPlugin } from 'vite-plugin-mock-dev-server'
 export default defineConfig({
   plugins: [react(), mockDevServerPlugin({
     prefix: '/mock',
-    exclude: ['/api/**'],
+    // exclude: ['/api/**'],
   })],
   resolve: {
     alias: {
