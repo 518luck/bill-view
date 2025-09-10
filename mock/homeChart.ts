@@ -69,7 +69,7 @@ const income: [string, number][] = [
 
 export default defineMock(
   {
-    url: '/api/chart-data',
+    url: '/mock/chart-data',
     method: 'GET',
     body: {
       code: 200,

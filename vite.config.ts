@@ -5,7 +5,10 @@ import { mockDevServerPlugin } from 'vite-plugin-mock-dev-server'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), mockDevServerPlugin()],
+  plugins: [react(), mockDevServerPlugin({
+    prefix: '/mock',
+    exclude: ['/api/**'],
+  })],
   resolve: {
     alias: {
       '@': resolve(__dirname, './src'),
@@ -14,8 +17,8 @@ export default defineConfig({
   server: {
     cors: true,
     proxy: {
-      '/api': {
-        target: 'http://127.0.0.1:7001',
+      '/mock': {
+        target: 'http://localhost:5173/',
         changeOrigin: true,
       },
     },

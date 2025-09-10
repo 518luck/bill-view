@@ -11,5 +11,5 @@ interface ChartData {
 }
 
 export const getChartData = () => {
-  return axios.get<ChartData>('/api/chart-data')
+  return axios.get<ChartData>('/mock/chart-data')
 }
