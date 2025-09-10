@@ -20,6 +20,7 @@ export default defineConfig({
       '/mock': {
         target: 'http://localhost:5173/',
         changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/mock/, ''),
       },
     },
   },
