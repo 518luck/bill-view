@@ -71,7 +71,7 @@ export default defineMock({
   url: '/mock/chart-data',
   method: 'GET',
   body: {
-    code: 201,
+    code: 200,
     msg: 'success',
     data: {
       expend,

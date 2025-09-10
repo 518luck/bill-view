@@ -7,13 +7,13 @@ import { useChartDataQuery } from '@/api'
 import styles from './styles.module.less'
 
 const Home = () => {
+  const canvasLineRef = useCanvasMeteorLine()
   const domRef = useRef<HTMLDivElement>(null)
   const chartRef = useRef<echarts.ECharts | null>(null)
 
   const { data } = useChartDataQuery()
-  console.log('🚀 ~ Home ~ data:', data)
-
-  const canvasLineRef = useCanvasMeteorLine()
+  const xExpendData = data?.data?.expend
+  const xIncomeData = data?.data?.income
 
   useEffect(() => {
     if (domRef.current) {
@@ -31,14 +31,14 @@ const Home = () => {
             type: 'line',
             smooth: true,
             symbol: 'none',
-            data: [],
+            data: xExpendData,
           },
           {
             name: '8月花费',
             type: 'line',
             smooth: true,
             symbol: 'none',
-            data: [],
+            data: xIncomeData,
           },
         ],
       }

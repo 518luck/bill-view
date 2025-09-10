@@ -1,15 +1,10 @@
 import { axios } from "@/utils";
 
 
-interface ChartData {
-  code: number;
-  msg: string;
-  data: {
-    expend: [string, number][];
-    income: [string, number][];
-  };
-}
+type ApiResp<T> = { code: number; msg: string; data: T }
+type Chart = { expend: [string, number][], income: [string, number][] }
 
-export const getChartData = () => {
-  return axios.get<ChartData>('/mock/chart-data', { baseURL: '' })
+
+export const getChartData = (): Promise<ApiResp<Chart>> => {
+  return axios.get('/mock/chart-data', { baseURL: '' })
 }
