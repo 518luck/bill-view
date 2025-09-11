@@ -2,6 +2,7 @@ import { useCanvasMeteorLine } from '@/hook'
 
 import styles from './styles.module.less'
 import LineChart from './LinChart'
+import ButtonCard from './ButtonCard'
 
 const Home = () => {
   const canvasLineRef = useCanvasMeteorLine()
@@ -14,8 +15,12 @@ const Home = () => {
         <div className={styles.header_money}>$ 4500,11</div>
         <div className={styles.header_income}>总收入金额</div>
       </div>
-
       <LineChart />
+
+      <div className={styles.bottom}>
+        <ButtonCard />
+        <ButtonCard />
+      </div>
     </div>
   )
 }
