@@ -41,10 +41,11 @@ const PieChart = () => {
           type: 'pie',
           radius: '100%',
           center: ['26%', '50%'],
+          startAngle: 45,
           data: [
             {
-              value: 100,
-              name: 'Expend',
+              value: 72,
+              name: '预支',
               itemStyle: {
                 borderWidth: 0,
                 color: {
@@ -67,8 +68,8 @@ const PieChart = () => {
               },
             },
             {
-              value: 200,
-              name: 'Income',
+              value: 288,
+              name: '余粮',
               itemStyle: {
                 color: {
                   type: 'radial',
