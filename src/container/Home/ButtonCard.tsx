@@ -17,7 +17,11 @@ const ButtonCard = ({
   const navigate = useNavigate()
 
   return (
-    <div className={styles.buttonCard} onClick={() => navigate(linkPath)}>
+    <div
+      className={styles.buttonCard}
+      onClick={() => {
+        navigate(linkPath)
+      }}>
       <div className={styles.buttonCard_number} style={{ color: numberColor }}>
         {number}
       </div>
