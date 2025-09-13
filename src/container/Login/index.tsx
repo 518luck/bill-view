@@ -97,7 +97,7 @@ const Login = () => {
             onSuccess: (token) => {
               Toast.show({ icon: 'success', content: '登录成功' })
               setToken(token.data.token)
-              navigate('/home')
+              navigate('/financialData')
             },
           }
         )
