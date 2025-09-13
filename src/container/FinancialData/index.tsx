@@ -15,6 +15,7 @@ const FinancialData = () => {
         <div className={styles.header_money}>$ 4500,11</div>
         <div className={styles.header_income}>总收入金额</div>
       </div>
+
       <LineChart />
 
       <div className={styles.bottom}>
