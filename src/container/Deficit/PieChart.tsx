@@ -35,6 +35,13 @@ const PieChart = () => {
           verticalAlign: 'middle',
           fontSize: 12,
         },
+        data: [
+          {
+            name: '余粮 : 288 元',
+            itemStyle: { color: 'rgba(123, 58, 235, 1)' },
+          },
+          { name: '预支 : 72 元', itemStyle: { color: '#E74C3C' } },
+        ],
       },
       series: [
         {
@@ -45,7 +52,7 @@ const PieChart = () => {
           data: [
             {
               value: 72,
-              name: '预支',
+              name: '预支 : 72 元',
               itemStyle: {
                 borderWidth: 0,
                 color: {
@@ -69,7 +76,7 @@ const PieChart = () => {
             },
             {
               value: 288,
-              name: '余粮',
+              name: '余粮 : 288 元',
               itemStyle: {
                 color: {
                   type: 'radial',
