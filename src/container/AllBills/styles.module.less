@@ -1,1 +1,56 @@
 @import url('@/styles/App.module.less');
+
+
+.AllBills {
+  padding: 0 23px;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: start;
+  background: rgba(255, 255, 255, 0.33);
+  margin-top: 42px;
+  padding: 15px;
+  height: 93px;
+
+  &_title {
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  &_partculars {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &_date {
+      white-space: nowrap;
+
+      span:first-child {
+        font-size: 20px;
+      }
+    }
+
+    &_item {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+
+      &_text {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        margin-right: 10px;
+
+        span:first-child {
+          font-size: 10px;
+          color: rgba(166, 166, 166, 1);
+        }
+      }
+    }
+  }
+
+}
