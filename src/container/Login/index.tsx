@@ -41,7 +41,7 @@ const Login = () => {
       formRef.current?.setFieldsValue({
         username: savedCredentials.username,
         password: savedCredentials.password,
-        remember: true,
+        remember: rememberPassword,
       })
       // 当自动填充账号密码时显示验证码
       if (savedCredentials.username && savedCredentials.password) {
@@ -50,6 +50,7 @@ const Login = () => {
     }
   }, [savedCredentials, rememberPassword])
 
+  // 文字动画
   useEffect(() => {
     const char = textRef.current?.querySelectorAll('span')
     if (!char) return
@@ -74,7 +75,6 @@ const Login = () => {
 
   const handleChange = useCallback((captcha: string) => {
     setCaptcha(captcha)
-
     formRef.current?.setFieldValue('verifyCaptcha', captcha)
   }, [])
 
@@ -207,7 +207,7 @@ const Login = () => {
         <div className={styles.footer}>
           <div className={styles.footer_checkbox}>
             <Form.Item name='remember'>
-              <Checkbox defaultChecked>记住我</Checkbox>
+              <Checkbox checked={rememberPassword}>记住我</Checkbox>
             </Form.Item>
           </div>
           <div
