@@ -4,7 +4,7 @@ import styles from './styles.module.less'
 import LineChart from './LinChart'
 import ButtonCard from './ButtonCard'
 
-const Home = () => {
+const FinancialData = () => {
   const canvasLineRef = useCanvasMeteorLine()
 
   return (
@@ -35,4 +35,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default FinancialData

@@ -3,7 +3,7 @@ import { lazy, Suspense } from 'react'
 import ProtectedRoute from '@/components/ProtectedRoute'
 
 import App from '@/App'
-const Home = lazy(() => import('@/container/Home'))
+const FinancialData = lazy(() => import('@/container/FinancialData'))
 const Data = lazy(() => import('@/container/Data'))
 const User = lazy(() => import('@/container/User'))
 const Detail = lazy(() => import('@/container/Detail'))
@@ -19,7 +19,7 @@ const createProtectedRoute = (Component: React.ComponentType) => (
 
 // 受保护的路由配置
 const protectedRoutes = [
-  { path: '/home', component: Home },
+  { path: '/financialData', component: FinancialData },
   { path: '/deficit', component: Deficit },
   { path: '/data', component: Data },
   { path: '/user', component: User },

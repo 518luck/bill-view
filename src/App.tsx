@@ -10,7 +10,7 @@ const App = () => {
 
   const [show, setShow] = useState(true)
 
-  const isShow = useMemo(() => ['/home', '/data', '/user'], [])
+  const isShow = useMemo(() => ['/financialData', '/data', '/user'], [])
 
   useEffect(() => {
     setShow(isShow.includes(pathname))
