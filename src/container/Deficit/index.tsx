@@ -45,24 +45,9 @@ const Deficit = () => {
         <span className={styles.content_title}>预支排行榜</span>
 
         <div className={styles.content_list}>
-          <AdvanceListItem />
-          <AdvanceListItem />
-          <AdvanceListItem />
-          <AdvanceListItem />
-          <AdvanceListItem />
-          <AdvanceListItem />
-          <AdvanceListItem />
-          <AdvanceListItem />
-          <AdvanceListItem />
-          <AdvanceListItem />
-          <AdvanceListItem />
-          <AdvanceListItem />
-          <AdvanceListItem />
-          <AdvanceListItem />
-          <AdvanceListItem />
-          <AdvanceListItem />
-          <AdvanceListItem />
-          <AdvanceListItem />
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
+            <AdvanceListItem key={item} />
+          ))}
         </div>
       </div>
     </div>

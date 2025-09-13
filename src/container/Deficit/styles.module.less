@@ -2,6 +2,12 @@
 
 .deficit {
   padding: 0 28px;
+
+  :global {
+    .adm-progress-bar-trail {
+      background-color: rgba(255, 255, 255, 0.33);
+    }
+  }
 }
 
 .header {
@@ -54,7 +60,8 @@
   &_list {
     margin-top: 25px;
     overflow-y: auto;
-    height: 300px;
+    height: 250px;
+    padding: 10px 0;
   }
 }
 
@@ -62,14 +69,15 @@
   display: flex;
   width: 100%;
   align-items: center;
-  gap: 10px;
+  gap: 7px;
+  margin-bottom: 20px;
 
   &_icon {
     flex: 1;
 
     &_avatar {
       --border-radius: 50px;
-      --size: 30px;
+      --size: 25px;
     }
   }
 
