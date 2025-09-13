@@ -42,8 +42,54 @@ const PieChart = () => {
           radius: '100%',
           center: ['26%', '50%'],
           data: [
-            { value: 100, name: 'Expend' },
-            { value: 200, name: 'Income' },
+            {
+              value: 100,
+              name: 'Expend',
+              itemStyle: {
+                borderWidth: 0,
+                color: {
+                  type: 'radial',
+                  x: 70, // 渐变的起始位置X
+                  y: 90, // 渐变的起始位置Y
+                  r: 95, // 渐变的半径，50% 为渐变半径
+                  colorStops: [
+                    {
+                      offset: 0, // 渐变的起始位置
+                      color: 'rgba(231, 76, 60, 1)', // 渐变起始颜色，红色
+                    },
+                    {
+                      offset: 1, // 渐变的结束位置
+                      color: 'rgba(231, 76, 60, 0)', // 渐变结束颜色，完全透明
+                    },
+                  ],
+                  global: true, // 全局
+                },
+              },
+            },
+            {
+              value: 200,
+              name: 'Income',
+              itemStyle: {
+                color: {
+                  type: 'radial',
+                  x: 70,
+                  y: 90,
+                  r: 95,
+                  colorStops: [
+                    {
+                      offset: 0,
+                      color: 'rgba(40, 26, 66, 0.47)',
+                    },
+                    {
+                      offset: 1,
+                      color: 'rgba(123, 86, 192, 0.78)',
+                    },
+                  ],
+                  global: true, // 全局
+                },
+                borderWidth: 0,
+              },
+            },
           ],
           label: {
             show: false, // 显示标签
