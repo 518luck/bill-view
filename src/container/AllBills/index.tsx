@@ -1,5 +1,7 @@
+import styles from './styles.module.less'
+
 const AllBills = () => {
-  return <div>AllBills</div>
+  return <div className={styles.commonBackground}>AllBills</div>
 }
 
 export default AllBills
