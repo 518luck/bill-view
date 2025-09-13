@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import cs from 'classnames'
-import styles from './styles.module.less'
 import { Divider } from 'antd-mobile'
+
+import styles from './styles.module.less'
+import BillTable from './billTable'
 
 const AllBills = () => {
   const [tab, setTab] = useState('month')
@@ -71,6 +73,8 @@ const AllBills = () => {
           年账单
         </div>
       </div>
+
+      <BillTable />
     </div>
   )
 }

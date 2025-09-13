@@ -80,3 +80,37 @@
   }
 
 }
+
+.billTable {
+  width: 100%;
+  margin-top: 20px;
+
+  &_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 30px;
+    color: rgba(166, 166, 166, 1);
+    border-bottom: 1px solid rgba(166, 166, 166, 1);
+    padding: 0 10px;
+    margin-bottom: 20px;
+  }
+
+  &_body {
+    color: #E5E5E5;
+    padding: 0 10px 10px;
+    height: 300px;
+    overflow: auto;
+
+    &_item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.33);
+      margin-bottom: 10px;
+      height: 30px;
+      line-height: 30px;
+    }
+  }
+
+}
