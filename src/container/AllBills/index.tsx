@@ -1,8 +1,11 @@
+import { useState } from 'react'
 import cs from 'classnames'
 import styles from './styles.module.less'
 import { Divider } from 'antd-mobile'
 
 const AllBills = () => {
+  const [tab, setTab] = useState('month')
+
   const item = [
     {
       title: '收入',
@@ -49,6 +52,23 @@ const AllBills = () => {
               </div>
             ))}
           </div>
+        </div>
+      </div>
+
+      <div className={styles.tab}>
+        <div
+          className={cs(styles.tab_item, {
+            [styles.tab_item_active]: tab === 'month',
+          })}
+          onClick={() => setTab('month')}>
+          月账单
+        </div>
+        <div
+          className={cs(styles.tab_item, {
+            [styles.tab_item_active]: tab === 'year',
+          })}
+          onClick={() => setTab('year')}>
+          年账单
         </div>
       </div>
     </div>
