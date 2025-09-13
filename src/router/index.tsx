@@ -6,7 +6,7 @@ import App from '@/App'
 const FinancialData = lazy(() => import('@/container/FinancialData'))
 const Data = lazy(() => import('@/container/Data'))
 const User = lazy(() => import('@/container/User'))
-const Detail = lazy(() => import('@/container/Detail'))
+const AllBills = lazy(() => import('@/container/AllBills'))
 const Login = lazy(() => import('@/container/Login'))
 const Deficit = lazy(() => import('@/container/Deficit'))
 
@@ -23,7 +23,7 @@ const protectedRoutes = [
   { path: '/deficit', component: Deficit },
   { path: '/data', component: Data },
   { path: '/user', component: User },
-  { path: '/detail', component: Detail },
+  { path: '/allBills', component: AllBills },
 ]
 
 const router = createBrowserRouter([

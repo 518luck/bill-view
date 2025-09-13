@@ -27,9 +27,9 @@ const FinancialData = () => {
         />
         <ButtonCard
           number={'09'}
-          text='本月消费明细'
+          text='我的账本明细'
           numberColor='white'
-          linkPath='/detail'
+          linkPath='/allBills'
         />
       </div>
     </div>
