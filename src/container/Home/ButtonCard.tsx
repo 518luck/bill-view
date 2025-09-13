@@ -1,10 +1,18 @@
 import styles from './styles.module.less'
 
-const ButtonCard = () => {
+interface ButtonCardProps {
+  number: string | number
+  text: string
+  numberColor: string
+}
+
+const ButtonCard = ({ number, text, numberColor }: ButtonCardProps) => {
   return (
     <div className={styles.buttonCard}>
-      <div>03</div>
-      <span>逾期消费清单</span>
+      <div className={styles.buttonCard_number} style={{ color: numberColor }}>
+        {number}
+      </div>
+      <span className={styles.buttonCard_text}>{text}</span>
     </div>
   )
 }
