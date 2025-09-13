@@ -6,10 +6,52 @@
 
 .header {
   margin-top: 41px;
+  position: relative;
+
+  .PreAllocationRatio {
+    width: 109px;
+    height: 10px;
+    position: absolute;
+    top: 110px;
+    right: 10px;
+
+
+    span {
+      display: inline-block;
+      font-size: 16px;
+      margin-bottom: 5px;
+      white-space: nowrap
+    }
+  }
 }
 
 .pie_chart {
   width: 100%;
   height: 160px;
-  // background-color: red;
+}
+
+.message {
+  margin-top: 25px;
+  background: rgba(255, 255, 255, 0.33);
+  padding: 10px;
+  border-radius: 16px;
+
+  span {
+    white-space: nowrap;
+    font-size: 12px;
+  }
+}
+
+.content {
+  margin-top: 29px;
+
+  &_title {
+    font-weight: 800;
+    display: block;
+    overflow: hidden;
+  }
+
+  &_list {
+    margin-top: 25px;
+  }
 }
