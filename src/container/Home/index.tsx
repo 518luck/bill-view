@@ -18,8 +18,18 @@ const Home = () => {
       <LineChart />
 
       <div className={styles.bottom}>
-        <ButtonCard number={'03'} text='贷款未偿合计' numberColor='red' />
-        <ButtonCard number={'09'} text='本月消费明细' numberColor='white' />
+        <ButtonCard
+          number={'03'}
+          text='贷款未偿合计'
+          numberColor='red'
+          linkPath='/deficit'
+        />
+        <ButtonCard
+          number={'09'}
+          text='本月消费明细'
+          numberColor='white'
+          linkPath='/detail'
+        />
       </div>
     </div>
   )
