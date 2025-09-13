@@ -53,5 +53,39 @@
 
   &_list {
     margin-top: 25px;
+    overflow-y: auto;
+    height: 300px;
+  }
+}
+
+.item {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 10px;
+
+  &_icon {
+    flex: 1;
+
+    &_avatar {
+      --border-radius: 50px;
+      --size: 30px;
+    }
+  }
+
+  &_content {
+    flex: 9;
+
+    &_title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+
+    &_progressBar {
+      width: 100%;
+      --track-width: 9px
+    }
   }
 }

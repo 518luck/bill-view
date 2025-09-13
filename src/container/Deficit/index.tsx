@@ -46,6 +46,23 @@ const Deficit = () => {
 
         <div className={styles.content_list}>
           <AdvanceListItem />
+          <AdvanceListItem />
+          <AdvanceListItem />
+          <AdvanceListItem />
+          <AdvanceListItem />
+          <AdvanceListItem />
+          <AdvanceListItem />
+          <AdvanceListItem />
+          <AdvanceListItem />
+          <AdvanceListItem />
+          <AdvanceListItem />
+          <AdvanceListItem />
+          <AdvanceListItem />
+          <AdvanceListItem />
+          <AdvanceListItem />
+          <AdvanceListItem />
+          <AdvanceListItem />
+          <AdvanceListItem />
         </div>
       </div>
     </div>
