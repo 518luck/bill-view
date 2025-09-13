@@ -207,7 +207,11 @@ const Login = () => {
         <div className={styles.footer}>
           <div className={styles.footer_checkbox}>
             <Form.Item name='remember'>
-              <Checkbox checked={rememberPassword}>记住我</Checkbox>
+              <Checkbox
+                checked={rememberPassword}
+                onChange={(checked) => setRememberPassword(checked)}>
+                记住我
+              </Checkbox>
             </Form.Item>
           </div>
           <div
