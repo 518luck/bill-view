@@ -33,3 +33,66 @@
     font-family: 'YouSheBiaoTiYuan';
   }
 }
+
+.message {
+  width: 335px;
+  height: 55px;
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.33);
+  overflow: hidden;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+
+  &_divider {
+    width: 1px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.33);
+    margin: 15px;
+  }
+
+  &_date {
+    &_year {
+      color: rgba(166, 166, 166, 1);
+      font-size: 12px;
+      margin-bottom: 3px;
+    }
+
+    &_month {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2px;
+
+      :first-child {
+        font-size: 18px;
+        line-height: 18px;
+      }
+
+      :nth-child(2) {
+        font-size: 12px;
+      }
+    }
+  }
+
+  &_content {
+    display: flex;
+
+    &_item {
+      margin-right: 10px;
+
+      &_title {
+        color: rgba(166, 166, 166, 1);
+        font-size: 12px;
+        margin-bottom: 3px;
+      }
+
+      &_value {
+        color: rgba(255, 255, 255, 1);
+        font-size: 14px;
+      }
+    }
+  }
+}
