@@ -35,7 +35,7 @@ const NavBar = ({ show }: { show: boolean }) => {
           className={styles.tab}
           activeKey={activeKey}
           onChange={changeTab}>
-          <TabBar.Item key='/data' title='明细' icon={<CiViewList />} />
+          <TabBar.Item key='/detail' title='明细' icon={<CiViewList />} />
 
           <TabBar.Item
             key='/financialData'
@@ -43,8 +43,8 @@ const NavBar = ({ show }: { show: boolean }) => {
             icon={<MdInsertChartOutlined />}
           />
 
-          <TabBar.Item key='/#' title='记账' icon={<IoMdAdd />} />
-          <TabBar.Item key='/#' title='账童' icon={<BsFiletypeAi />} />
+          <TabBar.Item key='/use2' title='记账' icon={<IoMdAdd />} />
+          <TabBar.Item key='/user1' title='账童' icon={<BsFiletypeAi />} />
           <TabBar.Item key='/user' title='我的' icon={<GiMummyHead />} />
         </TabBar>
       )}
