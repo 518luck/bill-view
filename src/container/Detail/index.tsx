@@ -7,10 +7,8 @@ const Detail = () => {
   return (
     <div className={cs(styles.commonBackground, styles.Detail)}>
       <div className={styles.header}>
-        <div className={styles.headerIcon}>
-          <img src={logo} alt='AI' />
-        </div>
-        <div>小账童</div>
+        <img src={logo} alt='AI' className={styles.header_icon} />
+        <div className={styles.header_title}>小账童</div>
       </div>
     </div>
   )

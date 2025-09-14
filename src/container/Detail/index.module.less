@@ -1,5 +1,35 @@
 @import url('@/styles/App.module.less');
+@import url('@/styles/fonts.less');
+
 
 .Detail {
   padding: 0 28px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 25px;
+  position: relative;
+  width: 100%;
+  height: 44px;
+
+  &_icon {
+    position: absolute;
+    left: 20px;
+    top: 5px;
+    width: 40px;
+    height: 40px;
+  }
+
+  &_title {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 22px;
+    font-weight: 500;
+    font-family: 'YouSheBiaoTiYuan';
+  }
 }
