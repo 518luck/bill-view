@@ -1,0 +1,267 @@
+@import url('@/styles/App.module.less');
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  padding: 20px;
+  text-align: center;
+}
+
+.icon {
+  position: relative;
+  margin-bottom: 40px;
+}
+
+.gear {
+  width: 80px;
+  height: 80px;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  position: relative;
+  animation: rotate 3s linear infinite;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+  }
+}
+
+.gear2 {
+  width: 60px;
+  height: 60px;
+  border: 3px solid rgba(123, 58, 235, 0.6);
+  border-radius: 50%;
+  position: absolute;
+  top: 50px;
+  right: -20px;
+  animation: rotate 2s linear infinite reverse;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    background: rgba(123, 58, 235, 0.8);
+    border-radius: 50%;
+  }
+}
+
+.gearInner {
+  width: 100%;
+  height: 100%;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 4px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, #fff, rgba(123, 58, 235, 0.8));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 40px;
+  line-height: 1.5;
+}
+
+.features {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.feature {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 10px 30px rgba(123, 58, 235, 0.3);
+  }
+
+  span {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 14px;
+    font-weight: 500;
+  }
+}
+
+.featureIcon {
+  font-size: 24px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.progress {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.progressBar {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progressFill {
+  height: 100%;
+  width: 75%;
+  background: linear-gradient(90deg, rgba(123, 58, 235, 1), rgba(255, 255, 255, 0.8));
+  border-radius: 4px;
+  position: relative;
+  animation: shimmer 2s ease-in-out infinite;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    animation: slide 2s ease-in-out infinite;
+  }
+}
+
+@keyframes shimmer {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes slide {
+  0% {
+    left: -100%;
+  }
+
+  100% {
+    left: 100%;
+  }
+}
+
+.progressText {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.homeButton {
+  margin-top: 40px;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 25px;
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.homeIcon {
+  font-size: 18px;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 24px;
+  }
+
+  .features {
+    gap: 20px;
+  }
+
+  .feature {
+    padding: 16px;
+    min-width: 80px;
+  }
+
+  .homeButton {
+    margin-top: 30px;
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+}

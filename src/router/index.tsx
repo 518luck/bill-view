@@ -9,6 +9,7 @@ const User = lazy(() => import('@/container/User'))
 const AllBills = lazy(() => import('@/container/AllBills'))
 const Login = lazy(() => import('@/container/Login'))
 const Deficit = lazy(() => import('@/container/Deficit'))
+const NotFound = lazy(() => import('@/container/NotFound'))
 
 // 创建受保护路由的辅助函数
 const createProtectedRoute = (Component: React.ComponentType) => (
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
         path,
         element: createProtectedRoute(component),
       })),
+      {
+        path: '*',
+        element: <NotFound />,
+      },
     ],
   },
 ])
