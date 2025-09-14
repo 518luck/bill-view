@@ -1,0 +1,84 @@
+@import url('@/styles/App.module.less');
+@import url('@/styles/fonts.less');
+
+
+.user {
+  padding: 0 30px;
+  color: rgba(229, 229, 229, 1);
+}
+
+.header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 40px;
+  gap: 25px;
+
+  &_name {
+    font-size: 24px;
+    font-family: 'YouSheBiaoTiYuan';
+    background: linear-gradient(135deg, #fff, rgba(123, 58, 235, 0.8));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+.message {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 40px;
+
+  &_item {
+    flex: 1;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 14px;
+
+    &_number {
+      font-size: 16px;
+      font-weight: 600;
+    }
+  }
+}
+
+.content {
+  margin-top: 26px;
+  background: rgba(255, 255, 255, 0.1);
+  width: 312px;
+  font-size: 14px;
+
+  &_item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}
+
+
+
+.footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+
+  :global {
+    .adm-button {
+      width: 310px;
+      height: 40px;
+      border-radius: 50px;
+      background: rgba(125, 57, 235, 1);
+      backdrop-filter: blur(4px);
+      transition: transform 0.15s ease-in-out;
+      transform: scale(1);
+      border: transparent;
+      color: white;
+    }
+  }
+}
