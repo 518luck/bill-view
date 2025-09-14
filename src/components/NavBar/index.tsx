@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { TabBar } from 'antd-mobile'
-import { ContentOutline, ReceivePaymentOutline } from 'antd-mobile-icons'
+import { CiViewList } from 'react-icons/ci'
+import { MdInsertChartOutlined } from 'react-icons/md'
+import { IoMdAdd } from 'react-icons/io'
+import { BsFiletypeAi } from 'react-icons/bs'
+import { GiMummyHead } from 'react-icons/gi'
 
 import styles from './styles.module.less'
 
@@ -31,14 +35,17 @@ const NavBar = ({ show }: { show: boolean }) => {
           className={styles.tab}
           activeKey={activeKey}
           onChange={changeTab}>
-          <TabBar.Item key='/data' title='统计' icon={<ContentOutline />} />
+          <TabBar.Item key='/data' title='明细' icon={<CiViewList />} />
 
           <TabBar.Item
             key='/financialData'
             title='数据'
-            icon={<ReceivePaymentOutline />}
+            icon={<MdInsertChartOutlined />}
           />
-          <TabBar.Item key='/user' title='我的' icon={<ContentOutline />} />
+
+          <TabBar.Item key='/user' title='记账' icon={<IoMdAdd />} />
+          <TabBar.Item key='/user' title='账童' icon={<BsFiletypeAi />} />
+          <TabBar.Item key='/user' title='我的' icon={<GiMummyHead />} />
         </TabBar>
       )}
     </>

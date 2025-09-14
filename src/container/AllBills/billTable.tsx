@@ -1,5 +1,5 @@
 import styles from './styles.module.less'
-import { PlayOutline } from 'antd-mobile-icons'
+import { CiPlay1 } from 'react-icons/ci'
 
 const BillTable = () => {
   const header = ['月份', '月收入', '月支出', '月结余', '赤字']
@@ -25,7 +25,7 @@ const BillTable = () => {
               <span>2640.00</span>
               <span>2640.00</span>
               <span>2640.00</span>
-              <PlayOutline />
+              <CiPlay1 />
             </div>
           )
         })}
