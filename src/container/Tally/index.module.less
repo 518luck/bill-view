@@ -82,3 +82,87 @@
     gap: 5px;
   }
 }
+
+.keypad_area {
+  margin-top: 24px;
+  border-radius: 2px;
+  width: 334px;
+  height: 310px;
+  background: rgba(204, 204, 204, 0.1);
+}
+
+.Keypad {
+  overflow: hidden;
+
+  .header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 400;
+    margin-top: 12px;
+    margin-right: 21px;
+  }
+
+  .describe {
+    width: 319px;
+    height: 33px;
+    opacity: 1;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.33);
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+
+    :global {
+      .adm-input-element {
+        padding: 0 10px;
+        color: rgba(229, 229, 229, 1);
+      }
+    }
+  }
+
+  .name {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin-top: 18px;
+    gap: 5px;
+
+    div {
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 20px;
+      font-weight: 400;
+
+
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      user-select: none;
+      box-shadow:
+        0 4px 8px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.15);
+        transform: translateY(-1px);
+      }
+
+      &:active {
+        transform: translateY(2px);
+        box-shadow:
+          0 1px 3px rgba(0, 0, 0, 0.2),
+          inset 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      &:last-child {
+        background: rgba(123, 58, 235, 1);
+      }
+    }
+  }
+}

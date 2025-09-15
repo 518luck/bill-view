@@ -4,6 +4,7 @@ import { AiOutlineRight } from 'react-icons/ai'
 import { FaUtensils } from 'react-icons/fa'
 
 import styles from './index.module.less'
+import Keypad from './Keypad'
 
 const Tally = () => {
   const [tab, setTab] = useState('pay')
@@ -44,6 +45,10 @@ const Tally = () => {
             )
           })}
         </div>
+      </div>
+
+      <div className={styles.keypad_area}>
+        <Keypad />
       </div>
     </div>
   )
