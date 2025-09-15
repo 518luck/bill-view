@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import cs from 'classnames'
 import { AiOutlineRight } from 'react-icons/ai'
+import { FaUtensils } from 'react-icons/fa'
 
 import styles from './index.module.less'
 
@@ -32,7 +33,18 @@ const Tally = () => {
         </div>
       </div>
 
-      <div className={styles.content}></div>
+      <div className={styles.content}>
+        <div className={styles.content_list}>
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map((item) => {
+            return (
+              <div className={styles.content_item} key={item}>
+                <FaUtensils size={18} />
+                <span>餐饮</span>
+              </div>
+            )
+          })}
+        </div>
+      </div>
     </div>
   )
 }
