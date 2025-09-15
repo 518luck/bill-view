@@ -43,7 +43,7 @@ const NavBar = ({ show }: { show: boolean }) => {
             icon={<MdInsertChartOutlined />}
           />
 
-          <TabBar.Item key='/use2' title='记账' icon={<IoMdAdd />} />
+          <TabBar.Item key='/tally' title='记账' icon={<IoMdAdd />} />
           <TabBar.Item key='/user1' title='账童' icon={<BsFiletypeAi />} />
           <TabBar.Item key='/user' title='我的' icon={<GiMummyHead />} />
         </TabBar>

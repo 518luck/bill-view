@@ -11,7 +11,14 @@ const App = () => {
   const [show, setShow] = useState(true)
 
   const isShow = useMemo(
-    () => ['/financialData', '/detail', '/user', '/deficit', '/allBills'],
+    () => [
+      '/financialData',
+      '/detail',
+      '/tally',
+      '/user',
+      '/deficit',
+      '/allBills',
+    ],
     []
   )
 
