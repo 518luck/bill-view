@@ -50,13 +50,23 @@ const Login = () => {
   // 自动填充账号密码
   useEffect(() => {
     if (savedCredentials && rememberPassword) {
-      formRef.current?.setFieldsValue({
-        username: savedCredentials.username,
-        password: savedCredentials.password,
-        remember: rememberPassword,
-      })
+      // 检查账号密码是否为空
+      if (!savedCredentials.account || !savedCredentials.password) return
+
+      // 只有当表单字段都为空时才自动填充
+      if (
+        !formRef.current?.getFieldValue('account') ||
+        !formRef.current?.getFieldValue('password')
+      ) {
+        formRef.current?.setFieldsValue({
+          account: savedCredentials.account,
+          password: savedCredentials.password,
+          remember: rememberPassword,
+        })
+      }
+
       // 显示验证码
-      if (savedCredentials.username && savedCredentials.password) {
+      if (savedCredentials.account && savedCredentials.password) {
         setShowCaptcha(true)
       }
     }
@@ -67,7 +77,7 @@ const Login = () => {
     _: Record<string, string>,
     allValues: Record<string, string>
   ) => {
-    if (allValues.username && allValues.password) {
+    if (allValues.account && allValues.password) {
       setShowCaptcha(true)
     } else {
       setShowCaptcha(false)
@@ -91,17 +101,8 @@ const Login = () => {
       }
 
       if (values.remember) {
-        setCredentials(values.username, values.password)
-        loginMutate(
-          { username: values.username, password: values.password },
-          {
-            onSuccess: (token) => {
-              Toast.show({ icon: 'success', content: '登录成功' })
-              // setToken(token.data.token)
-              // navigate('/financialData')
-            },
-          }
-        )
+        setCredentials(values.account, values.password)
+        loginMutate({ account: values.account, password: values.password })
       } else {
         setRememberPassword(false)
       }
@@ -146,7 +147,7 @@ const Login = () => {
           <div className={styles.message_label}>账号</div>
           <div className={styles.message_input}>
             <Form.Item
-              name='username'
+              name='account'
               rules={[{ required: true, message: '账号不能为空' }]}>
               <Input placeholder='请输入账号' />
             </Form.Item>

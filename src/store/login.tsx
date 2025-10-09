@@ -4,7 +4,7 @@ import { persist } from 'zustand/middleware'
 interface AuthState {
   token: string | null
   savedCredentials: {
-    username: string
+    account: string
     password: string
   } | null
   rememberPassword: boolean
@@ -12,8 +12,8 @@ interface AuthState {
   setToken: (token: string) => void
   clearToken: () => void
 
-  setCredentials: (username: string, password: string) => void
-  getSavedCredentials: () => { username: string; password: string } | null
+  setCredentials: (account: string, password: string) => void
+  getSavedCredentials: () => { account: string; password: string } | null
   setRememberPassword: (remember: boolean) => void
 }
 
@@ -27,9 +27,9 @@ export const useAuthStore = create<AuthState>()(
       setToken: (token) => set({ token }),
       clearToken: () => set({ token: null }),
 
-      setCredentials: (username, password) =>
+      setCredentials: (account, password) =>
         set({
-          savedCredentials: { username, password },
+          savedCredentials: { account, password },
           rememberPassword: true,
         }),
       getSavedCredentials: () => get().savedCredentials,

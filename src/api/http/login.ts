@@ -1,14 +1,12 @@
 import { axios } from '@/utils'
 
-interface LoginResponse {
-  code: number
-  msg: string
-  data: {
-    token: string
-  }
-}
-interface LoginParams {
+export interface LoginResponse {
+  id: number
   username: string
+  token: string
+}
+export interface LoginParams {
+  account: string
   password: string
 }
 

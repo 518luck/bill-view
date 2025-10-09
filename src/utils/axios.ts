@@ -3,7 +3,7 @@ import { Toast } from 'antd-mobile'
 import { ENV } from '@/config/global.config'
 
 const token = localStorage.getItem('token')
-const API_URL = ENV.API_URL + '/bill/v1'
+const API_URL = ENV.API_URL
 
 const server = axios.create({
   baseURL: API_URL,
