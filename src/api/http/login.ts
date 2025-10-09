@@ -1,19 +1,17 @@
-import { axios } from "@/utils";
-
+import { axios } from '@/utils'
 
 interface LoginResponse {
-  code: number;
-  msg: string;
+  code: number
+  msg: string
   data: {
-    token: string;
-  };
+    token: string
+  }
 }
 interface LoginParams {
-  username: string;
-  password: string;
+  username: string
+  password: string
 }
 
-
 export const postLogin = (params: LoginParams): Promise<LoginResponse> => {
-  return axios.post('/api/user/login', params)
+  return axios.post('/auth/login', params)
 }

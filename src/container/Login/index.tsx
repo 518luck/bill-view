@@ -8,7 +8,6 @@ import Captcha from 'react-captcha-code'
 import styles from './styles.module.less'
 import logo from '@/assets/svg/logo.svg'
 import arrows from '@/assets/svg/arrows.svg'
-
 import { useCanvasBreathingEffect, useJellyAnimation } from '@/hook'
 import { useLoginMutation } from '@/api'
 import { useAuthStore } from '@/store/login'
@@ -36,20 +35,6 @@ const Login = () => {
   const textRef = useRef<HTMLSpanElement>(null)
   const formRef = useRef<FormInstance>(null)
 
-  useEffect(() => {
-    if (savedCredentials && rememberPassword) {
-      formRef.current?.setFieldsValue({
-        username: savedCredentials.username,
-        password: savedCredentials.password,
-        remember: rememberPassword,
-      })
-      // 当自动填充账号密码时显示验证码
-      if (savedCredentials.username && savedCredentials.password) {
-        setShowCaptcha(true)
-      }
-    }
-  }, [savedCredentials, rememberPassword])
-
   // 文字动画
   useEffect(() => {
     const char = textRef.current?.querySelectorAll('span')
@@ -62,6 +47,22 @@ const Login = () => {
     })
   }, [])
 
+  // 自动填充账号密码
+  useEffect(() => {
+    if (savedCredentials && rememberPassword) {
+      formRef.current?.setFieldsValue({
+        username: savedCredentials.username,
+        password: savedCredentials.password,
+        remember: rememberPassword,
+      })
+      // 显示验证码
+      if (savedCredentials.username && savedCredentials.password) {
+        setShowCaptcha(true)
+      }
+    }
+  }, [savedCredentials, rememberPassword])
+
+  // 监听表单值变化判断是否显示验证码
   const handleFormWatchValuesChange = (
     _: Record<string, string>,
     allValues: Record<string, string>
@@ -96,8 +97,8 @@ const Login = () => {
           {
             onSuccess: (token) => {
               Toast.show({ icon: 'success', content: '登录成功' })
-              setToken(token.data.token)
-              navigate('/financialData')
+              // setToken(token.data.token)
+              // navigate('/financialData')
             },
           }
         )

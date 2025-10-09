@@ -1,11 +1,12 @@
 import axios from 'axios'
 import { Toast } from 'antd-mobile'
+import { ENV } from '@/config/global.config'
 
 const token = localStorage.getItem('token')
-const baseURL = import.meta.env.VITE_API_URL
+const API_URL = ENV.API_URL + '/bill/v1'
 
 const server = axios.create({
-  baseURL,
+  baseURL: API_URL,
   timeout: 5000,
   withCredentials: true,
   headers: {
@@ -14,21 +15,17 @@ const server = axios.create({
   },
 })
 
-
-server.interceptors.request.use((config) => {
-  config.headers['Authorization'] = `Bearer ${token || null
-    } `
-  return config
-
-}, (error) => {
-  return Promise.reject(error)
-})
+server.interceptors.request.use(
+  (config) => {
+    config.headers['Authorization'] = `Bearer ${token || null} `
+    return config
+  },
+  (error) => {
+    return Promise.reject(error)
+  }
+)
 
 server.interceptors.response.use((res) => {
-  /*   if (typeof res.data !== 'object') {
-      Toast.show('服务端异常！')
-      return Promise.reject(res)
-    } */
   if (res.data.code != 200) {
     if (res.data.msg) Toast.show(res.data.msg)
     if (res.data.code == 401) {

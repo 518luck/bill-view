@@ -1,22 +1,23 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { resolve } from 'path'
-import { mockDevServerPlugin } from 'vite-plugin-mock-dev-server'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [
-    react(),
-    mockDevServerPlugin({
-      prefix: '/mock',
-    })
-  ],
+  plugins: [react()],
   resolve: {
     alias: {
       '@': resolve(__dirname, './src'),
     },
   },
   server: {
+    proxy: {
+      '/bill/v1': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/bill\/v1/, ''),
+      },
+    },
     cors: true,
   },
 })
