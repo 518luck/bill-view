@@ -1,7 +1,6 @@
 @import url('@/styles/App.module.less');
 @import url('@/styles/fonts.less');
 
-
 .tally {
   padding: 0 20px;
   color: rgba(229, 229, 229, 1);
@@ -34,7 +33,6 @@
         background: rgba(125, 57, 235, 1);
       }
     }
-
   }
 
   .cancel {
@@ -138,14 +136,12 @@
       font-size: 20px;
       font-weight: 400;
 
-
       background: rgba(255, 255, 255, 0.1);
       border-radius: 8px;
       cursor: pointer;
       transition: all 0.15s ease;
       user-select: none;
-      box-shadow:
-        0 4px 8px rgba(0, 0, 0, 0.1),
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1),
         inset 0 1px 0 rgba(255, 255, 255, 0.2);
 
       &:hover {
@@ -155,12 +151,15 @@
 
       &:active {
         transform: translateY(2px);
-        box-shadow:
-          0 1px 3px rgba(0, 0, 0, 0.2),
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2),
           inset 0 2px 4px rgba(0, 0, 0, 0.1);
       }
 
       &:last-child {
+        background: rgba(123, 58, 235, 1);
+      }
+
+      .specialKey {
         background: rgba(123, 58, 235, 1);
       }
     }

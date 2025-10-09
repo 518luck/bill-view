@@ -7,7 +7,7 @@ import styles from './index.module.less'
 import Keypad from './Keypad'
 
 const Tally = () => {
-  const [tab, setTab] = useState('pay')
+  const [tab, setTab] = useState('expense')
 
   return (
     <div className={cs(styles.commonBackground, styles.tally)}>
@@ -15,9 +15,9 @@ const Tally = () => {
         <div className={styles.tab}>
           <div
             className={cs(styles.tab_item, {
-              [styles.tab_item_active]: tab === 'pay',
+              [styles.tab_item_active]: tab === 'expense',
             })}
-            onClick={() => setTab('pay')}>
+            onClick={() => setTab('expense')}>
             支出
           </div>
           <div
