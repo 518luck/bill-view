@@ -26,7 +26,12 @@ const Login = () => {
     setRememberPassword,
   } = useAuthStore()
 
-  const { mutate: loginMutate, isPending } = useLoginMutation()
+  const { mutate: loginMutate, isPending } = useLoginMutation({
+    onSuccess: (responseData) => {
+      setToken(responseData.token)
+      navigate('/tally')
+    },
+  })
 
   const [captcha, setCaptcha] = useState('') //验证码
   const [showCaptcha, setShowCaptcha] = useState(false) //是否显示验证码

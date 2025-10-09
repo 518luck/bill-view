@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { Toast } from 'antd-mobile'
 import { ENV } from '@/config/global.config'
 
 const token = localStorage.getItem('token')
@@ -26,9 +25,9 @@ server.interceptors.request.use(
 )
 
 server.interceptors.response.use((res) => {
-  if (res.data.code != 200) {
-    if (res.data.msg) Toast.show(res.data.msg)
-    if (res.data.code == 401) {
+  const successCodes = [200, 201]
+  if (!successCodes.includes(res.status)) {
+    if (res.status == 401) {
       window.location.href = '/login'
     }
     return Promise.reject(res.data)
