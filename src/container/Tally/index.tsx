@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import cs from 'classnames'
-import { AiOutlineRight } from 'react-icons/ai'
 import { FaUtensils } from 'react-icons/fa'
+import { MdSettings } from 'react-icons/md'
 
 import styles from './index.module.less'
 import Keypad from './Keypad'
@@ -29,8 +29,7 @@ const Tally = () => {
           </div>
         </div>
         <div className={styles.cancel}>
-          <span>取消</span>
-          <AiOutlineRight />
+          <MdSettings size={24} />
         </div>
       </div>
 
