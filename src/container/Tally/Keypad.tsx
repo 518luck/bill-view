@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Input } from 'antd-mobile'
 import { evaluate } from 'mathjs'
 
-import styles from './index.module.less'
+import styles from './styles.module.less'
 
 const Keypad = () => {
   const [expr, setExpr] = useState('0') // 用于存储操作表达式

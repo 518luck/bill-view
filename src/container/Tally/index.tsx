@@ -1,12 +1,14 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import cs from 'classnames'
 import { FaUtensils } from 'react-icons/fa'
 import { MdSettings } from 'react-icons/md'
 
-import styles from './index.module.less'
+import styles from './styles.module.less'
 import Keypad from './Keypad'
 
 const Tally = () => {
+  const navigate = useNavigate()
   const [tab, setTab] = useState('expense')
 
   return (
@@ -29,7 +31,7 @@ const Tally = () => {
           </div>
         </div>
         <div className={styles.cancel}>
-          <MdSettings size={24} />
+          <MdSettings size={24} onClick={() => navigate('/iconPicker')} />
         </div>
       </div>
 
