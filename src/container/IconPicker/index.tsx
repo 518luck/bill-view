@@ -6,6 +6,7 @@ import {
   MdRestaurant,
   MdArrowBackIosNew,
   MdMenu,
+  MdAdd,
 } from 'react-icons/md'
 
 import styles from './styles.module.less'
@@ -26,16 +27,22 @@ const IconPicker = () => {
         <BillTypeTabs size='small' />
       </div>
       <div className={styles.content}>
-        {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
-          <div className={styles.item} key={item}>
-            <Space align='center'>
-              <MdRemoveCircle size={20} color='#ff3b2f' />
-              <MdRestaurant size={20} />
-              <span>餐饮</span>
-            </Space>
-            <MdMenu size={25} />
-          </div>
-        ))}
+        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17].map(
+          (item) => (
+            <div className={styles.item} key={item}>
+              <Space align='center'>
+                <MdRemoveCircle size={20} color='#ff3b2f' />
+                <MdRestaurant size={20} />
+                <span>餐饮</span>
+              </Space>
+              <MdMenu size={25} />
+            </div>
+          )
+        )}
+      </div>
+      <div className={styles.footer}>
+        <MdAdd size={25} />
+        <span>添加类别</span>
       </div>
     </div>
   )
