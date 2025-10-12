@@ -10,7 +10,7 @@ const IconPicker = () => {
       <span onClick={() => navigate('/tally')}>返回</span>
       <div>
         tab栏
-        <BillTypeTabs size='large' />
+        <BillTypeTabs size='small' />
       </div>
       <div>
         <div>选择图标</div>

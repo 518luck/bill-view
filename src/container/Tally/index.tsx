@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import cs from 'classnames'
 import { FaUtensils } from 'react-icons/fa'
@@ -6,29 +5,16 @@ import { MdSettings } from 'react-icons/md'
 
 import styles from './styles.module.less'
 import Keypad from './Keypad'
+import BillTypeTabs from '@/components/BillTypeTabs'
 
 const Tally = () => {
   const navigate = useNavigate()
-  const [tab, setTab] = useState('expense')
 
   return (
     <div className={cs(styles.commonBackground, styles.tally)}>
       <div className={styles.header}>
         <div className={styles.tab}>
-          <div
-            className={cs(styles.tab_item, {
-              [styles.tab_item_active]: tab === 'expense',
-            })}
-            onClick={() => setTab('expense')}>
-            支出
-          </div>
-          <div
-            className={cs(styles.tab_item, {
-              [styles.tab_item_active]: tab === 'income',
-            })}
-            onClick={() => setTab('income')}>
-            收入
-          </div>
+          <BillTypeTabs size='medium' />
         </div>
         <div className={styles.cancel}>
           <MdSettings size={24} onClick={() => navigate('/iconPicker')} />
