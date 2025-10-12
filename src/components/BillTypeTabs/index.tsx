@@ -2,7 +2,11 @@ import { useEffect, useState } from 'react'
 import styles from './styles.module.less'
 import cs from 'classnames'
 
-const BillTypeTabs = () => {
+interface BillTypeTabsProps {
+  size?: 'small' | 'medium' | 'large' | { width: number; height: number }
+}
+
+const BillTypeTabs = ({ size = 'medium' }: BillTypeTabsProps) => {
   const [tab, setTab] = useState('expense')
   const [transform, setTransform] = useState('translateX(0) scale(1)')
 
@@ -15,8 +19,23 @@ const BillTypeTabs = () => {
     return () => clearTimeout(timer)
   }, [tab])
 
+  const getDimensions = () => {
+    if (typeof size === 'object') {
+      return { width: size.width, height: size.height }
+    }
+    switch (size) {
+      case 'small':
+        return { width: 150, height: 30 }
+      case 'large':
+        return { width: 220, height: 45 }
+      default:
+        return { width: 182, height: 35 }
+    }
+  }
+  const { width, height } = getDimensions()
+
   return (
-    <div className={styles.tab}>
+    <div className={styles.tab} style={{ width, height }}>
       <div className={styles.tab_active_bg} style={{ transform }} />
       <div
         className={cs(styles.tab_item, {
