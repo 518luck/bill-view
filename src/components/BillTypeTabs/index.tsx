@@ -21,9 +21,9 @@ const BillTypeTabs = ({
 
   const handleTabChange = (newTab: 'expense' | 'income') => {
     if (value === undefined) {
-      setInternalTab(newTab) // 非受控模式更新内部状态
+      setInternalTab(newTab)
     }
-    onChange?.(newTab) // 调用父组件回调
+    onChange?.(newTab)
   }
 
   // 每次 tab 变化的时候 背景方块,先放大再还原
