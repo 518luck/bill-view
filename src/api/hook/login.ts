@@ -26,16 +26,16 @@ export const useLoginMutation = (
   const { onSuccess, onError, ...restOptions } = options || {}
   return useMutation({
     mutationFn: (data: LoginParams) => postLogin(data),
-    onSuccess: (responseData, variables, context) => {
+    onSuccess: (responseData, variables, context, mutation) => {
       Toast.show({ icon: 'success', content: '登录成功' })
-      onSuccess?.(responseData, variables, context)
+      onSuccess?.(responseData, variables, context, mutation)
     },
-    onError: (error, variables, context) => {
+    onError: (error, variables, context, mutation) => {
       Toast.show({
         icon: 'fail',
         content: error?.response?.data?.message || '登录失败',
       })
-      onError?.(error, variables, context)
+      onError?.(error, variables, context, mutation)
     },
     ...restOptions,
   })
