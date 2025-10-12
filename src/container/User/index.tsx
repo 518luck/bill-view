@@ -48,7 +48,7 @@ const User = () => {
         <div className={styles.header_icon}>
           <Avatar src={user} />
         </div>
-        <div className={styles.header_name}>多云</div>
+        <div className={styles.header_name}>多云 1</div>
       </div>
 
       <div className={styles.message}>
