@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import NavBar from '@/components/NavBar'
 
-import styles from './styles/App.module.less'
+import styles from '@/styles/App.module.less'
 
 const App = () => {
   const location = useLocation()
@@ -28,7 +28,9 @@ const App = () => {
 
   return (
     <div className={styles.app}>
-      <Outlet />
+      <div className={styles.app_common}>
+        <Outlet />
+      </div>
       <NavBar show={show} />
     </div>
   )
