@@ -1,0 +1,49 @@
+name: Deploy React App
+
+# 触发条件：当 main 分支有 push 或 pull request 时
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️⃣ 获取代码
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2️⃣ 安装 Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      # 3️⃣ 安装 PNPM
+      - name: Install PNPM
+        run: npm install -g pnpm
+
+      # 4️⃣ 安装依赖
+      - name: Install dependencies
+        run: pnpm install
+
+      # 5️⃣ 构建项目
+      - name: Build project
+        run: pnpm run build
+
+      # 6️⃣ 部署到宝塔服务器
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.SERVER_HOST }} # 你的服务器公网 IP
+          username: ${{ secrets.SERVER_USER }} # 登录服务器的用户名，一般是 root 或 www
+          key: ${{ secrets.SERVER_SSH_KEY }} # SSH 私钥，需要在 GitHub Secrets 配置
+          script: |
+            # 清空目标目录
+            rm -rf /www/wwwroot/bill/views/*
+            # 拷贝打包后的文件到目标目录
+            cp -r dist/* /www/wwwroot/bill/views/
