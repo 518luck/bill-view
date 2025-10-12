@@ -4,11 +4,27 @@ import cs from 'classnames'
 
 interface BillTypeTabsProps {
   size?: 'small' | 'medium' | 'large' | { width: number; height: number }
+  value?: 'expense' | 'income'
+  onChange?: (value: 'expense' | 'income') => void
 }
 
-const BillTypeTabs = ({ size = 'medium' }: BillTypeTabsProps) => {
-  const [tab, setTab] = useState('expense')
+const BillTypeTabs = ({
+  size = 'medium',
+  value,
+  onChange,
+}: BillTypeTabsProps) => {
   const [transform, setTransform] = useState('translateX(0) scale(1)')
+  const [internalTab, setInternalTab] = useState<'expense' | 'income'>(
+    'expense'
+  )
+  const tab = value !== undefined ? value : internalTab
+
+  const handleTabChange = (newTab: 'expense' | 'income') => {
+    if (value === undefined) {
+      setInternalTab(newTab) // 非受控模式更新内部状态
+    }
+    onChange?.(newTab) // 调用父组件回调
+  }
 
   // 每次 tab 变化的时候 背景方块,先放大再还原
   useEffect(() => {
@@ -41,14 +57,14 @@ const BillTypeTabs = ({ size = 'medium' }: BillTypeTabsProps) => {
         className={cs(styles.tab_item, {
           [styles.tab_item_active]: tab === 'expense',
         })}
-        onClick={() => setTab('expense')}>
+        onClick={() => handleTabChange('expense')}>
         支出
       </div>
       <div
         className={cs(styles.tab_item, {
           [styles.tab_item_active]: tab === 'income',
         })}
-        onClick={() => setTab('income')}>
+        onClick={() => handleTabChange('income')}>
         收入
       </div>
     </div>
