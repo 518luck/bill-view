@@ -11,13 +11,12 @@ on:
 
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest # 使用 GitHub 提供的 Ubuntu 最新环境
+    runs-on: ubuntu-latest
 
     steps:
       # 1️⃣ 获取仓库代码
       - name: Checkout code
         uses: actions/checkout@v3
-        # 这里会把 main 分支的代码拉取到 runner 的工作目录
 
       # 2️⃣ 安装 Node.js 环境
       - name: Setup Node.js
@@ -33,28 +32,26 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      # 5️⃣ 构建项目
+      # 5️⃣ 构建项目（在 Runner 上生成 dist）
       - name: Build project
         run: pnpm run build
-        # React + Vite 项目会在根目录生成 dist 文件夹（生产环境代码）
 
-      # 6️⃣ 部署到宝塔服务器
-      - name: Deploy via SSH
+      # 6️⃣ 上传 dist 到服务器
+      - name: Deploy to server
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          source: 'dist/*' # 上传 dist 文件夹内容
+          target: '/www/wwwroot/bill/views/' # 服务器目标路径
+
+      # 7️⃣ 可选：清理服务器旧文件（如果 scp 不能覆盖）
+      - name: Clean server target directory
         uses: appleboy/ssh-action@v0.1.6
         with:
-          host: ${{ secrets.SERVER_HOST }} # GitHub Secrets 中配置的服务器公网 IP
-          username: ${{ secrets.SERVER_USER }} # 登录服务器用户名（一般 root 或 www）
-          key: ${{ secrets.SERVER_SSH_KEY }} # SSH 私钥（已配置在 GitHub Secrets）
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            # 进入服务器上的目标目录（可选，根据你的需求修改）
-            mkdir -p /www/wwwroot/bill/views
-
-            # 清空目标目录
             rm -rf /www/wwwroot/bill/views/*
-
-            # 将 CI/CD 构建的 dist 文件夹上传到目标目录
-            cp -r dist/* /www/wwwroot/bill/views/
-
-            # ✅ 小提示：
-            # 如果你的服务器路径和项目结构不同，记得修改上面的路径
-            # dist/* 表示上传 dist 文件夹下所有内容，不会上传 dist 自身
