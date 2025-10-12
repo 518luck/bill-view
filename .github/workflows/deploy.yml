@@ -43,7 +43,7 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
-          source: 'dist/*' # 上传 dist 文件夹内容
+          source: 'dist/' # 上传 dist 文件夹内容
           target: '/www/wwwroot/bill/views/' # 服务器目标路径
 
       # 7️⃣ 可选：清理服务器旧文件（如果 scp 不能覆盖）
