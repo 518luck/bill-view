@@ -1,30 +1,41 @@
-import cs from 'classnames'
-import styles from './styles.module.less'
 import { useNavigate } from 'react-router-dom'
-import BillTypeTabs from '@/components/BillTypeTabs'
-import { MdArrowBackIosNew } from 'react-icons/md'
 import { Space } from 'antd-mobile'
+import cs from 'classnames'
+import {
+  MdRemoveCircle,
+  MdRestaurant,
+  MdArrowBackIosNew,
+  MdMenu,
+} from 'react-icons/md'
+
+import styles from './styles.module.less'
+import BillTypeTabs from '@/components/BillTypeTabs'
 
 const IconPicker = () => {
   const navigate = useNavigate()
   return (
     <div className={cs(styles.commonBackground, styles.icon_picker)}>
       <div className={styles.header}>
-        <Space
-          onClick={() => navigate('/tally')}
-          justify='start'
-          align='center'>
-          <MdArrowBackIosNew size={15} />
-          返回
-        </Space>
+        <div className={styles.leftSection} onClick={() => navigate('/tally')}>
+          <MdArrowBackIosNew size={18} />
+          <span>返回</span>
+        </div>
+        <div className={styles.centerSection}>类别设置</div>
       </div>
-      <span onClick={() => navigate('/tally')}>返回</span>
-      <div>
-        tab栏
+      <div className={styles.tab}>
         <BillTypeTabs size='small' />
       </div>
-      <div>
-        <div>选择图标</div>
+      <div className={styles.content}>
+        {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
+          <div className={styles.item} key={item}>
+            <Space align='center'>
+              <MdRemoveCircle size={20} color='#ff3b2f' />
+              <MdRestaurant size={20} />
+              <span>餐饮</span>
+            </Space>
+            <MdMenu size={25} />
+          </div>
+        ))}
       </div>
     </div>
   )
