@@ -11,9 +11,13 @@ import {
 
 import styles from './styles.module.less'
 import BillTypeTabs from '@/components/BillTypeTabs'
+import PopupModifyIcon from '@/container/IconPicker/PopupModifyIcon'
+import { useState } from 'react'
 
 const IconPicker = () => {
   const navigate = useNavigate()
+  const [visiblePopup, setVisiblePopup] = useState(false)
+
   return (
     <div className={cs(styles.commonBackground, styles.icon_picker)}>
       <div className={styles.header}>
@@ -40,10 +44,17 @@ const IconPicker = () => {
           )
         )}
       </div>
-      <div className={styles.footer}>
-        <MdAdd size={25} />
-        <span>添加类别</span>
-      </div>
+      {!visiblePopup && (
+        <div className={styles.footer} onClick={() => setVisiblePopup(true)}>
+          <MdAdd size={25} />
+          <span>添加类别</span>
+        </div>
+      )}
+
+      <PopupModifyIcon
+        visible={visiblePopup}
+        onClose={() => setVisiblePopup(false)}
+      />
     </div>
   )
 }
