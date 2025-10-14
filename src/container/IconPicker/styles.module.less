@@ -40,7 +40,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid @card-bg-color-1;
     padding: 10px 0;
     span {
       font-size: 14px;
@@ -67,6 +67,8 @@
 
 .popup {
   .content {
-    height: 440px;
+    height: 455px;
+    backdrop-filter: blur(8px);
+    color: white;
   }
 }

@@ -1,5 +1,6 @@
-import { Popup } from 'antd-mobile'
+import { Button, Input, Popup } from 'antd-mobile'
 import styles from './styles.module.less'
+import Flex from '@/components/Flex'
 
 interface PopupModifyIconProps {
   visible: boolean
@@ -14,7 +15,13 @@ const PopupModifyIcon = ({ visible, onClose }: PopupModifyIconProps) => {
       onClose={onClose}
       onMaskClick={onClose}>
       <div className={styles.content}>
-        <h3>修改图标</h3>
+        <Flex justify='between' align='center'>
+          <Button fill='outline'>取消</Button>
+          <span>添加支出类别</span>
+          <Button fill='solid'>完成</Button>
+        </Flex>
+        <div className={styles.icon}></div>
+        <Input></Input>
       </div>
     </Popup>
   )
