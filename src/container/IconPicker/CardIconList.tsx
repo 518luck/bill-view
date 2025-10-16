@@ -131,7 +131,7 @@ import {
 } from 'react-icons/md'
 
 import styles from './styles.module.less'
-import { useState } from 'react'
+import { useState, type SVGProps } from 'react'
 // 定义图标数组
 const iconCategories = [
   {
@@ -322,15 +322,19 @@ const iconCategories = [
 ]
 
 interface CardIconListProps {
-  onIconSelect?: (icon: React.ReactNode, title: string) => void
+  onIconSelect?: (
+    icon: React.ReactElement<SVGProps<SVGSVGElement>>,
+    title: string
+  ) => void
 }
+type OnIconSelectType = NonNullable<CardIconListProps['onIconSelect']>
 const CardIconList = ({ onIconSelect }: CardIconListProps) => {
   const [currentCategory, setCurrentCategory] = useState({
     iconIndex: 0,
     title: '娱乐',
   })
 
-  const handleIconClick = (icon: React.ReactNode, title: string) => {
+  const handleIconClick: OnIconSelectType = (icon, title) => {
     if (onIconSelect) {
       onIconSelect(icon, title)
     }
