@@ -321,11 +321,20 @@ const iconCategories = [
   },
 ]
 
-const CardIconList = () => {
+interface CardIconListProps {
+  onIconSelect?: (icon: React.ReactNode, title: string) => void
+}
+const CardIconList = ({ onIconSelect }: CardIconListProps) => {
   const [currentCategory, setCurrentCategory] = useState({
     iconIndex: 0,
     title: '娱乐',
   })
+
+  const handleIconClick = (icon: React.ReactNode, title: string) => {
+    if (onIconSelect) {
+      onIconSelect(icon, title)
+    }
+  }
 
   return (
     <>
@@ -343,12 +352,13 @@ const CardIconList = () => {
                     ? '#7d39eb'
                     : ''
                 }
-                onClick={() =>
+                onClick={() => {
                   setCurrentCategory({
                     iconIndex,
                     title: category.title,
                   })
-                }
+                  handleIconClick(<Icon size={31} />, category.title)
+                }}
               />
             ))}
           </div>

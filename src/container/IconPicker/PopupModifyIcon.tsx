@@ -1,14 +1,19 @@
 import { Button, Input, Popup, Space } from 'antd-mobile'
 import styles from './styles.module.less'
 import Flex from '@/components/Flex'
-import { MdArrowLeft, MdCameraswitch } from 'react-icons/md'
+import { MdArrowLeft, MdPedalBike } from 'react-icons/md'
 import CardIconList from '@/container/IconPicker/CardIconList'
+import { useState } from 'react'
 
 interface PopupModifyIconProps {
   visible: boolean
   onClose: () => void
 }
 const PopupModifyIcon = ({ visible, onClose }: PopupModifyIconProps) => {
+  const [selectedIcon, setSelectedIcon] = useState<React.ReactNode>(
+    <MdPedalBike size={31} />
+  )
+
   return (
     <Popup
       className={styles.popup}
@@ -28,12 +33,16 @@ const PopupModifyIcon = ({ visible, onClose }: PopupModifyIconProps) => {
         </Flex>
         <Space direction='vertical' className={styles.space}>
           <Flex justify='center' align='center' direction='column' gap={18}>
-            <MdCameraswitch size={31} />
+            {selectedIcon}
             <Input clearable placeholder='请输入类别名称 (不超过4个汉字)' />
           </Flex>
         </Space>
         <div className={styles.iconContent}>
-          <CardIconList />
+          <CardIconList
+            onIconSelect={(icon) => {
+              setSelectedIcon(icon)
+            }}
+          />
         </div>
       </div>
     </Popup>
