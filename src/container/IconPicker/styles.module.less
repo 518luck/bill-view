@@ -67,8 +67,59 @@
 
 .popup {
   .content {
+    overflow: hidden;
     height: 455px;
     backdrop-filter: blur(8px);
-    color: white;
+    color: @font-color-white;
+    .confirmBt {
+      :global {
+        .adm-button {
+          width: 70px;
+          height: 30px;
+          .adm-button-primary();
+          font-size: 12px;
+        }
+      }
+    }
+    .space {
+      margin-top: 20px;
+      :global {
+        .adm-input {
+          width: 200px;
+        }
+        .adm-input-element {
+          border-radius: 10px;
+          padding: 0 10px;
+          font-size: 12px;
+          height: 30px;
+          color: @font-color-white;
+          background-color: @card-bg-color-3;
+        }
+      }
+      width: 100%;
+    }
+    .iconContent {
+      height: 286px;
+      overflow: auto;
+    }
+  }
+}
+
+.CardIconList {
+  margin-top: 20px;
+  .title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .icons {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    justify-items: center;
+    align-items: center;
+    grid-gap: 19px;
   }
 }
