@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import styles from './styles.module.less'
 import cs from 'classnames'
 
-interface BillTypeTabsProps {
+export interface BillTypeTabsProps {
   size?: 'small' | 'medium' | 'large' | { width: number; height: number }
   value?: 'expense' | 'income'
   onChange?: (value: 'expense' | 'income') => void

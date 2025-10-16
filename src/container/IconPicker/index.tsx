@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Space } from 'antd-mobile'
 import cs from 'classnames'
@@ -12,11 +13,13 @@ import {
 import styles from './styles.module.less'
 import BillTypeTabs from '@/components/BillTypeTabs'
 import PopupModifyIcon from '@/container/IconPicker/PopupModifyIcon'
-import { useState } from 'react'
+import type { BillTypeTabsProps } from '@/components/BillTypeTabs'
 
 const IconPicker = () => {
   const navigate = useNavigate()
   const [visiblePopup, setVisiblePopup] = useState(false)
+  const [currentTabsType, setCurrentTabsType] =
+    useState<BillTypeTabsProps['value']>('expense')
 
   return (
     <div className={cs(styles.commonBackground, styles.icon_picker)}>
@@ -28,7 +31,10 @@ const IconPicker = () => {
         <div className={styles.centerSection}>类别设置</div>
       </div>
       <div className={styles.tab}>
-        <BillTypeTabs size='small' />
+        <BillTypeTabs
+          size='small'
+          onChange={(tab) => setCurrentTabsType(tab)}
+        />
       </div>
 
       <div className={styles.content}>
@@ -55,6 +61,7 @@ const IconPicker = () => {
       <PopupModifyIcon
         visible={visiblePopup}
         onClose={() => setVisiblePopup(false)}
+        currentTabsType={currentTabsType}
       />
     </div>
   )
