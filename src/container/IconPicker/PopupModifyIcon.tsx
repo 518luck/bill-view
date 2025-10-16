@@ -39,6 +39,7 @@ const PopupModifyIcon = ({
       onClose={onClose}
       onMaskClick={onClose}>
       <div className={styles.content}>
+        {/* header */}
         <Flex justify='between' align='center'>
           <div className={styles.cancelBt} onClick={onClose}>
             <MdArrowLeft size={31} />
@@ -48,12 +49,16 @@ const PopupModifyIcon = ({
             <Button fill='solid'>完成</Button>
           </div>
         </Flex>
+
+        {/* message */}
         <Space direction='vertical' className={styles.space}>
           <Flex justify='center' align='center' direction='column' gap={18}>
             {selectedIcon}
             <Input clearable placeholder='请输入类别名称 (不超过4个汉字)' />
           </Flex>
         </Space>
+
+        {/* icon content */}
         <div className={styles.iconContent}>
           <CardIconList
             onIconSelect={(icon) => {
