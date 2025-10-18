@@ -1,11 +1,12 @@
-import { useState } from 'react'
 import { Button, Input, Popup, Space } from 'antd-mobile'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { createIconSchema } from '@/container/IconPicker/schema/create-icon.schema'
-import { MdArrowLeft, MdPedalBike } from 'react-icons/md'
+import { MdArrowLeft } from 'react-icons/md'
+import { iconMap } from '@/container/IconPicker/iconMap'
 import type { z } from 'zod'
 
+import DynamicIcon from '@/components/DynamicIcon'
 import styles from './styles.module.less'
 import CardIconList from '@/container/IconPicker/CardIconList'
 import Flex from '@/components/Flex'
@@ -36,6 +37,8 @@ const PopupModifyIcon = ({
     control,
     setValue,
     trigger,
+    watch,
+    reset,
     getValues,
     formState: { errors },
   } = useForm<z.infer<typeof createIconSchema>>({
@@ -46,15 +49,21 @@ const PopupModifyIcon = ({
     },
   })
 
-  const { mutate: createIcon } = useCreateIconMutation()
+  const handleIconClick = (iconName: keyof typeof iconMap) => {
+    setValue('icon_name', iconName)
+  }
+  const iconName = watch('icon_name')
 
-  const [selectedIcon, setSelectedIcon] = useState<React.ReactNode>(
-    <MdPedalBike size={31} />
-  )
+  const { mutate: createIcon } = useCreateIconMutation({
+    onSuccess: () => {
+      reset()
+      onClose()
+    },
+  })
 
   // 创建图标
-  const handleSubmit = () => {
-    const valid = trigger()
+  const handleSubmit = async () => {
+    const valid = await trigger()
     if (!valid) return
     const values = getValues()
     const data = {
@@ -88,7 +97,7 @@ const PopupModifyIcon = ({
         {/* message */}
         <Space direction='vertical' className={styles.space}>
           <Flex justify='center' align='center' direction='column' gap={18}>
-            {selectedIcon}
+            <DynamicIcon name={iconName as keyof typeof iconMap} size={31} />
             <Flex justify='center' align='center' direction='column' gap={0}>
               <Controller
                 name='title'
@@ -113,17 +122,7 @@ const PopupModifyIcon = ({
 
         {/* icon content */}
         <div className={styles.iconContent}>
-          <CardIconList
-            onIconSelect={(icon) => {
-              const componentType = icon.type
-              const componentName =
-                typeof componentType === 'string'
-                  ? componentType
-                  : componentType.name
-              setSelectedIcon(icon)
-              setValue('icon_name', componentName)
-            }}
-          />
+          <CardIconList onClick={handleIconClick} />
         </div>
       </div>
     </Popup>

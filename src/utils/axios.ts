@@ -1,7 +1,11 @@
 import axios from 'axios'
 import { ENV } from '@/config/global.config'
+import { useAuthStore } from '@/store/login'
 
-const token = localStorage.getItem('token')
+export const getAuthToken = () => {
+  return useAuthStore.getState().token
+}
+
 const API_URL = ENV.API_URL
 
 const server = axios.create({
@@ -15,25 +19,35 @@ const server = axios.create({
 })
 
 server.interceptors.request.use(
-  (config) => {
-    config.headers['Authorization'] = `Bearer ${token || null} `
-    return config
+  (successCallback) => {
+    const token = getAuthToken()
+    successCallback.headers['Authorization'] = `Bearer ${token || null} `
+    return successCallback
   },
-  (error) => {
-    return Promise.reject(error)
+  (errorCallback) => {
+    return Promise.reject(errorCallback)
   }
 )
 
-server.interceptors.response.use((res) => {
-  const successCodes = [200, 201]
-  if (!successCodes.includes(res.status)) {
-    if (res.status == 401) {
-      window.location.href = '/login'
+server.interceptors.response.use(
+  (successCallback) => {
+    const successCodes = [200, 201]
+    if (!successCodes.includes(successCallback.status)) {
+      if (successCallback.status == 401) {
+        window.location.href = '/'
+      }
+      return Promise.reject(successCallback.data)
     }
-    return Promise.reject(res.data)
-  }
 
-  return res.data
-})
+    return successCallback.data
+  },
+  (errorCallback) => {
+    if (errorCallback.status == 401) {
+      // window.location.href = '/'
+      return Promise.reject(errorCallback.response.data)
+    }
+    return Promise.reject(errorCallback.response.data)
+  }
+)
 
 export default server

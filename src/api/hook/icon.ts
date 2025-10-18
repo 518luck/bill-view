@@ -20,7 +20,7 @@ export const useCreateIconMutation = (
     onError: (error, variables, context, mutation) => {
       Toast.show({
         icon: 'fail',
-        content: error?.response?.data?.message || '创建失败',
+        content: error?.message || '创建失败',
       })
       onError?.(error, variables, context, mutation)
     },
