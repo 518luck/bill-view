@@ -264,7 +264,7 @@ export const iconMap = {
 
 interface IconCategory {
   title: string
-  icons: (keyof typeof iconMap)[]
+  icons: IconName[]
 }
 export const iconClassifyMap: IconCategory[] = [
   {
@@ -453,3 +453,5 @@ export const iconClassifyMap: IconCategory[] = [
     ],
   },
 ]
+
+export type IconName = keyof typeof iconMap

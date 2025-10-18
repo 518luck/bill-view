@@ -3,7 +3,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { createIconSchema } from '@/container/IconPicker/schema/create-icon.schema'
 import { MdArrowLeft } from 'react-icons/md'
-import { iconMap } from '@/container/IconPicker/iconMap'
+import type { IconName } from '@/container/IconPicker/iconMap'
 import type { z } from 'zod'
 
 import DynamicIcon from '@/components/DynamicIcon'
@@ -49,7 +49,7 @@ const PopupModifyIcon = ({
     },
   })
 
-  const handleIconClick = (iconName: keyof typeof iconMap) => {
+  const handleIconClick = (iconName: IconName) => {
     setValue('icon_name', iconName)
   }
   const iconName = watch('icon_name')
@@ -97,7 +97,7 @@ const PopupModifyIcon = ({
         {/* message */}
         <Space direction='vertical' className={styles.space}>
           <Flex justify='center' align='center' direction='column' gap={18}>
-            <DynamicIcon name={iconName as keyof typeof iconMap} size={31} />
+            <DynamicIcon name={iconName as IconName} size={31} />
             <Flex justify='center' align='center' direction='column' gap={0}>
               <Controller
                 name='title'

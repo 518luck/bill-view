@@ -2,10 +2,10 @@ import styles from './styles.module.less'
 import { useState } from 'react'
 import { iconClassifyMap } from '@/container/IconPicker/iconMap'
 import DynamicIcon from '@/components/DynamicIcon'
-import { iconMap } from '@/container/IconPicker/iconMap'
+import type { IconName } from '@/container/IconPicker/iconMap'
 
 interface CardIconListProps {
-  onClick: (iconName: keyof typeof iconMap) => void
+  onClick: (iconName: IconName) => void
 }
 const CardIconList = ({ onClick }: CardIconListProps) => {
   const [currentCategory, setCurrentCategory] = useState({
@@ -13,7 +13,7 @@ const CardIconList = ({ onClick }: CardIconListProps) => {
     title: '娱乐',
   })
 
-  const handleIconClick = (iconName: keyof typeof iconMap) => {
+  const handleIconClick = (iconName: IconName) => {
     if (onClick) {
       onClick(iconName)
     }
@@ -46,24 +46,6 @@ const CardIconList = ({ onClick }: CardIconListProps) => {
                     }}
                   />
                 )
-
-                /*   <Icon
-                    key={iconIndex}
-                    size={25}
-                    color={
-                      currentCategory.iconIndex === iconIndex &&
-                      currentCategory.title === category.title
-                        ? '#7d39eb'
-                        : ''
-                    }
-                    onClick={() => {
-                      setCurrentCategory({
-                        iconIndex,
-                        title: category.title,
-                      })
-                      handleIconClick(<Icon size={31} />, category.title)
-                    }}
-                  /> */
               })}
             </div>
           </div>
