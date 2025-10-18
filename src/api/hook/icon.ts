@@ -1,16 +1,22 @@
 import {
   useMutation,
+  useQuery,
   type UseMutationOptions,
   type UseMutationResult,
+  type UseQueryOptions,
 } from '@tanstack/react-query'
 import {
   createIcon,
+  getIconList,
   type createIconRequest,
   type createIconResponse,
+  type getIconListRequest,
+  type IconListResponse,
 } from '@/api'
 import { Toast } from 'antd-mobile'
 import type { ApiError } from '@/api/type'
 
+//创建icon(购物,工资...)
 export const useCreateIconMutation = (
   options?: UseMutationOptions<createIconResponse, ApiError, createIconRequest>
 ): UseMutationResult<createIconResponse, ApiError, createIconRequest> => {
@@ -28,6 +34,20 @@ export const useCreateIconMutation = (
       })
       onError?.(error, variables, context, mutation)
     },
+    ...restOptions,
+  })
+}
+
+//获取Icon列表
+export const useGetIconList = (
+  data: getIconListRequest,
+  options?: UseQueryOptions<IconListResponse, ApiError>
+) => {
+  const { ...restOptions } = options || {}
+
+  return useQuery({
+    queryKey: ['iconList'],
+    queryFn: () => getIconList(data),
     ...restOptions,
   })
 }

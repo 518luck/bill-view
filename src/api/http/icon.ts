@@ -1,10 +1,10 @@
 import { axios } from '@/utils'
-
+import type { IconName } from '@/container/IconPicker/iconMap'
 //创建icon(购物,工资...)
 export interface createIconRequest {
   type: 'expense' | 'income'
   title: string
-  icon_name: string
+  icon_name: IconName
 }
 export interface createIconResponse {
   message: string
@@ -19,9 +19,10 @@ export const createIcon = (
 export interface getIconListRequest {
   type: 'expense' | 'income'
 }
-export interface IconListResponse {
-  icons: createIconRequest[]
+export interface IconItem extends createIconRequest {
+  id: number
 }
+export type IconListResponse = IconItem[]
 export const getIconList = (
   request: getIconListRequest
 ): Promise<IconListResponse> => {

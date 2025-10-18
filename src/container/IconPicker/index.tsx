@@ -4,7 +4,6 @@ import { Space } from 'antd-mobile'
 import cs from 'classnames'
 import {
   MdRemoveCircle,
-  MdRestaurant,
   MdArrowBackIosNew,
   MdMenu,
   MdAdd,
@@ -13,6 +12,8 @@ import {
 import styles from './styles.module.less'
 import BillTypeTabs from '@/components/BillTypeTabs'
 import PopupModifyIcon from '@/container/IconPicker/PopupModifyIcon'
+import { useGetIconList } from '@/api/hook/icon'
+import DynamicIcon from '@/components/DynamicIcon'
 
 const IconPicker = () => {
   const navigate = useNavigate()
@@ -20,6 +21,11 @@ const IconPicker = () => {
   const [currentTabsType, setCurrentTabsType] = useState<'expense' | 'income'>(
     'expense'
   )
+
+  const { data } = useGetIconList({
+    type: currentTabsType,
+  })
+
   return (
     <div className={cs(styles.commonBackground, styles.icon_picker)}>
       <div className={styles.header}>
@@ -37,18 +43,16 @@ const IconPicker = () => {
       </div>
 
       <div className={styles.content}>
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17].map(
-          (item) => (
-            <div className={styles.item} key={item}>
-              <Space align='center'>
-                <MdRemoveCircle size={20} color='#ff3b2f' />
-                <MdRestaurant size={20} />
-                <span>餐饮</span>
-              </Space>
-              <MdMenu size={25} />
-            </div>
-          )
-        )}
+        {data?.map((item) => (
+          <div className={styles.item} key={item.id}>
+            <Space align='center'>
+              <MdRemoveCircle size={20} color='#ff3b2f' />
+              <DynamicIcon name={item.icon_name} size={20} />
+              <span>{item.title}</span>
+            </Space>
+            <MdMenu size={25} />
+          </div>
+        ))}
       </div>
       {!visiblePopup && (
         <div className={styles.footer} onClick={() => setVisiblePopup(true)}>
