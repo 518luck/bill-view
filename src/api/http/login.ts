@@ -3,13 +3,14 @@ import { axios } from '@/utils'
 export interface LoginResponse {
   id: number
   username: string
+  role: string
   token: string
 }
-export interface LoginParams {
+export interface LoginRequest {
   account: string
   password: string
 }
 
-export const postLogin = (params: LoginParams): Promise<LoginResponse> => {
-  return axios.post('/auth/login', params)
+export const postLogin = (request: LoginRequest): Promise<LoginResponse> => {
+  return axios.post('/auth/login', request)
 }

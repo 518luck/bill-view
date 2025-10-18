@@ -13,14 +13,13 @@ import {
 import styles from './styles.module.less'
 import BillTypeTabs from '@/components/BillTypeTabs'
 import PopupModifyIcon from '@/container/IconPicker/PopupModifyIcon'
-import type { BillTypeTabsProps } from '@/components/BillTypeTabs'
 
 const IconPicker = () => {
   const navigate = useNavigate()
   const [visiblePopup, setVisiblePopup] = useState(false)
-  const [currentTabsType, setCurrentTabsType] =
-    useState<BillTypeTabsProps['value']>('expense')
-
+  const [currentTabsType, setCurrentTabsType] = useState<'expense' | 'income'>(
+    'expense'
+  )
   return (
     <div className={cs(styles.commonBackground, styles.icon_picker)}>
       <div className={styles.header}>

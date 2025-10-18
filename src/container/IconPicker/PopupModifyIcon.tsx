@@ -4,26 +4,27 @@ import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { createIconSchema } from '@/container/IconPicker/schema/create-icon.schema'
 import { MdArrowLeft, MdPedalBike } from 'react-icons/md'
+import type { z } from 'zod'
 
 import styles from './styles.module.less'
 import CardIconList from '@/container/IconPicker/CardIconList'
 import Flex from '@/components/Flex'
-import type { BillTypeTabsProps } from '@/components/BillTypeTabs'
 import Text from '@/components/Text'
+import { useCreateIconMutation } from '@/api/hook'
+
 interface PopupModifyIconProps {
   visible: boolean
   onClose: () => void
-  currentTabsType: BillTypeTabsProps['value']
+  currentTabsType: 'expense' | 'income'
 }
 // 标题映射
-const getCurrentTabsTypeTitle = (tabsType: BillTypeTabsProps['value']) => {
+const getCurrentTabsTypeTitle = (tabsType: 'expense' | 'income') => {
   switch (tabsType) {
     case 'expense':
       return '支出'
     case 'income':
       return '收入'
     default:
-      return ''
   }
 }
 const PopupModifyIcon = ({
@@ -37,21 +38,30 @@ const PopupModifyIcon = ({
     trigger,
     getValues,
     formState: { errors },
-  } = useForm({
+  } = useForm<z.infer<typeof createIconSchema>>({
     resolver: zodResolver(createIconSchema),
-    defaultValues: createIconSchema.parse({}),
+    defaultValues: {
+      icon_name: 'MdPedalBike',
+      title: '',
+    },
   })
+
+  const { mutate: createIcon } = useCreateIconMutation()
+
   const [selectedIcon, setSelectedIcon] = useState<React.ReactNode>(
     <MdPedalBike size={31} />
   )
+
+  // 创建图标
   const handleSubmit = () => {
     const valid = trigger()
     if (!valid) return
     const values = getValues()
     const data = {
       ...values,
-      tabsType: currentTabsType,
+      type: currentTabsType,
     }
+    createIcon(data)
   }
 
   return (
@@ -111,7 +121,7 @@ const PopupModifyIcon = ({
                   ? componentType
                   : componentType.name
               setSelectedIcon(icon)
-              setValue('iconName', componentName)
+              setValue('icon_name', componentName)
             }}
           />
         </div>
