@@ -79,6 +79,9 @@ const PopupModifyIcon = ({
       position='bottom'
       visible={visible}
       onClose={onClose}
+      afterClose={() => {
+        reset()
+      }}
       onMaskClick={onClose}>
       <div className={styles.content}>
         {/* header */}

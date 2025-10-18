@@ -3,13 +3,17 @@ import {
   type UseMutationOptions,
   type UseMutationResult,
 } from '@tanstack/react-query'
-import { createIcon, type IconRequest, type IconResponse } from '@/api'
+import {
+  createIcon,
+  type createIconRequest,
+  type createIconResponse,
+} from '@/api'
 import { Toast } from 'antd-mobile'
 import type { ApiError } from '@/api/type'
 
 export const useCreateIconMutation = (
-  options?: UseMutationOptions<IconResponse, ApiError, IconRequest>
-): UseMutationResult<IconResponse, ApiError, IconRequest> => {
+  options?: UseMutationOptions<createIconResponse, ApiError, createIconRequest>
+): UseMutationResult<createIconResponse, ApiError, createIconRequest> => {
   const { onSuccess, onError, ...restOptions } = options || {}
   return useMutation({
     mutationFn: (data) => createIcon(data),

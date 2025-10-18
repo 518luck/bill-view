@@ -1,16 +1,29 @@
 import { axios } from '@/utils'
 
-export interface IconRequest {
+//创建icon(购物,工资...)
+export interface createIconRequest {
   type: 'expense' | 'income'
   title: string
   icon_name: string
 }
-
-export interface IconResponse {
+export interface createIconResponse {
   message: string
 }
-
-//创建分类(购物,工资...)
-export const createIcon = (request: IconRequest): Promise<IconResponse> => {
+export const createIcon = (
+  request: createIconRequest
+): Promise<createIconResponse> => {
   return axios.post('/bills/icon', request)
+}
+
+//获取Icon列表
+export interface getIconListRequest {
+  type: 'expense' | 'income'
+}
+export interface IconListResponse {
+  icons: createIconRequest[]
+}
+export const getIconList = (
+  request: getIconListRequest
+): Promise<IconListResponse> => {
+  return axios.get('/bills/icon', { params: request })
 }
