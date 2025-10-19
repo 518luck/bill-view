@@ -46,14 +46,14 @@ export const useCreateIconMutation = (
 
 //获取Icon列表
 export const useGetIconList = (
-  data: getIconListRequest,
+  type: getIconListRequest,
   options?: UseQueryOptions<IconListResponse, ApiError>
 ) => {
   const { ...restOptions } = options || {}
 
   return useQuery({
-    queryKey: ['iconList'],
-    queryFn: () => getIconList(data),
+    queryKey: ['iconList', type],
+    queryFn: () => getIconList(type),
     ...restOptions,
   })
 }

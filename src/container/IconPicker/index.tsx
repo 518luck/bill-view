@@ -12,7 +12,7 @@ import {
 import styles from './styles.module.less'
 import BillTypeTabs from '@/components/BillTypeTabs'
 import PopupModifyIcon from '@/container/IconPicker/PopupModifyIcon'
-import { useGetIconList } from '@/api/hook/icon'
+import { useGetIconList } from '@/api/hook'
 import DynamicIcon from '@/components/DynamicIcon'
 
 const IconPicker = () => {
