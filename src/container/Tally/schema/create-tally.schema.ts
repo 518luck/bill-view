@@ -1,5 +1,5 @@
 import z from 'zod'
-
+import { iconMap, type IconName } from '@/container/IconPicker/iconMap'
 /**
  * 变量
  * 1. id:这个不需要传递
@@ -13,6 +13,6 @@ export const createTallySchema = z.object({
   money: z.number().min(0, '金额不能小于0'),
   note: z.string(),
   type: z.enum(['expense', 'income']),
-  date: z.string().optional(),
-  icon_name: z.string(),
+  date: z.string(),
+  icon_name: z.enum(Object.keys(iconMap) as [IconName, ...IconName[]]),
 })

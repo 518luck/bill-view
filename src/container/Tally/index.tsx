@@ -10,7 +10,7 @@ import styles from './styles.module.less'
 import Keypad from './Keypad'
 import BillTypeTabs from '@/components/BillTypeTabs'
 import DynamicIcon from '@/components/DynamicIcon'
-import { useGetIconList, type IconItem } from '@/api'
+import { useCreateTallyMutation, useGetIconList, type IconItem } from '@/api'
 import { createTallySchema } from '@/container/Tally/schema/create-tally.schema'
 import dayjs from 'dayjs'
 
@@ -24,7 +24,6 @@ const Tally = () => {
       note: '',
       type: 'expense',
       date: dayjs().format('YYYY-MM-DD'),
-      icon_name: '',
     },
   })
 
@@ -32,6 +31,13 @@ const Tally = () => {
 
   const { data: iconList } = useGetIconList({
     type: type,
+  })
+
+  const { mutate: createTally } = useCreateTallyMutation({
+    onSuccess: () => {
+      methods.reset()
+      setCurrentIconId('')
+    },
   })
 
   const handleCurrentIcon = (iconItem: IconItem) => {
@@ -78,7 +84,7 @@ const Tally = () => {
       </div>
 
       <div className={styles.keypad_area}>
-        <Keypad methods={methods} />
+        <Keypad methods={methods} createTally={createTally} />
       </div>
     </div>
   )

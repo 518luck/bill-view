@@ -7,11 +7,13 @@ import dayjs from 'dayjs'
 import styles from './styles.module.less'
 import type z from 'zod'
 import type { createTallySchema } from './schema/create-tally.schema'
+import type { createTallyRequest } from '@/api'
 interface KeypadProps {
   methods: UseFormReturn<z.infer<typeof createTallySchema>>
+  createTally: (data: createTallyRequest) => void
 }
 
-const Keypad = ({ methods }: KeypadProps) => {
+const Keypad = ({ methods, createTally }: KeypadProps) => {
   const [expr, setExpr] = useState('0') // 用于存储操作表达式
   const [result, setResult] = useState('完成') // 用于存储计算结果
   const [datePickerVisible, setDatePickerVisible] = useState(false)
@@ -43,7 +45,7 @@ const Keypad = ({ methods }: KeypadProps) => {
     } else if (value === '完成') {
       methods.setValue('money', Number(expr))
       const values = methods.getValues()
-      console.log('🚀 ~ handlePress ~ values:', values)
+      createTally(values)
       setExpr('0')
     } else {
       // 拼接数字或操作符
