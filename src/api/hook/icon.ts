@@ -1,4 +1,5 @@
 import {
+  useQueryClient,
   useMutation,
   useQuery,
   type UseMutationOptions,
@@ -20,10 +21,15 @@ import type { ApiError } from '@/api/type'
 export const useCreateIconMutation = (
   options?: UseMutationOptions<createIconResponse, ApiError, createIconRequest>
 ): UseMutationResult<createIconResponse, ApiError, createIconRequest> => {
+  const queryClient = useQueryClient()
+
   const { onSuccess, onError, ...restOptions } = options || {}
+
   return useMutation({
     mutationFn: (data) => createIcon(data),
     onSuccess: (data, variables, context, mutation) => {
+      queryClient.invalidateQueries({ queryKey: ['iconList'] })
+
       Toast.show({ icon: 'success', content: '创建成功' })
       onSuccess?.(data, variables, context, mutation)
     },

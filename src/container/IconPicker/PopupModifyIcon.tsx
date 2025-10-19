@@ -100,7 +100,7 @@ const PopupModifyIcon = ({
         {/* message */}
         <Space direction='vertical' className={styles.space}>
           <Flex justify='center' align='center' direction='column' gap={18}>
-            <DynamicIcon name={iconName as IconName} size={31} />
+            <DynamicIcon name={iconName} size={31} />
             <Flex justify='center' align='center' direction='column' gap={0}>
               <Controller
                 name='title'
