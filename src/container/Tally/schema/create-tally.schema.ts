@@ -10,9 +10,16 @@ import { iconMap, type IconName } from '@/container/IconPicker/iconMap'
  * 6. icon_name:图标名称
  */
 export const createTallySchema = z.object({
-  money: z.number().min(0, '金额不能小于0'),
+  money: z.number().min(0.01, '金额必须大于0.00'),
   note: z.string(),
   type: z.enum(['expense', 'income']),
   date: z.string(),
-  icon_name: z.enum(Object.keys(iconMap) as [IconName, ...IconName[]]),
+  icon_name: z
+    .enum(Object.keys(iconMap) as [IconName, ...IconName[]])
+    .optional()
+    .refine((value) => value !== undefined, {
+      message: '请选择图标',
+    }),
+
+  icon_title: z.string().optional(),
 })

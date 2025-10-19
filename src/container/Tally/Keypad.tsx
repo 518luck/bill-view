@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Input, DatePicker } from 'antd-mobile'
+import { Input, DatePicker, Toast } from 'antd-mobile'
 import { evaluate } from 'mathjs'
 import { type UseFormReturn, Controller } from 'react-hook-form'
 import dayjs from 'dayjs'
@@ -30,10 +30,13 @@ const Keypad = ({ methods, createTally }: KeypadProps) => {
     setResult(isComplete)
   }, [expr])
 
-  const handlePress = (value: string) => {
+  const handlePress = async (value: string) => {
     if (value === '⌫') {
-      if (expr === '0') return
-      setExpr(expr.slice(0, -1))
+      if (expr.length <= 1) {
+        setExpr('0')
+      } else {
+        setExpr(expr.slice(0, -1))
+      }
     } else if (value === '=') {
       try {
         const safeExpr = expr.replace(/\b0+(\d+)/g, '$1')
@@ -45,8 +48,47 @@ const Keypad = ({ methods, createTally }: KeypadProps) => {
     } else if (value === '完成') {
       methods.setValue('money', Number(expr))
       const values = methods.getValues()
-      createTally(values)
+      if (!values.note || values.note.trim() === '') {
+        methods.setValue('note', values.icon_title || '')
+      }
+      // 上面设置了 note，需要再提取一次表单
+      const newValues = methods.getValues()
+      const valid = await methods.trigger()
+      if (!valid) {
+        // 获取所有错误信息
+        const errors = methods.formState.errors
+        const firstError = Object.values(errors)[0]
+
+        // 显示第一个错误信息
+        if (!firstError) {
+          const result = await methods.trigger(undefined, { shouldFocus: true })
+          if (!result) {
+            const errorsAfterTrigger = methods.formState.errors
+            const errorAfterTrigger = Object.values(errorsAfterTrigger)[0]
+            if (errorAfterTrigger?.message) {
+              Toast.show({
+                icon: 'fail',
+                content: errorAfterTrigger.message,
+              })
+            }
+          }
+        } else if (firstError?.message) {
+          Toast.show({
+            icon: 'fail',
+            content: firstError.message,
+          })
+        }
+        return
+      }
+      createTally(newValues as createTallyRequest)
       setExpr('0')
+    } else if (/\d/.test(value)) {
+      // 处理数字输入：如果当前是"0"，则替换为输入的数字
+      if (expr === '0') {
+        setExpr(value)
+      } else {
+        setExpr(expr + value)
+      }
     } else {
       // 拼接数字或操作符
       setExpr(expr + value)

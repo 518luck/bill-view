@@ -42,6 +42,7 @@ const Tally = () => {
 
   const handleCurrentIcon = (iconItem: IconItem) => {
     methods.setValue('icon_name', iconItem.icon_name)
+    methods.setValue('icon_title', iconItem.title)
     setCurrentIconId(iconItem.id)
   }
 
