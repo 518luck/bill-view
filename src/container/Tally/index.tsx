@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 import cs from 'classnames'
 import { MdSettings } from 'react-icons/md'
 
@@ -7,9 +9,15 @@ import styles from './styles.module.less'
 import Keypad from './Keypad'
 import BillTypeTabs from '@/components/BillTypeTabs'
 import DynamicIcon from '@/components/DynamicIcon'
-import { useGetIconList } from '@/api'
+import { useGetIconList, type IconItem } from '@/api'
+import { createTallySchema } from '@/container/Tally/schema/create-tally.schema'
 
 const Tally = () => {
+  const { setValue } = useForm({
+    resolver: zodResolver(createTallySchema),
+  })
+  const [currentIconId, setCurrentIconId] = useState<string>('')
+
   const navigate = useNavigate()
   const [currentTabsType, setCurrentTabsType] = useState<'expense' | 'income'>(
     'expense'
@@ -17,6 +25,11 @@ const Tally = () => {
   const { data: iconList } = useGetIconList({
     type: currentTabsType,
   })
+
+  const handleCurrentIcon = (iconItem: IconItem) => {
+    setValue('icon_name', iconItem.icon_name)
+    setCurrentIconId(iconItem.id)
+  }
 
   return (
     <div className={cs(styles.commonBackground, styles.tally)}>
@@ -33,9 +46,19 @@ const Tally = () => {
         <div className={styles.content_list}>
           {iconList?.map((item) => {
             return (
-              <div className={styles.content_item} key={item.id}>
-                <DynamicIcon name={item.icon_name} size={18} />
-                <span>{item.title}</span>
+              <div
+                className={styles.content_item}
+                key={item.id}
+                onClick={() => handleCurrentIcon(item)}>
+                <DynamicIcon
+                  name={item.icon_name}
+                  size={18}
+                  color={item.id === currentIconId ? '#7d39eb' : ''}
+                />
+                <span
+                  style={{ color: item.id === currentIconId ? '#7d39eb' : '' }}>
+                  {item.title}
+                </span>
               </div>
             )
           })}

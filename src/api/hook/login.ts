@@ -5,7 +5,7 @@ import {
 } from '@tanstack/react-query'
 import { postLogin, type LoginRequest, type LoginResponse } from '@/api'
 import { Toast } from 'antd-mobile'
-import type { ApiError } from '@/api/type'
+import type { ApiError } from '@/api/types'
 
 export const useLoginMutation = (
   options?: UseMutationOptions<LoginResponse, ApiError, LoginRequest>

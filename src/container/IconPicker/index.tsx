@@ -42,6 +42,7 @@ const IconPicker = () => {
         />
       </div>
 
+      {/* // TODO:还没添加删除图标功能 */}
       <div className={styles.content}>
         {data?.map((item) => (
           <div className={styles.item} key={item.id}>

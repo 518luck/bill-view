@@ -15,7 +15,7 @@ import {
   type IconListResponse,
 } from '@/api'
 import { Toast } from 'antd-mobile'
-import type { ApiError } from '@/api/type'
+import type { ApiError } from '@/api/types'
 
 //创建icon(购物,工资...)
 export const useCreateIconMutation = (

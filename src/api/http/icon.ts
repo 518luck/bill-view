@@ -20,7 +20,7 @@ export interface getIconListRequest {
   type: 'expense' | 'income'
 }
 export interface IconItem extends createIconRequest {
-  id: number
+  id: string
 }
 export type IconListResponse = IconItem[]
 export const getIconList = (
