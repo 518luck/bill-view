@@ -28,3 +28,20 @@ export const getIconList = (
 ): Promise<IconListResponse> => {
   return axios.get('/bills/icon', { params: request })
 }
+
+// 创建账单
+export interface createTallyRequest {
+  money: number
+  note: string
+  type: 'expense' | 'income'
+  date: string
+  icon_name: IconName
+}
+export interface createTallyResponse {
+  message: string
+}
+export const createTally = (
+  request: createTallyRequest
+): Promise<createTallyResponse> => {
+  return axios.post('/bills', request)
+}

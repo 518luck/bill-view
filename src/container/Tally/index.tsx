@@ -12,19 +12,26 @@ import BillTypeTabs from '@/components/BillTypeTabs'
 import DynamicIcon from '@/components/DynamicIcon'
 import { useGetIconList, type IconItem } from '@/api'
 import { createTallySchema } from '@/container/Tally/schema/create-tally.schema'
+import dayjs from 'dayjs'
 
 const Tally = () => {
+  const navigate = useNavigate()
+  const [currentIconId, setCurrentIconId] = useState<string>('')
   const methods = useForm<z.infer<typeof createTallySchema>>({
     resolver: zodResolver(createTallySchema),
+    defaultValues: {
+      money: 0,
+      note: '',
+      type: 'expense',
+      date: dayjs().format('YYYY-MM-DD'),
+      icon_name: '',
+    },
   })
-  const [currentIconId, setCurrentIconId] = useState<string>('')
 
-  const navigate = useNavigate()
-  const [currentTabsType, setCurrentTabsType] = useState<'expense' | 'income'>(
-    'expense'
-  )
+  const type = methods.watch('type')
+
   const { data: iconList } = useGetIconList({
-    type: currentTabsType,
+    type: type,
   })
 
   const handleCurrentIcon = (iconItem: IconItem) => {
@@ -36,7 +43,11 @@ const Tally = () => {
     <div className={cs(styles.commonBackground, styles.tally)}>
       <div className={styles.header}>
         <div className={styles.tab}>
-          <BillTypeTabs size='medium' onChange={setCurrentTabsType} />
+          <BillTypeTabs
+            size='medium'
+            value={type}
+            onChange={(value) => methods.setValue('type', value)}
+          />
         </div>
         <div className={styles.cancel}>
           <MdSettings size={24} onClick={() => navigate('/iconPicker')} />

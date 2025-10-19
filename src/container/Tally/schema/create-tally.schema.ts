@@ -11,8 +11,8 @@ import z from 'zod'
  */
 export const createTallySchema = z.object({
   money: z.number().min(0, '金额不能小于0'),
-  note: z.string().optional(),
+  note: z.string(),
   type: z.enum(['expense', 'income']),
-  date: z.string().datetime(),
+  date: z.string().optional(),
   icon_name: z.string(),
 })

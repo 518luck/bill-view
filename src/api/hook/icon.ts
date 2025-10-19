@@ -8,9 +8,12 @@ import {
 } from '@tanstack/react-query'
 import {
   createIcon,
+  createTally,
   getIconList,
   type createIconRequest,
   type createIconResponse,
+  type createTallyRequest,
+  type createTallyResponse,
   type getIconListRequest,
   type IconListResponse,
 } from '@/api'
@@ -54,6 +57,37 @@ export const useGetIconList = (
   return useQuery({
     queryKey: ['iconList', type],
     queryFn: () => getIconList(type),
+    ...restOptions,
+  })
+}
+
+// 创建账单
+export const useCreateTallyMutation = (
+  options?: UseMutationOptions<
+    createTallyResponse,
+    ApiError,
+    createTallyRequest
+  >
+): UseMutationResult<createTallyResponse, ApiError, createTallyRequest> => {
+  const queryClient = useQueryClient()
+
+  const { onSuccess, onError, ...restOptions } = options || {}
+
+  return useMutation({
+    mutationFn: (data) => createTally(data),
+    onSuccess: (data, variables, context, mutation) => {
+      queryClient.invalidateQueries({ queryKey: ['tallyList'] })
+
+      Toast.show({ icon: 'success', content: '创建成功' })
+      onSuccess?.(data, variables, context, mutation)
+    },
+    onError: (error, variables, context, mutation) => {
+      Toast.show({
+        icon: 'fail',
+        content: error?.message || '创建失败',
+      })
+      onError?.(error, variables, context, mutation)
+    },
     ...restOptions,
   })
 }

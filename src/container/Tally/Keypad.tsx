@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Input, DatePicker } from 'antd-mobile'
 import { evaluate } from 'mathjs'
-import type { UseFormReturn } from 'react-hook-form'
+import { type UseFormReturn, Controller } from 'react-hook-form'
 import dayjs from 'dayjs'
 
 import styles from './styles.module.less'
@@ -41,6 +41,9 @@ const Keypad = ({ methods }: KeypadProps) => {
         setExpr(`错误 - ${error}`)
       }
     } else if (value === '完成') {
+      methods.setValue('money', Number(expr))
+      const values = methods.getValues()
+      console.log('🚀 ~ handlePress ~ values:', values)
       setExpr('0')
     } else {
       // 拼接数字或操作符
@@ -52,7 +55,13 @@ const Keypad = ({ methods }: KeypadProps) => {
     <div className={styles.Keypad}>
       <div className={styles.header}>{expr}</div>
       <div className={styles.describe}>
-        <Input placeholder='备注 : 点击填写备注' />
+        <Controller
+          name='note'
+          control={methods.control}
+          render={({ field }) => (
+            <Input {...field} placeholder='备注 : 点击填写备注' />
+          )}
+        />
       </div>
       <div className={styles.name}>
         <div onClick={() => handlePress('7')}>7</div>
