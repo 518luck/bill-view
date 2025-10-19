@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import cs from 'classnames'
 import { MdSettings } from 'react-icons/md'
+import type z from 'zod'
 
 import styles from './styles.module.less'
 import Keypad from './Keypad'
@@ -13,7 +14,7 @@ import { useGetIconList, type IconItem } from '@/api'
 import { createTallySchema } from '@/container/Tally/schema/create-tally.schema'
 
 const Tally = () => {
-  const { setValue } = useForm({
+  const methods = useForm<z.infer<typeof createTallySchema>>({
     resolver: zodResolver(createTallySchema),
   })
   const [currentIconId, setCurrentIconId] = useState<string>('')
@@ -27,7 +28,7 @@ const Tally = () => {
   })
 
   const handleCurrentIcon = (iconItem: IconItem) => {
-    setValue('icon_name', iconItem.icon_name)
+    methods.setValue('icon_name', iconItem.icon_name)
     setCurrentIconId(iconItem.id)
   }
 
@@ -66,7 +67,7 @@ const Tally = () => {
       </div>
 
       <div className={styles.keypad_area}>
-        <Keypad />
+        <Keypad methods={methods} />
       </div>
     </div>
   )

@@ -1,13 +1,22 @@
 import { useEffect, useState } from 'react'
-import { Input } from 'antd-mobile'
+import { Input, DatePicker } from 'antd-mobile'
 import { evaluate } from 'mathjs'
+import type { UseFormReturn } from 'react-hook-form'
+import dayjs from 'dayjs'
 
 import styles from './styles.module.less'
+import type z from 'zod'
+import type { createTallySchema } from './schema/create-tally.schema'
+interface KeypadProps {
+  methods: UseFormReturn<z.infer<typeof createTallySchema>>
+}
 
-const Keypad = () => {
+const Keypad = ({ methods }: KeypadProps) => {
   const [expr, setExpr] = useState('0') // 用于存储操作表达式
   const [result, setResult] = useState('完成') // 用于存储计算结果
+  const [datePickerVisible, setDatePickerVisible] = useState(false)
 
+  const today = methods.watch('date')
   // 监听 expr 变化，判断是否完成计算
   useEffect(() => {
     const isComplete =
@@ -38,6 +47,7 @@ const Keypad = () => {
       setExpr(expr + value)
     }
   }
+
   return (
     <div className={styles.Keypad}>
       <div className={styles.header}>{expr}</div>
@@ -48,7 +58,11 @@ const Keypad = () => {
         <div onClick={() => handlePress('7')}>7</div>
         <div onClick={() => handlePress('8')}>8</div>
         <div onClick={() => handlePress('9')}>9</div>
-        <div onClick={() => handlePress('今天')}>今天</div>
+        <div
+          onClick={() => setDatePickerVisible(true)}
+          style={{ fontSize: 12 }}>
+          {today ? dayjs(today).format('YYYY/MM/DD') : '今天'}
+        </div>
 
         <div onClick={() => handlePress('4')}>4</div>
         <div onClick={() => handlePress('5')}>5</div>
@@ -65,6 +79,15 @@ const Keypad = () => {
         <div onClick={() => handlePress('⌫')}>⌫</div>
         <div onClick={() => handlePress(result)}>{result}</div>
       </div>
+      <DatePicker
+        visible={datePickerVisible}
+        onCancel={() => setDatePickerVisible(false)}
+        onConfirm={(date) => {
+          setDatePickerVisible(false)
+          methods.setValue('date', dayjs(date).format('YYYY-MM-DD'))
+        }}
+        className={styles.datePicker}
+      />
     </div>
   )
 }
