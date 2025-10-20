@@ -21,6 +21,6 @@ export interface monthBillsResponse {
 
 export const getMonthBills = (
   params: monthBillsRequest
-): Promise<monthBillsResponse> => {
+): Promise<monthBillsResponse[]> => {
   return axios.get('/bills/month', { params })
 }

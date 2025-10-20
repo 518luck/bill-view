@@ -9,7 +9,7 @@ import type { ApiError } from '@/api/types'
 //获取某年某月的账单
 export const useGetMonthBills = (
   request: monthBillsRequest,
-  options?: UseQueryOptions<monthBillsResponse, ApiError>
+  options?: UseQueryOptions<monthBillsResponse[], ApiError>
 ) => {
   const { ...restOptions } = options || {}
 
