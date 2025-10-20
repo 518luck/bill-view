@@ -3,7 +3,7 @@ import { axios } from '@/utils'
 // 获取某年某月的账单
 export interface monthBillsRequest {
   date_str: string
-  payday: number
+  payday?: number
 }
 
 export interface bills {
