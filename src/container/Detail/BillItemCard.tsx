@@ -1,8 +1,8 @@
 import styles from './index.module.less'
 import dayjs from 'dayjs'
-import { FaUtensils } from 'react-icons/fa6'
 
 import { useGetMonthBills, type bills } from '@/api'
+import DynamicIcon from '@/components/DynamicIcon'
 
 const dayMxpense = (day: bills[]) => {
   let total = 0
@@ -56,7 +56,7 @@ const BillItemCard = () => {
                 return (
                   <div className={styles.list_item} key={item.id}>
                     <div className={styles.list_item_icon}>
-                      <FaUtensils />
+                      <DynamicIcon name={item.icon_name} size={16} />
                       <span>{item.note}</span>
                     </div>
                     <div className={styles.list_item_money}>

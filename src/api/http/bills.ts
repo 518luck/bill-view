@@ -1,5 +1,5 @@
 import { axios } from '@/utils'
-
+import type { IconName } from '@/container/IconPicker/iconMap'
 // 获取某年某月的账单
 export interface monthBillsRequest {
   date_str: string
@@ -11,7 +11,7 @@ export interface bills {
   money: string
   note: string
   type: 'expense' | 'income'
-  icon_name: string
+  icon_name: IconName
   date: string
 }
 export interface monthBillsResponse {
