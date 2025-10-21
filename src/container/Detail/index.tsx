@@ -7,31 +7,48 @@ import dayjs from 'dayjs'
 import logo from '@/assets/svg/logo.svg'
 import styles from './index.module.less'
 import BillItemCard from '@/container/Detail/BillItemCard'
-import { useGetMonthBills } from '@/api'
+import { useGetMonthBills, type monthBillsResponse } from '@/api'
 
+const totalMoney = (
+  monthBills: monthBillsResponse[],
+  type: 'expense' | 'income'
+) => {
+  let total = 0
+  monthBills.forEach((month) => {
+    month.bills.forEach((item) => {
+      if (item.type === type) {
+        total += Number(item.money)
+      }
+    })
+  })
+  return total
+}
 const Detail = () => {
   const [isDatePickerVisible, setIsDatePickerVisible] = useState(false)
   const [selectedDate, setSelectedDate] = useState(dayjs())
-
-  const messageData = [
-    {
-      title: '收入',
-      value: '25540.00',
-    },
-    {
-      title: '支出',
-      value: '15540.00',
-    },
-    {
-      title: '差值',
-      value: '10000.00',
-    },
-  ]
 
   const { data } = useGetMonthBills({
     date_str: selectedDate.format('YYYY-MM-DD'),
   })
   const monthBills = data || []
+
+  const remainMoney = (
+    totalMoney(monthBills, 'income') - totalMoney(monthBills, 'expense')
+  ).toFixed(2)
+  const messageData = [
+    {
+      title: '收入',
+      value: totalMoney(monthBills, 'income').toFixed(2),
+    },
+    {
+      title: '支出',
+      value: totalMoney(monthBills, 'expense').toFixed(2),
+    },
+    {
+      title: Number(remainMoney) > 0 ? '结余' : '赤字',
+      value: remainMoney,
+    },
+  ]
 
   return (
     <div className={cs(styles.commonBackground, styles.Detail)}>
