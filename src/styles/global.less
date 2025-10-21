@@ -8,7 +8,7 @@
 
 //adm
 //adm-button primary
-.adm-button-primary() {
+.adm-button-primary-mixin() {
   color: @font-color-white;
   border-radius: 50px;
   background: rgba(125, 57, 235, 1);
@@ -16,4 +16,14 @@
   transition: transform 0.15s ease-in-out;
   transform: scale(1);
   border: transparent;
+}
+//adm-datePicker
+.date-picker-mixin() {
+  backdrop-filter: blur(8px);
+  color: @font-color-white;
+  :global {
+    .adm-picker-header-button {
+      color: @font-color-gray;
+    }
+  }
 }

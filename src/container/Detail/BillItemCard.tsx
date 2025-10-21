@@ -1,7 +1,7 @@
 import styles from './index.module.less'
 import dayjs from 'dayjs'
 
-import { useGetMonthBills, type bills } from '@/api'
+import { type bills, type monthBillsResponse } from '@/api'
 import DynamicIcon from '@/components/DynamicIcon'
 
 const dayMxpense = (day: bills[]) => {
@@ -22,14 +22,11 @@ const dayIncome = (day: bills[]) => {
   })
   return total
 }
-const BillItemCard = () => {
-  const { data = [] } = useGetMonthBills({
-    date_str: '2025-10-20',
-  })
 
+const BillItemCard = ({ monthBills }: { monthBills: monthBillsResponse[] }) => {
   return (
     <div className={styles.content}>
-      {data.map((month) => {
+      {monthBills?.map((month) => {
         return (
           <div className={styles.list} key={month.day}>
             <div className={styles.list_title}>
