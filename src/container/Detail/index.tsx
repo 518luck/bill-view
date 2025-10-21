@@ -29,7 +29,7 @@ const Detail = () => {
   ]
 
   const { data } = useGetMonthBills({
-    date_str: '2025-10-20',
+    date_str: selectedDate.format('YYYY-MM-DD'),
   })
   const monthBills = data || []
 

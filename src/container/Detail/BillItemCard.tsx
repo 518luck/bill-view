@@ -1,8 +1,10 @@
+import { ErrorBlock } from 'antd-mobile'
 import styles from './index.module.less'
 import dayjs from 'dayjs'
 
 import { type bills, type monthBillsResponse } from '@/api'
 import DynamicIcon from '@/components/DynamicIcon'
+import LogoIcon from '@/components/LogoIcon'
 
 const dayMxpense = (day: bills[]) => {
   let total = 0
@@ -24,9 +26,19 @@ const dayIncome = (day: bills[]) => {
 }
 
 const BillItemCard = ({ monthBills }: { monthBills: monthBillsResponse[] }) => {
+  if (monthBills.length === 0) {
+    return (
+      <ErrorBlock
+        image={<LogoIcon />}
+        status='empty'
+        description='暂无数据'
+        title='暂无账单'
+      />
+    )
+  }
   return (
     <div className={styles.content}>
-      {monthBills?.map((month) => {
+      {monthBills.map((month) => {
         return (
           <div className={styles.list} key={month.day}>
             <div className={styles.list_title}>
@@ -37,19 +49,19 @@ const BillItemCard = ({ monthBills }: { monthBills: monthBillsResponse[] }) => {
               <div className={styles.list_title_money}>
                 <span>
                   {dayMxpense(month.bills) > 0 && (
-                    <span>支出 : {dayMxpense(month.bills).toFixed(2)}</span>
+                    <span>支出 : {dayMxpense(month.bills)?.toFixed(2)}</span>
                   )}
                 </span>
                 <span>
                   {dayIncome(month.bills) > 0 && (
-                    <span>收入 : {dayIncome(month.bills).toFixed(2)}</span>
+                    <span>收入 : {dayIncome(month.bills)?.toFixed(2)}</span>
                   )}
                 </span>
               </div>
             </div>
 
             <div className={styles.list_content}>
-              {month.bills.map((item) => {
+              {month?.bills.map((item) => {
                 return (
                   <div className={styles.list_item} key={item.id}>
                     <div className={styles.list_item_icon}>
