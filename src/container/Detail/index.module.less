@@ -49,9 +49,15 @@
     width: 1px;
     height: 30px;
     margin: 15px;
+    background-color: @card-bg-color-3;
   }
 
   &_date {
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     &_year {
       color: @font-color-gray;
       font-size: 12px;
@@ -77,9 +83,10 @@
 
   &_content {
     display: flex;
-
+    width: 290px;
     &_item {
-      margin-right: 10px;
+      flex: 1;
+      text-align: center;
 
       &_title {
         color: @font-color-gray;

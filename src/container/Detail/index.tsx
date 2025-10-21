@@ -72,6 +72,7 @@ const Detail = () => {
             <AiFillCaretDown />
           </div>
         </div>
+
         <div className={styles.message_divider} />
 
         <div className={styles.message_content}>
