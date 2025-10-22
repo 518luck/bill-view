@@ -9,11 +9,14 @@ import {
 import {
   createIcon,
   createTally,
+  deleteIcon,
   getIconList,
   type createIconRequest,
   type createIconResponse,
   type createTallyRequest,
   type createTallyResponse,
+  type deleteIconRequest,
+  type deleteIconResponse,
   type getIconListRequest,
   type IconListResponse,
 } from '@/api'
@@ -85,6 +88,33 @@ export const useCreateTallyMutation = (
       Toast.show({
         icon: 'fail',
         content: error?.message || '创建失败',
+      })
+      onError?.(error, variables, context, mutation)
+    },
+    ...restOptions,
+  })
+}
+
+// 删除自定义的图标
+export const useDeleteIcon = (
+  options?: UseMutationOptions<deleteIconResponse, ApiError, deleteIconRequest>
+): UseMutationResult<deleteIconResponse, ApiError, deleteIconRequest> => {
+  const queryClient = useQueryClient()
+
+  const { onSuccess, onError, ...restOptions } = options || {}
+
+  return useMutation({
+    mutationFn: (data) => deleteIcon(data),
+    onSuccess: (data, variables, context, mutation) => {
+      queryClient.invalidateQueries({ queryKey: ['iconList'] })
+
+      Toast.show({ icon: 'success', content: '删除成功' })
+      onSuccess?.(data, variables, context, mutation)
+    },
+    onError: (error, variables, context, mutation) => {
+      Toast.show({
+        icon: 'fail',
+        content: error?.message || '删除失败',
       })
       onError?.(error, variables, context, mutation)
     },

@@ -45,3 +45,18 @@ export const createTally = (
 ): Promise<createTallyResponse> => {
   return axios.post('/bills', request)
 }
+
+// 删除自定义的图标
+export interface deleteIconRequest {
+  id: string
+}
+export interface deleteIconResponse {
+  success?: boolean
+  statusCode?: number
+  message: string
+}
+export const deleteIcon = (
+  request: deleteIconRequest
+): Promise<deleteIconResponse> => {
+  return axios.delete(`/bills/icon/${request.id}`)
+}
