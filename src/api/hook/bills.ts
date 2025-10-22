@@ -42,9 +42,9 @@ export const useDeleteBill = (
   return useMutation({
     mutationFn: (id) => deleteBill(id),
     onSuccess: (data, variables, context, mutation) => {
-      queryClient.invalidateQueries({ queryKey: ['monthBills', variables] })
+      queryClient.invalidateQueries({ queryKey: ['monthBills'] })
 
-      Toast.show({ icon: 'success', content: '删除成功' })
+      Toast.show({ icon: 'success', content: data.message || '删除成功' })
       onSuccess?.(data, variables, context, mutation)
     },
     onError: (error, variables, context, mutation) => {

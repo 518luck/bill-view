@@ -2,7 +2,7 @@ import { ErrorBlock, SwipeAction, type SwipeActionRef } from 'antd-mobile'
 import dayjs from 'dayjs'
 
 import styles from './index.module.less'
-import { useDeleteIcon, type bills, type monthBillsResponse } from '@/api'
+import { useDeleteBill, type bills, type monthBillsResponse } from '@/api'
 import DynamicIcon from '@/components/DynamicIcon'
 import LogoIcon from '@/components/LogoIcon'
 import { useRef } from 'react'
@@ -28,13 +28,10 @@ const dayIncome = (day: bills[]) => {
 
 const BillItemCard = ({ monthBills }: { monthBills: monthBillsResponse[] }) => {
   const swipeRefs = useRef<Record<string, SwipeActionRef | null>>({})
-  const { mutate: deleteIcon, isPending } = useDeleteIcon()
+  const { mutate: deleteBill, isPending } = useDeleteBill()
 
   const handleDelete = (id: string) => {
-    console.log('🚀 ~ handleDelete ~ id:', id)
-    // deleteIcon({
-    //   id,
-    // })
+    deleteBill({ id })
   }
   if (monthBills.length === 0) {
     return (
@@ -80,7 +77,7 @@ const BillItemCard = ({ monthBills }: { monthBills: monthBillsResponse[] }) => {
                     rightActions={[
                       {
                         key: 'delete',
-                        text: '删除',
+                        text: isPending ? '删除中...' : '删除',
                         color: '#ff3142c7',
                         onClick: () => handleDelete(item.id),
                       },

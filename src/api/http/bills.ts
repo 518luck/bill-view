@@ -33,7 +33,7 @@ export interface deleteBillResponse {
   message: string
 }
 export const deleteBill = (
-  id: deleteBillRequest
+  request: deleteBillRequest
 ): Promise<deleteBillResponse> => {
-  return axios.delete(`/bills/${id}`)
+  return axios.delete(`/bills/${request.id}`)
 }
