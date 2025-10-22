@@ -36,6 +36,7 @@ const BillItemCard = ({ monthBills }: { monthBills: monthBillsResponse[] }) => {
       />
     )
   }
+
   return (
     <div className={styles.content}>
       {monthBills.map((month) => {
