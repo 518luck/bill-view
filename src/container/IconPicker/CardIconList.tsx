@@ -1,5 +1,6 @@
-import styles from './styles.module.less'
 import { useState } from 'react'
+
+import styles from './styles.module.less'
 import { iconClassifyMap } from '@/container/IconPicker/iconMap'
 import DynamicIcon from '@/components/DynamicIcon'
 import type { IconName } from '@/container/IconPicker/iconMap'

@@ -1,10 +1,11 @@
-import { ErrorBlock } from 'antd-mobile'
-import styles from './index.module.less'
+import { ErrorBlock, SwipeAction, type SwipeActionRef } from 'antd-mobile'
 import dayjs from 'dayjs'
 
-import { type bills, type monthBillsResponse } from '@/api'
+import styles from './index.module.less'
+import { useDeleteIcon, type bills, type monthBillsResponse } from '@/api'
 import DynamicIcon from '@/components/DynamicIcon'
 import LogoIcon from '@/components/LogoIcon'
+import { useRef } from 'react'
 
 const dayMxpense = (day: bills[]) => {
   let total = 0
@@ -26,6 +27,15 @@ const dayIncome = (day: bills[]) => {
 }
 
 const BillItemCard = ({ monthBills }: { monthBills: monthBillsResponse[] }) => {
+  const swipeRefs = useRef<Record<string, SwipeActionRef | null>>({})
+  const { mutate: deleteIcon, isPending } = useDeleteIcon()
+
+  const handleDelete = (id: string) => {
+    console.log('🚀 ~ handleDelete ~ id:', id)
+    // deleteIcon({
+    //   id,
+    // })
+  }
   if (monthBills.length === 0) {
     return (
       <ErrorBlock
@@ -64,18 +74,30 @@ const BillItemCard = ({ monthBills }: { monthBills: monthBillsResponse[] }) => {
             <div className={styles.list_content}>
               {month?.bills.map((item) => {
                 return (
-                  <div className={styles.list_item} key={item.id}>
-                    <div className={styles.list_item_icon}>
-                      <DynamicIcon name={item.icon_name} size={16} />
-                      <span>{item.note}</span>
+                  <SwipeAction
+                    key={item.id}
+                    ref={(el) => (swipeRefs.current[item.id] = el)}
+                    rightActions={[
+                      {
+                        key: 'delete',
+                        text: '删除',
+                        color: '#ff3142c7',
+                        onClick: () => handleDelete(item.id),
+                      },
+                    ]}>
+                    <div className={styles.list_item} key={item.id}>
+                      <div className={styles.list_item_icon}>
+                        <DynamicIcon name={item.icon_name} size={16} />
+                        <div>{item.note}</div>
+                      </div>
+                      <div className={styles.list_item_money}>
+                        <span>
+                          {item.type === 'expense' ? '- ' : ''}
+                          {item.money}
+                        </span>
+                      </div>
                     </div>
-                    <div className={styles.list_item_money}>
-                      <span>
-                        {item.type === 'expense' ? '- ' : ''}
-                        {item.money}
-                      </span>
-                    </div>
-                  </div>
+                  </SwipeAction>
                 )
               })}
             </div>

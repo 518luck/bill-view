@@ -135,6 +135,11 @@
   &_content {
     height: 190px;
     overflow: auto;
+    :global {
+      .adm-button {
+        .swipe-action-mixin();
+      }
+    }
   }
 
   &_item {

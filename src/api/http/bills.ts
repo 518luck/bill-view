@@ -5,7 +5,6 @@ export interface monthBillsRequest {
   date_str: string
   payday?: number
 }
-
 export interface bills {
   id: string
   money: string
@@ -18,9 +17,23 @@ export interface monthBillsResponse {
   day: string
   bills: bills[]
 }
-
 export const getMonthBills = (
   params: monthBillsRequest
 ): Promise<monthBillsResponse[]> => {
   return axios.get('/bills/month', { params })
+}
+
+// 删除账单
+export interface deleteBillRequest {
+  id: string
+}
+export interface deleteBillResponse {
+  success?: boolean
+  statusCode?: number
+  message: string
+}
+export const deleteBill = (
+  id: deleteBillRequest
+): Promise<deleteBillResponse> => {
+  return axios.delete(`/bills/${id}`)
 }
