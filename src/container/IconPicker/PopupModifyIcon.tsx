@@ -54,7 +54,7 @@ const PopupModifyIcon = ({
   }
   const iconName = watch('icon_name')
 
-  const { mutate: createIcon } = useCreateIconMutation({
+  const { mutate: createIcon, isPending } = useCreateIconMutation({
     onSuccess: () => {
       reset()
       onClose()
@@ -91,7 +91,7 @@ const PopupModifyIcon = ({
           </div>
           <strong>添加 {getCurrentTabsTypeTitle(currentTabsType)} 类别</strong>
           <div className={styles.confirmBt}>
-            <Button fill='solid' onClick={handleSubmit}>
+            <Button loading={isPending} fill='solid' onClick={handleSubmit}>
               完成
             </Button>
           </div>
