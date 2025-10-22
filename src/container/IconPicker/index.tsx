@@ -14,10 +14,7 @@ import BillTypeTabs from '@/components/BillTypeTabs'
 import PopupModifyIcon from '@/container/IconPicker/PopupModifyIcon'
 import { useGetIconList } from '@/api/hook'
 import DynamicIcon from '@/components/DynamicIcon'
-import type {
-  Action,
-  SwipeActionRef,
-} from 'antd-mobile/es/components/swipe-action'
+import type { SwipeActionRef } from 'antd-mobile/es/components/swipe-action'
 
 const IconPicker = () => {
   const navigate = useNavigate()
@@ -31,20 +28,16 @@ const IconPicker = () => {
     type: currentTabsType,
   })
 
-  //-----
-  const handleDelete = (id: string) => {
+  const handlSildeDeleteBtn = (id: string) => {
     Object.keys(swipeRefs.current).forEach((key) => {
       if (key !== id) swipeRefs.current[key]?.close()
     })
     swipeRefs.current[id]?.show('right')
   }
-  const rightActions: Action[] = [
-    {
-      key: 'delete',
-      text: '删除',
-      color: '#ff3142c7',
-    },
-  ]
+
+  const handleDelete = (e) => {
+    console.log('🚀 ~ handleDelete ~ e:', e)
+  }
   return (
     <div className={cs(styles.commonBackground, styles.icon_picker)}>
       <div className={styles.header}>
@@ -67,13 +60,20 @@ const IconPicker = () => {
           <SwipeAction
             ref={(el) => (swipeRefs.current[item.id] = el)}
             key={item.id}
-            rightActions={rightActions}>
+            rightActions={[
+              {
+                key: 'delete',
+                text: '删除',
+                color: '#ff3142c7',
+                onClick: () => handleDelete(item.id),
+              },
+            ]}>
             <div className={styles.item} key={item.id}>
               <Space align='center'>
                 <MdRemoveCircle
                   size={20}
                   color='#ff3b2f'
-                  onClick={() => handleDelete(item.id)}
+                  onClick={() => handlSildeDeleteBtn(item.id)}
                 />
                 <DynamicIcon name={item.icon_name} size={20} />
                 <span>{item.title}</span>
