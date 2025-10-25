@@ -6,15 +6,23 @@ import dayjs from 'dayjs'
 import styles from './styles.module.less'
 
 // 将 monthBillsResponse 转换为图表数据[[day, money],[],[]]
-const toCharData = (data: monthBillsResponse[], type: 'expense' | 'income') => {
-  if (!data) return []
-  const result = data.map((item) => {
-    const total = item.bills.reduce((sum, bill) => {
-      return sum + (bill.type === type ? Number(bill.money) : 0)
-    }, 0)
-    return [item.day, total] as chartMetadata
-  })
-  return result || []
+const toCharData = (
+  data: monthBillsResponse[] = [],
+  type: 'expense' | 'income'
+): chartMetadata[] => {
+  let cumulative = 0
+  // 假设 data 已经按日期升序或者降序排列，如果是降序可以先 reverse()
+  return data
+    .slice()
+    .reverse()
+    .map((item) => {
+      const todayTotal = item.bills.reduce(
+        (sum, bill) => sum + (bill.type === type ? Number(bill.money) : 0),
+        0
+      )
+      cumulative += todayTotal
+      return [item.day, cumulative] as chartMetadata
+    })
 }
 export type chartMetadata = [string, number] | []
 const LineChart = () => {
