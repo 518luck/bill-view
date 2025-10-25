@@ -20,7 +20,7 @@ export const useLoginMutation = (
     onError: (error, variables, context, mutation) => {
       Toast.show({
         icon: 'fail',
-        content: error?.response?.data?.message || '登录失败',
+        content: error?.message || '登录失败',
       })
       onError?.(error, variables, context, mutation)
     },

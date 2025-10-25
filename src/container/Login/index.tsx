@@ -97,6 +97,7 @@ const Login = () => {
   const handleLogin = async () => {
     try {
       const values = await formRef.current?.validateFields()
+
       if (captcha !== values.verifyCaptcha) {
         Toast.show({
           icon: 'fail',
@@ -107,10 +108,10 @@ const Login = () => {
 
       if (values.remember) {
         setCredentials(values.account, values.password)
-        loginMutate({ account: values.account, password: values.password })
       } else {
         setRememberPassword(false)
       }
+      loginMutate({ account: values.account, password: values.password })
 
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (error: any) {
