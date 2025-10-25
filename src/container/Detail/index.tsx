@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import cs from 'classnames'
-import { AiFillCaretDown } from 'react-icons/ai'
+import { MdArrowDropDown } from 'react-icons/md'
 import { DatePicker } from 'antd-mobile'
 import dayjs from 'dayjs'
 
@@ -69,7 +69,7 @@ const Detail = () => {
           <div className={styles.message_date_month}>
             <span>{selectedDate.format('MM')}</span>
             <span>月</span>
-            <AiFillCaretDown />
+            <MdArrowDropDown size={24} />
           </div>
         </div>
 

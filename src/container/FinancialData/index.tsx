@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { useCanvasMeteorLine } from '@/hook'
+import { MdArrowDropDown } from 'react-icons/md'
 import dayjs from 'dayjs'
 
 import styles from './styles.module.less'
 import LineChart from './LinChart'
 import ButtonCard from './ButtonCard'
 import { useGetMonthBills, type monthBillsResponse } from '@/api'
+import { DatePicker } from 'antd-mobile'
 export type chartMetadata = [string, number] | []
 
 // 将 monthBillsResponse 转换为图表数据[[day, money],[],[]]
@@ -52,18 +54,35 @@ const calculateNetIncome = (data: monthBillsResponse[] = []) => {
 }
 const FinancialData = () => {
   const canvasLineRef = useCanvasMeteorLine()
-  const [selectedDate, setSelectedDate] = useState(dayjs().format('YYYY-MM-DD'))
+  const [isDatePickerVisible, setIsDatePickerVisible] = useState(false)
+  const [selectedDate, setSelectedDate] = useState(dayjs())
   const { data } = useGetMonthBills({
-    date_str: selectedDate,
+    date_str: selectedDate.format('YYYY-MM-DD'),
   })
+
+  const total = calculateNetIncome(data || []).netIncome.toFixed(2)
 
   return (
     <div className={styles.commonBackground}>
       <div className={styles.header}>
         <div className={styles.header_text}>碎银二三</div>
         <canvas ref={canvasLineRef} className={styles.canvasLine} />
-        <div className={styles.header_money}>$ 4500,11</div>
-        <div className={styles.header_income}>总收入金额</div>
+        {Number(total) !== 0 && (
+          <div className={styles.header_money}>$ {total}</div>
+        )}
+        <div
+          className={styles.header_income}
+          onClick={() => setIsDatePickerVisible(true)}>
+          <span>
+            {selectedDate.format('YYYY-MM')}
+            <MdArrowDropDown size={24} />
+          </span>
+          {Number(total) > 0
+            ? '🤑嘿嘿结余'
+            : Number(total) < 0
+            ? '😭这月赤字'
+            : '📝这个月还没有账单'}
+        </div>
       </div>
 
       <LineChart
@@ -85,6 +104,19 @@ const FinancialData = () => {
           linkPath='/allBills'
         />
       </div>
+
+      <DatePicker
+        visible={isDatePickerVisible}
+        onClose={() => {
+          setIsDatePickerVisible(false)
+        }}
+        onConfirm={(date) => {
+          setSelectedDate(dayjs(date))
+        }}
+        precision='month'
+        value={selectedDate.toDate()}
+        className={styles.datePicker}
+      />
     </div>
   )
 }

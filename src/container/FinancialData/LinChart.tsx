@@ -102,7 +102,7 @@ const LineChart = ({
     }
 
     chartRef.current.setOption(option)
-  }, [])
+  }, [xExpendData, xIncomeData])
 
   return <div className={styles.chart} ref={domRef} />
 }
