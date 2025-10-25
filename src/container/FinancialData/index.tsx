@@ -98,7 +98,7 @@ const FinancialData = () => {
           linkPath='/deficit'
         />
         <ButtonCard
-          number={'09'}
+          number={selectedDate.format('MM')}
           text='我的账本明细'
           numberColor='white'
           linkPath='/allBills'
