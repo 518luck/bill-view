@@ -1,38 +1,18 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import * as echarts from 'echarts'
-import { useGetMonthBills, type monthBillsResponse } from '@/api'
-import dayjs from 'dayjs'
 
 import styles from './styles.module.less'
 
-// 将 monthBillsResponse 转换为图表数据[[day, money],[],[]]
-const toCharData = (
-  data: monthBillsResponse[] = [],
-  type: 'expense' | 'income'
-): chartMetadata[] => {
-  let cumulative = 0
-  // 假设 data 已经按日期升序或者降序排列，如果是降序可以先 reverse()
-  return data
-    .slice()
-    .reverse()
-    .map((item) => {
-      const todayTotal = item.bills.reduce(
-        (sum, bill) => sum + (bill.type === type ? Number(bill.money) : 0),
-        0
-      )
-      cumulative += todayTotal
-      return [item.day, cumulative] as chartMetadata
-    })
-}
-export type chartMetadata = [string, number] | []
-const LineChart = () => {
+import type { chartMetadata } from './index'
+const LineChart = ({
+  xExpendData,
+  xIncomeData,
+}: {
+  xExpendData: chartMetadata[]
+  xIncomeData: chartMetadata[]
+}) => {
   const domRef = useRef<HTMLDivElement>(null)
   const chartRef = useRef<echarts.ECharts | null>(null)
-  const [selectedDate, setSelectedDate] = useState(dayjs().format('YYYY-MM-DD'))
-
-  const { data } = useGetMonthBills({
-    date_str: selectedDate,
-  })
 
   useEffect(() => {
     if (!domRef.current) return
@@ -48,8 +28,6 @@ const LineChart = () => {
   }, [])
 
   useEffect(() => {
-    const xExpendData: chartMetadata[] = toCharData(data || [], 'expense')
-    const xIncomeData: chartMetadata[] = toCharData(data || [], 'income')
     if (!chartRef.current) return
 
     const option = {
