@@ -41,12 +41,12 @@ const Deficit = () => {
       </div>
 
       <div className={styles.content}>
-        <div className={styles.content_hr} />
         <Flex justify='between'>
           <div className={styles.content_btn}>修改存款</div>
           <div className={styles.content_btn}>添加预支</div>
           <div className={styles.content_btn}>修改储蓄</div>
         </Flex>
+        <div className={styles.content_hr} />
 
         <span className={styles.content_title}>本需累计需要偿还:{100}</span>
 
