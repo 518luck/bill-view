@@ -46,9 +46,13 @@ const Deficit = () => {
           <div className={styles.content_btn}>添加预支</div>
           <div className={styles.content_btn}>修改储蓄</div>
         </Flex>
+
         <div className={styles.content_hr} />
 
-        <span className={styles.content_title}>本需累计需要偿还:{100}</span>
+        <span className={styles.content_title}>
+          <span>本需累计需要偿还:{100}</span>
+          <span>总共欠款为:{100}</span>
+        </span>
 
         <div className={styles.content_list}>
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
