@@ -5,6 +5,7 @@ import cs from 'classnames'
 import styles from './styles.module.less'
 import PieChart from './PieChart'
 import AdvanceListItem from './AdvanceListItem'
+import Flex from '@/components/Flex'
 
 const Deficit = () => {
   const [percent, setPercent] = useState<number>(0)
@@ -20,8 +21,6 @@ const Deficit = () => {
     const hue = Math.min(120, (advance / 100) * 120) // 控制色相，0度为红色，120度为绿色
     setProgressColor(`hsl(${hue}, 100%, 50%)`)
   }, [advance])
-
-  // 以上全是假数据
 
   return (
     <div className={cs(styles.commonBackground, styles.deficit)}>
@@ -42,7 +41,14 @@ const Deficit = () => {
       </div>
 
       <div className={styles.content}>
-        <span className={styles.content_title}>预支排行榜</span>
+        <div className={styles.content_hr} />
+        <Flex justify='between'>
+          <div className={styles.content_btn}>修改存款</div>
+          <div className={styles.content_btn}>添加预支</div>
+          <div className={styles.content_btn}>修改储蓄</div>
+        </Flex>
+
+        <span className={styles.content_title}>本需累计需要偿还:{100}</span>
 
         <div className={styles.content_list}>
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
