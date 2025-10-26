@@ -78,7 +78,7 @@ const FinancialData = () => {
             <MdArrowDropDown size={24} />
           </span>
           {Number(total) > 0
-            ? '🤑嘿嘿结余'
+            ? '😀嘿嘿结余'
             : Number(total) < 0
             ? '😭这月赤字'
             : '📝这个月还没有账单'}
