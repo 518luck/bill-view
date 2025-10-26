@@ -103,6 +103,19 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 5px;
+
+      &_item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        :not(:last-child) {
+          display: inline-block;
+          white-space: nowrap;
+          width: 70px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
     }
 
     &_progressBar {

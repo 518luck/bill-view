@@ -3,14 +3,17 @@ import { ProgressBar } from 'antd-mobile'
 import cs from 'classnames'
 
 import styles from './styles.module.less'
-import PieChart from './PieChart'
-import AdvanceListItem from './AdvanceListItem'
+import PieChart from '@/container/Debts/PieChart'
+import AdvanceListItem from '@/container/Debts/AdvanceListItem'
 import Flex from '@/components/Flex'
+import { useGetDebts } from '@/api/hook'
 
 const Debts = () => {
   const [percent, setPercent] = useState<number>(0)
   const [progressColor, setProgressColor] =
     useState<string>('hsl(0, 100%, 50%)')
+
+  const { data: debts = [] } = useGetDebts()
 
   // 预支占比 后期用api代替
   const advance = 20
@@ -55,8 +58,8 @@ const Debts = () => {
         </span>
 
         <div className={styles.content_list}>
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
-            <AdvanceListItem key={item} />
+          {debts.map((item) => (
+            <AdvanceListItem key={item.id} debtsItem={item} />
           ))}
         </div>
       </div>

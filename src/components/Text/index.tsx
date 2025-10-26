@@ -5,7 +5,7 @@ export interface TextProps {
   children: React.ReactNode
   className?: string
   style?: CSSProperties
-  type?: 'secondary' | 'success' | 'warning' | 'danger'
+  type?: 'secondary' | 'success' | 'warning' | 'danger' | 'tertiary'
   ellipsis?: boolean
   size?: 'small' | 'medium' | 'large' | number // 支持预设和自定义像素值
 }
