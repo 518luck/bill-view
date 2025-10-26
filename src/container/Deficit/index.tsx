@@ -50,8 +50,8 @@ const Deficit = () => {
         <div className={styles.content_hr} />
 
         <span className={styles.content_title}>
-          <span>本需累计需要偿还:{100}</span>
-          <span>总共欠款为:{100}</span>
+          <span>本月共需要偿还:{100}</span>
+          <span>总计欠款为:{100}</span>
         </span>
 
         <div className={styles.content_list}>
