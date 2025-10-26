@@ -7,7 +7,7 @@ import PieChart from './PieChart'
 import AdvanceListItem from './AdvanceListItem'
 import Flex from '@/components/Flex'
 
-const Deficit = () => {
+const Debts = () => {
   const [percent, setPercent] = useState<number>(0)
   const [progressColor, setProgressColor] =
     useState<string>('hsl(0, 100%, 50%)')
@@ -63,4 +63,4 @@ const Deficit = () => {
     </div>
   )
 }
-export default Deficit
+export default Debts

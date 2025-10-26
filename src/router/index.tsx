@@ -8,7 +8,7 @@ const FinancialData = lazy(() => import('@/container/FinancialData'))
 const User = lazy(() => import('@/container/User'))
 const AllBills = lazy(() => import('@/container/AllBills'))
 const Login = lazy(() => import('@/container/Login'))
-const Deficit = lazy(() => import('@/container/Deficit'))
+const Debts = lazy(() => import('@/container/Debts'))
 const NotFound = lazy(() => import('@/container/NotFound'))
 const Tally = lazy(() => import('@/container/Tally'))
 const IconPicker = lazy(() => import('@/container/IconPicker'))
@@ -23,7 +23,7 @@ const createProtectedRoute = (Component: React.ComponentType) => (
 // 受保护的路由配置
 const protectedRoutes = [
   { path: '/financialData', component: FinancialData },
-  { path: '/deficit', component: Deficit },
+  { path: '/debts', component: Debts },
   { path: '/detail', component: Detail },
   { path: '/allBills', component: AllBills },
   { path: '/tally', component: Tally },

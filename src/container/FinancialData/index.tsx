@@ -95,7 +95,7 @@ const FinancialData = () => {
           number={'03'}
           text='贷款未偿合计'
           numberColor='red'
-          linkPath='/deficit'
+          linkPath='/debts'
         />
         <ButtonCard
           number={selectedDate.format('MM')}
