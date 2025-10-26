@@ -14,6 +14,16 @@ const Debts = () => {
     useState<string>('hsl(0, 100%, 50%)')
 
   const { data: debts = [] } = useGetDebts()
+  // 计算本月共需要偿还的金额
+  const monthRepay = debts.reduce(
+    (acc, cur) => acc + Number(cur.current_month_due),
+    0
+  )
+  //计算总共欠款金额
+  const totalDebt = debts.reduce(
+    (acc, cur) => acc + Number(cur.total_amount),
+    0
+  )
 
   // 预支占比 后期用api代替
   const advance = 20
@@ -53,8 +63,8 @@ const Debts = () => {
         <div className={styles.content_hr} />
 
         <span className={styles.content_title}>
-          <span>本月共需要偿还:{100}</span>
-          <span>总计欠款为:{100}</span>
+          <span>本月偿还：{monthRepay.toFixed(2)}</span>
+          <span>剩余欠款：{totalDebt.toFixed(2)}</span>
         </span>
 
         <div className={styles.content_list}>
