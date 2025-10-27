@@ -7,11 +7,19 @@ import PieChart from '@/container/Debts/PieChart'
 import AdvanceListItem from '@/container/Debts/AdvanceListItem'
 import Flex from '@/components/Flex'
 import { useGetDebts } from '@/api/hook'
+import UpdateSavings from '@/container/Debts/UpdateSavings'
+import AddPrepayment from '@/container/Debts/AddPrepayment'
 
 const Debts = () => {
   const [percent, setPercent] = useState<number>(0)
   const [progressColor, setProgressColor] =
     useState<string>('hsl(0, 100%, 50%)')
+
+  //控制修改储蓄的弹窗是否显示
+  const [visibleSavings, setVisibleSavings] = useState<boolean>(false)
+  // 控制添加预支的弹窗是否显示
+  const [visibleAddPrepayment, setVisibleAddPrepayment] =
+    useState<boolean>(false)
 
   const { data: debts = [] } = useGetDebts()
   // 计算本月共需要偿还的金额
@@ -55,9 +63,16 @@ const Debts = () => {
 
       <div className={styles.content}>
         <Flex justify='between'>
-          <div className={styles.content_btn}>修改存款</div>
-          <div className={styles.content_btn}>添加预支</div>
-          <div className={styles.content_btn}>修改储蓄</div>
+          <div
+            className={styles.content_btn}
+            onClick={() => setVisibleSavings(true)}>
+            修改储蓄
+          </div>
+          <div
+            className={styles.content_btn}
+            onClick={() => setVisibleAddPrepayment(true)}>
+            添加预支
+          </div>
         </Flex>
 
         <div className={styles.content_hr} />
@@ -73,6 +88,12 @@ const Debts = () => {
           ))}
         </div>
       </div>
+
+      <UpdateSavings visible={visibleSavings} setVisible={setVisibleSavings} />
+      <AddPrepayment
+        visible={visibleAddPrepayment}
+        setVisible={setVisibleAddPrepayment}
+      />
     </div>
   )
 }
