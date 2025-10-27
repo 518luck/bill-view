@@ -4,6 +4,8 @@ import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import ZInput from '@/components/ZInput'
 import Text from '@/components/Text'
+
+import styles from './styles.module.less'
 interface AddPrepaymentProps {
   visible: boolean
   setVisible: (visible: boolean) => void
@@ -31,8 +33,9 @@ const AddPrepayment = ({ visible, setVisible }: AddPrepaymentProps) => {
       }}
       onClose={() => {
         setVisible(false)
-      }}>
-      <Space align='center'>
+      }}
+      className={styles.form}>
+      <Space align='center' className={styles.row}>
         <Text size='large'>欠款方：</Text>
         <Controller
           name='creditor'
@@ -40,8 +43,9 @@ const AddPrepayment = ({ visible, setVisible }: AddPrepaymentProps) => {
           render={({ field }) => <ZInput {...field} placeholder='欠款方' />}
         />
       </Space>
-      <Space align='center'>
-        <Text size='large'>本月应还金额：</Text>
+
+      <Space align='center' className={styles.row}>
+        <Text size='large'>本月应还：</Text>
         <Controller
           name='current_month_due'
           control={control}
@@ -55,8 +59,9 @@ const AddPrepayment = ({ visible, setVisible }: AddPrepaymentProps) => {
           )}
         />
       </Space>
-      <Space align='center'>
-        <Text size='large'>预计还清日期：</Text>
+
+      <Space align='center' className={styles.row}>
+        <Text size='large'>还清日期：</Text>
         <Controller
           name='end_date'
           control={control}
@@ -65,7 +70,7 @@ const AddPrepayment = ({ visible, setVisible }: AddPrepaymentProps) => {
           )}
         />
       </Space>
-      <Space align='center'>
+      <Space align='center' className={styles.row}>
         <Text size='large'>已还金额：</Text>
         <Controller
           name='repaid_amount'
@@ -80,7 +85,7 @@ const AddPrepayment = ({ visible, setVisible }: AddPrepaymentProps) => {
           )}
         />
       </Space>
-      <Space align='center'>
+      <Space align='center' className={styles.row}>
         <Text size='large'>欠款开始日期</Text>
         <Controller
           name='start_date'
@@ -90,7 +95,7 @@ const AddPrepayment = ({ visible, setVisible }: AddPrepaymentProps) => {
           )}
         />
       </Space>
-      <Space align='center'>
+      <Space align='center' className={styles.row}>
         <Text size='large'>欠款总额度</Text>
         <Controller
           name='total_amount'

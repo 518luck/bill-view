@@ -124,3 +124,16 @@
     }
   }
 }
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 8px 0;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 120px 1fr; /* 左固定宽度, 右自适应 */
+  align-items: center;
+  column-gap: 8px;
+}
