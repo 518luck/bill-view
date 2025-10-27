@@ -18,6 +18,7 @@ const App = () => {
       '/user',
       '/deficit',
       '/allBills',
+      '/debts',
     ],
     []
   )
