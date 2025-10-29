@@ -1,8 +1,8 @@
 import { axios } from '@/utils'
 
+// 获取用户所有债务
 export type DebtStatus = 'owed' | 'paid'
-
-export interface debtsRespones {
+export interface debtsResponse {
   id: string // 主键id
   creditor: string // 欠款方（例如：京东白条）
   total_amount: string // 总欠款金额
@@ -13,6 +13,6 @@ export interface debtsRespones {
   status: DebtStatus // 状态：欠款中或已还清
 }
 
-export const getDebts = (): Promise<debtsRespones[]> => {
+export const getDebts = (): Promise<debtsResponse[]> => {
   return axios.get('/debts')
 }
