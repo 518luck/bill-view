@@ -16,3 +16,23 @@ export interface debtsResponse {
 export const getDebts = (): Promise<debtsResponse[]> => {
   return axios.get('/debts')
 }
+
+// 创建债务
+export interface createDebtRequest {
+  creditor: string // 欠款方（例如：京东白条）
+  current_month_due: number // 本月应还金额
+  end_date: string // 结束日期
+  total_amount: number // 总欠款金额
+  start_date: string // 开始日期
+  repaid_amount: number // 已还金额
+}
+export interface createDebtResponse {
+  success?: boolean
+  statusCode?: number
+  message: string
+}
+export const createDebt = (
+  request: createDebtRequest
+): Promise<createDebtResponse> => {
+  return axios.post('/debts', request)
+}

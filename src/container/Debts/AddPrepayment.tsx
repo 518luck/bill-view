@@ -4,7 +4,7 @@ import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import ZInput from '@/components/ZInput'
 import Text from '@/components/Text'
-import { useGetDebts } from '@/api'
+import { useCreateDebtMutation } from '@/api'
 
 import styles from './styles.module.less'
 interface AddPrepaymentProps {
@@ -53,12 +53,17 @@ const AddPrepayment = ({ visible, setVisible }: AddPrepaymentProps) => {
     setCurrentDateField(null)
   }
 
-  const { data: debts } = useGetDebts()
+  const { mutate: createDebt, isPending } = useCreateDebtMutation({
+    onSuccess: () => {
+      setVisible(false)
+      reset()
+    },
+  })
   const handleSubmit = async () => {
     const valid = await trigger()
     if (!valid) return
     const values = getValues()
-    console.log('🚀 ~ handleSubmit ~ values:', values)
+    createDebt(values)
   }
 
   return (
@@ -244,7 +249,9 @@ const AddPrepayment = ({ visible, setVisible }: AddPrepaymentProps) => {
           }}>
           取消
         </Button>
-        <Button onClick={handleSubmit}>提交</Button>
+        <Button onClick={handleSubmit} loading={isPending}>
+          提交
+        </Button>
       </Flex>
 
       <DatePicker
