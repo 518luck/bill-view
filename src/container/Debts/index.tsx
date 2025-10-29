@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import { ProgressBar } from 'antd-mobile'
+import { ProgressBar, SwipeAction } from 'antd-mobile'
 import cs from 'classnames'
-
+import type { Action } from 'antd-mobile/es/components/swipe-action'
 import styles from './styles.module.less'
 import PieChart from '@/container/Debts/PieChart'
 import AdvanceListItem from '@/container/Debts/AdvanceListItem'
@@ -42,7 +42,13 @@ const Debts = () => {
     const hue = Math.min(120, (advance / 100) * 120) // 控制色相，0度为红色，120度为绿色
     setProgressColor(`hsl(${hue}, 100%, 50%)`)
   }, [advance])
-
+  const rightActions: Action[] = [
+    {
+      key: 'delete',
+      text: '删除',
+      color: 'danger',
+    },
+  ]
   return (
     <div className={cs(styles.commonBackground, styles.deficit)}>
       <div className={styles.header}>
@@ -84,7 +90,9 @@ const Debts = () => {
 
         <div className={styles.content_list}>
           {debts.map((item) => (
-            <AdvanceListItem key={item.id} debtsItem={item} />
+            <SwipeAction key={item.id} rightActions={rightActions}>
+              <AdvanceListItem debtsItem={item} />
+            </SwipeAction>
           ))}
         </div>
       </div>

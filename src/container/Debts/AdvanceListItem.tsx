@@ -1,8 +1,8 @@
 import { ProgressBar } from 'antd-mobile'
 import styles from './styles.module.less'
-import { type debtsRespones } from '@/api'
+import { type debtsResponse } from '@/api'
 
-const AdvanceListItem = ({ debtsItem }: { debtsItem: debtsRespones }) => {
+const AdvanceListItem = ({ debtsItem }: { debtsItem: debtsResponse }) => {
   // 计算进度百分比，避免除以0错误
   const progressPercent =
     (Number(debtsItem?.repaid_amount) / Number(debtsItem?.total_amount)) *

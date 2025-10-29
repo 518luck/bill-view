@@ -35,6 +35,7 @@ const Detail = () => {
   const remainMoney = (
     totalMoney(monthBills, 'income') - totalMoney(monthBills, 'expense')
   ).toFixed(2)
+
   const messageData = [
     {
       title: '收入',
@@ -90,6 +91,7 @@ const Detail = () => {
           })}
         </div>
       </div>
+
       {/* bill-item-card */}
       <BillItemCard monthBills={monthBills} />
 
