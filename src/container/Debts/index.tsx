@@ -6,7 +6,7 @@ import styles from './styles.module.less'
 import PieChart from '@/container/Debts/PieChart'
 import AdvanceListItem from '@/container/Debts/AdvanceListItem'
 import Flex from '@/components/Flex'
-import { useGetDebts } from '@/api/hook'
+import { useGetDebts, useDeleteDebtMutation } from '@/api'
 import UpdateSavings from '@/container/Debts/UpdateSavings'
 import AddPrepayment from '@/container/Debts/AddPrepayment'
 
@@ -35,6 +35,8 @@ const Debts = () => {
 
   // 预支占比 后期用api代替
   const advance = 20
+
+  const { mutate: deleteDebt } = useDeleteDebtMutation()
 
   useEffect(() => {
     setPercent(advance)
@@ -90,7 +92,10 @@ const Debts = () => {
 
         <div className={styles.content_list}>
           {debts.map((item) => (
-            <SwipeAction key={item.id} rightActions={rightActions}>
+            <SwipeAction
+              key={item.id}
+              rightActions={rightActions}
+              onAction={() => deleteDebt(item?.id)}>
               <AdvanceListItem debtsItem={item} />
             </SwipeAction>
           ))}

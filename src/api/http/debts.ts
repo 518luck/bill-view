@@ -36,3 +36,13 @@ export const createDebt = (
 ): Promise<createDebtResponse> => {
   return axios.post('/debts', request)
 }
+
+// 删除债务
+export interface deleteDebtResponse {
+  success?: boolean
+  statusCode?: number
+  message: string
+}
+export const deleteDebt = (id: string): Promise<deleteDebtResponse> => {
+  return axios.delete(`/debts/${id}`)
+}
