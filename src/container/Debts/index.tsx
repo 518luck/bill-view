@@ -6,7 +6,7 @@ import styles from './styles.module.less'
 import PieChart from '@/container/Debts/PieChart'
 import AdvanceListItem from '@/container/Debts/AdvanceListItem'
 import Flex from '@/components/Flex'
-import { useGetDebts, useDeleteDebtMutation } from '@/api'
+import { useGetDebts, useDeleteDebtMutation, type debtsResponse } from '@/api'
 import UpdateSavings from '@/container/Debts/UpdateSavings'
 import AddPrepayment from '@/container/Debts/AddPrepayment'
 
@@ -37,6 +37,14 @@ const Debts = () => {
   const advance = 20
 
   const { mutate: deleteDebt } = useDeleteDebtMutation()
+  const handleSwipeAction = (action: Action, item: debtsResponse) => {
+    if (action.key === 'delete') {
+      deleteDebt(item.id)
+    }
+    if (action.key === 'repay') {
+      console.log(item)
+    }
+  }
 
   useEffect(() => {
     setPercent(advance)
@@ -45,6 +53,11 @@ const Debts = () => {
     setProgressColor(`hsl(${hue}, 100%, 50%)`)
   }, [advance])
   const rightActions: Action[] = [
+    {
+      key: 'repay',
+      text: '还款',
+      color: '#a2f78d9b',
+    },
     {
       key: 'delete',
       text: '删除',
@@ -95,7 +108,7 @@ const Debts = () => {
             <SwipeAction
               key={item.id}
               rightActions={rightActions}
-              onAction={() => deleteDebt(item?.id)}>
+              onAction={(action) => handleSwipeAction(action, item)}>
               <AdvanceListItem debtsItem={item} />
             </SwipeAction>
           ))}
