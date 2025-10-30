@@ -15,7 +15,12 @@ const AdvanceListItem = ({ debtsItem }: { debtsItem: debtsResponse }) => {
             <span>{debtsItem.creditor}</span>
             <span>月还：{debtsItem.current_month_due}</span>
           </div>
-          <div>{debtsItem.total_amount}</div>
+          <div>
+            欠款：
+            {(
+              Number(debtsItem.total_amount) - Number(debtsItem?.repaid_amount)
+            ).toFixed(2)}
+          </div>
         </div>
         <ProgressBar
           className={styles.item_content_progressBar}

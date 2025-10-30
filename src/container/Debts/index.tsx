@@ -9,6 +9,7 @@ import Flex from '@/components/Flex'
 import { useGetDebts, useDeleteDebtMutation, type debtsResponse } from '@/api'
 import UpdateSavings from '@/container/Debts/UpdateSavings'
 import AddPrepayment from '@/container/Debts/AddPrepayment'
+import RepayPrepayment from './RepayPrepayment'
 
 const Debts = () => {
   const [percent, setPercent] = useState<number>(0)
@@ -20,6 +21,10 @@ const Debts = () => {
   // 控制添加预支的弹窗是否显示
   const [visibleAddPrepayment, setVisibleAddPrepayment] =
     useState<boolean>(false)
+  // 控制还款弹窗是否显示
+  const [visibleRepayPrepayment, setVisibleRepayPrepayment] =
+    useState<boolean>(false)
+  const [currentDebt, setCurrentDebt] = useState<debtsResponse>()
 
   const { data: debts = [] } = useGetDebts()
   // 计算本月共需要偿还的金额
@@ -42,7 +47,8 @@ const Debts = () => {
       deleteDebt(item.id)
     }
     if (action.key === 'repay') {
-      console.log(item)
+      setVisibleRepayPrepayment(true)
+      setCurrentDebt(item)
     }
   }
 
@@ -77,11 +83,9 @@ const Debts = () => {
           />
         </div>
       </div>
-
       <div className={styles.message}>
         <span>⚠️ 警告：赤字已经超过收入的20%，这属于高风险行为</span>
       </div>
-
       <div className={styles.content}>
         <Flex justify='between'>
           <div
@@ -114,11 +118,16 @@ const Debts = () => {
           ))}
         </div>
       </div>
-
       <UpdateSavings visible={visibleSavings} setVisible={setVisibleSavings} />
       <AddPrepayment
         visible={visibleAddPrepayment}
         setVisible={setVisibleAddPrepayment}
+      />
+      <RepayPrepayment
+        visible={visibleRepayPrepayment}
+        setVisible={setVisibleRepayPrepayment}
+        currentDebt={currentDebt}
+        setCurrentDebt={setCurrentDebt}
       />
     </div>
   )

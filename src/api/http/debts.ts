@@ -46,3 +46,20 @@ export interface deleteDebtResponse {
 export const deleteDebt = (id: string): Promise<deleteDebtResponse> => {
   return axios.delete(`/debts/${id}`)
 }
+
+// 偿还债务
+export interface repayPrepaymentRequest {
+  debt_id: string
+  amount: number // 还款金额
+  date: string // 还款日期
+}
+export interface repayPrepaymentResponse {
+  success?: boolean
+  statusCode?: number
+  message: string
+}
+export const repayPrepayment = (
+  request: repayPrepaymentRequest
+): Promise<repayPrepaymentResponse> => {
+  return axios.post(`/debts/repay`, request)
+}
