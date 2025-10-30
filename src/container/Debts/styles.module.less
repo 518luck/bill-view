@@ -76,6 +76,16 @@
     overflow-y: auto;
     height: 250px;
     padding: 10px 10px 10px 5px;
+    :global {
+      .adm-button {
+        .swipe-action-mixin();
+        transform: translateY(9px);
+        span {
+          display: inline-block;
+          transform: translateY(-5px);
+        }
+      }
+    }
   }
 }
 
