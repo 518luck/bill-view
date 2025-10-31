@@ -2,13 +2,18 @@ import { ProgressBar } from 'antd-mobile'
 import styles from './styles.module.less'
 import { type debtsResponse } from '@/api'
 
-const AdvanceListItem = ({ debtsItem }: { debtsItem: debtsResponse }) => {
+interface AdvanceListItemProps {
+  debtsItem: debtsResponse
+  onClick?: (item: debtsResponse) => void
+}
+
+const AdvanceListItem = ({ debtsItem, onClick }: AdvanceListItemProps) => {
   // 计算进度百分比，避免除以0错误
   const progressPercent =
     (Number(debtsItem?.repaid_amount) / Number(debtsItem?.total_amount)) *
       100 || 0
   return (
-    <div className={styles.item}>
+    <div className={styles.item} onClick={() => onClick?.(debtsItem)}>
       <div className={styles.item_content}>
         <div className={styles.item_content_title}>
           <div className={styles.item_content_title_item}>

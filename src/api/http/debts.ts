@@ -63,3 +63,22 @@ export const repayPrepayment = (
 ): Promise<repayPrepaymentResponse> => {
   return axios.post(`/debts/repay`, request)
 }
+
+// 更新债务
+export interface updateDebtRequest {
+  creditor: string // 欠款方（例如：京东白条）
+  current_month_due: number // 本月应还金额
+  total_amount: number // 总欠款金额
+  repaid_amount: number // 已还金额
+}
+export interface updateDebtResponse {
+  success?: boolean
+  statusCode?: number
+  message: string
+}
+export const updateDebt = (
+  id: string,
+  request: updateDebtRequest
+): Promise<updateDebtResponse> => {
+  return axios.patch(`/debts/${id}`, request)
+}

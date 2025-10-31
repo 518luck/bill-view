@@ -9,7 +9,8 @@ import Flex from '@/components/Flex'
 import { useGetDebts, useDeleteDebtMutation, type debtsResponse } from '@/api'
 import UpdateSavings from '@/container/Debts/UpdateSavings'
 import AddPrepayment from '@/container/Debts/AddPrepayment'
-import RepayPrepayment from './RepayPrepayment'
+import RepayPrepayment from '@/container/Debts/RepayPrepayment'
+import EditPrepayment from '@/container/Debts/EditPrepayment'
 
 const Debts = () => {
   const [percent, setPercent] = useState<number>(0)
@@ -24,6 +25,10 @@ const Debts = () => {
   // 控制还款弹窗是否显示
   const [visibleRepayPrepayment, setVisibleRepayPrepayment] =
     useState<boolean>(false)
+  // 控制编辑预支的弹窗是否显示
+  const [visibleEditPrepayment, setVisibleEditPrepayment] =
+    useState<boolean>(false)
+  // 当前选中的预支项
   const [currentDebt, setCurrentDebt] = useState<debtsResponse>()
 
   const { data: debts = [] } = useGetDebts()
@@ -113,7 +118,13 @@ const Debts = () => {
               key={item.id}
               rightActions={rightActions}
               onAction={(action) => handleSwipeAction(action, item)}>
-              <AdvanceListItem debtsItem={item} />
+              <AdvanceListItem
+                debtsItem={item}
+                onClick={(item) => {
+                  setVisibleEditPrepayment(true)
+                  setCurrentDebt(item)
+                }}
+              />
             </SwipeAction>
           ))}
         </div>
@@ -126,6 +137,12 @@ const Debts = () => {
       <RepayPrepayment
         visible={visibleRepayPrepayment}
         setVisible={setVisibleRepayPrepayment}
+        currentDebt={currentDebt}
+        setCurrentDebt={setCurrentDebt}
+      />
+      <EditPrepayment
+        visible={visibleEditPrepayment}
+        setVisible={setVisibleEditPrepayment}
         currentDebt={currentDebt}
         setCurrentDebt={setCurrentDebt}
       />

@@ -12,12 +12,15 @@ import {
   deleteDebt,
   getDebts,
   repayPrepayment,
+  updateDebt,
   type createDebtRequest,
   type createDebtResponse,
   type debtsResponse,
   type deleteDebtResponse,
   type repayPrepaymentRequest,
   type repayPrepaymentResponse,
+  type updateDebtRequest,
+  type updateDebtResponse,
 } from '@/api'
 import type { ApiError } from '@/api/types'
 import { Toast } from 'antd-mobile'
@@ -115,6 +118,41 @@ export const useRepayPrepayment = (
       Toast.show({
         icon: 'fail',
         content: error?.message || '偿还失败',
+      })
+      onError?.(error, variables, context, mutation)
+    },
+    ...restOptions,
+  })
+}
+
+// 更新债务
+export const useUpdateDebtMutation = (
+  options?: UseMutationOptions<
+    updateDebtResponse,
+    ApiError,
+    { id: string; request: updateDebtRequest }
+  >
+): UseMutationResult<
+  updateDebtResponse,
+  ApiError,
+  { id: string; request: updateDebtRequest }
+> => {
+  const queryClient = useQueryClient()
+
+  const { onSuccess, onError, ...restOptions } = options || {}
+
+  return useMutation({
+    mutationFn: ({ id, request }) => updateDebt(id, request),
+    onSuccess: (data, variables, context, mutation) => {
+      queryClient.invalidateQueries({ queryKey: ['debts'] })
+
+      Toast.show({ icon: 'success', content: data.message || '更新成功' })
+      onSuccess?.(data, variables, context, mutation)
+    },
+    onError: (error, variables, context, mutation) => {
+      Toast.show({
+        icon: 'fail',
+        content: error?.message || '更新失败',
       })
       onError?.(error, variables, context, mutation)
     },
