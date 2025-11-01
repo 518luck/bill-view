@@ -17,6 +17,16 @@ import AddPrepayment from '@/container/Debts/AddPrepayment'
 import RepayPrepayment from '@/container/Debts/RepayPrepayment'
 import EditPrepayment from '@/container/Debts/EditPrepayment'
 
+// 根据预支比例显示不同提示
+const getWarningMessage = (advancePercent: number) => {
+  if (advancePercent > 20) {
+    return '⚠️ 警告：预支比例过高，财务压力较大，建议减少开支'
+  } else if (advancePercent > 10) {
+    return 'ℹ️ 提示：预支比例适中，在可控范围内，请注意平衡收支'
+  } else {
+    return '✅ 状态良好：预支比例较低，财务状况稳健，继续保持'
+  }
+}
 const Debts = () => {
   const [percent, setPercent] = useState<number>(0)
   const [progressColor, setProgressColor] =
@@ -116,7 +126,7 @@ const Debts = () => {
         </div>
       </div>
       <div className={styles.message}>
-        <span>⚠️ 警告：赤字已经超过收入的20%，这属于高风险行为</span>
+        <span>{getWarningMessage(Number(advance))}</span>
       </div>
       <div className={styles.content}>
         <Flex justify='between'>

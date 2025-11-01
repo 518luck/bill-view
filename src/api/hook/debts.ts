@@ -50,6 +50,7 @@ export const useCreateDebtMutation = (
     mutationFn: (request) => createDebt(request),
     onSuccess: (data, variables, context, mutation) => {
       queryClient.invalidateQueries({ queryKey: ['debts'] })
+      queryClient.invalidateQueries({ queryKey: ['debtPieChart'] })
 
       Toast.show({ icon: 'success', content: data.message || '创建成功' })
       onSuccess?.(data, variables, context, mutation)
@@ -77,6 +78,7 @@ export const useDeleteDebtMutation = (
     mutationFn: (id) => deleteDebt(id),
     onSuccess: (data, variables, context, mutation) => {
       queryClient.invalidateQueries({ queryKey: ['debts'] })
+      queryClient.invalidateQueries({ queryKey: ['debtPieChart'] })
 
       Toast.show({ icon: 'success', content: data.message || '删除成功' })
       onSuccess?.(data, variables, context, mutation)
@@ -112,6 +114,7 @@ export const useRepayPrepayment = (
     mutationFn: (request) => repayPrepayment(request),
     onSuccess: (data, variables, context, mutation) => {
       queryClient.invalidateQueries({ queryKey: ['debts'] })
+      queryClient.invalidateQueries({ queryKey: ['debtPieChart'] })
 
       Toast.show({ icon: 'success', content: data.message || '偿还成功' })
       onSuccess?.(data, variables, context, mutation)
@@ -147,6 +150,7 @@ export const useUpdateDebtMutation = (
     mutationFn: ({ id, request }) => updateDebt(id, request),
     onSuccess: (data, variables, context, mutation) => {
       queryClient.invalidateQueries({ queryKey: ['debts'] })
+      queryClient.invalidateQueries({ queryKey: ['debtPieChart'] })
 
       Toast.show({ icon: 'success', content: data.message || '更新成功' })
       onSuccess?.(data, variables, context, mutation)
