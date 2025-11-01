@@ -108,5 +108,5 @@ export interface updateDebtPieChartResponse {
 export const updateDebtPieChart = (
   request: updateDebtPieChartRequest
 ): Promise<updateDebtPieChartResponse> => {
-  return axios.post(`/debts/asset-debt-pie`, request)
+  return axios.patch(`/debts/asset-debt-pie`, request)
 }

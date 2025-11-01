@@ -35,7 +35,13 @@ const UpdateSavingsPrepayment = ({
   })
 
   const { mutate: updateDebtPieChart, isPending } =
-    useUpdateDebtPieChartMutation()
+    useUpdateDebtPieChartMutation({
+      onSuccess: () => {
+        setVisible(false)
+        reset()
+      },
+    })
+
   const handleSubmit = async () => {
     const valid = await trigger()
     if (!valid) return
