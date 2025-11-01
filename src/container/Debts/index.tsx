@@ -16,9 +16,19 @@ import UpdateSavingsPrepayment from '@/container/Debts/UpdateSavingsPrepayment'
 import AddPrepayment from '@/container/Debts/AddPrepayment'
 import RepayPrepayment from '@/container/Debts/RepayPrepayment'
 import EditPrepayment from '@/container/Debts/EditPrepayment'
+import Text from '@/components/Text'
 
 // 根据预支比例显示不同提示
 const getWarningMessage = (advancePercent: number) => {
+  if (isNaN(advancePercent)) {
+    return '⚠️ 警告：预支比例数据异常，无法计算'
+  }
+  if (advancePercent < 0) {
+    return '⚠️ 警告：预支比例不能为负数，检查输入数据'
+  }
+  if (advancePercent > 100) {
+    return '⚠️⚠️⚠️ ⚠️⚠️⚠️我丢,这也太高了 ⚠️⚠️⚠️ ⚠️⚠️⚠️'
+  }
   if (advancePercent > 20) {
     return '⚠️ 警告：预支比例过高，财务压力较大，建议减少开支'
   } else if (advancePercent > 10) {
@@ -118,7 +128,13 @@ const Debts = () => {
       <div className={styles.header}>
         <PieChart pieChartData={pieChartData} />
         <div className={styles.PreAllocationRatio}>
-          <span>预支占比 : {advance}%</span>
+          {Number(advance) > 1000 ? (
+            <Text size='small' type='danger'>
+              直接爆炸
+            </Text>
+          ) : (
+            <span>预支占比 : {advance}%</span>
+          )}
           <ProgressBar
             style={{ '--fill-color': progressColor, '--track-width': '11px' }}
             percent={percent}

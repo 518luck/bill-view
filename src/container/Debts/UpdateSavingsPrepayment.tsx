@@ -126,7 +126,15 @@ const UpdateSavingsPrepayment = ({
             name='include_bills'
             control={control}
             render={({ field }) => (
-              <Switch checked={field.value} onChange={field.onChange} />
+              <Switch
+                uncheckedText='关'
+                checkedText='开'
+                checked={field.value}
+                onChange={field.onChange}
+                style={{
+                  '--checked-color': '#7d39eb',
+                }}
+              />
             )}
           />
         </Space>
@@ -144,7 +152,15 @@ const UpdateSavingsPrepayment = ({
             name='monthly_only'
             control={control}
             render={({ field }) => (
-              <Switch checked={field.value} onChange={field.onChange} />
+              <Switch
+                uncheckedText='关'
+                checkedText='开'
+                checked={field.value}
+                onChange={field.onChange}
+                style={{
+                  '--checked-color': '#7d39eb',
+                }}
+              />
             )}
           />
         </Space>
