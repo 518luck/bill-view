@@ -133,20 +133,20 @@ const Debts = () => {
           <div
             className={styles.content_btn}
             onClick={() => setVisibleSavings(true)}>
-            修改储蓄
+            设置
           </div>
           <div
             className={styles.content_btn}
             onClick={() => setVisibleAddPrepayment(true)}>
-            添加预支
+            新增预支
           </div>
         </Flex>
 
         <div className={styles.content_hr} />
 
         <span className={styles.content_title}>
-          <span>本月偿还：{monthRepay.toFixed(2)}</span>
-          <span>剩余欠款：{totalDebt.toFixed(2)}</span>
+          <span>本月应偿：{monthRepay.toFixed(2)}</span>
+          <span>总欠款：{totalDebt.toFixed(2)}</span>
         </span>
 
         <div className={styles.content_list}>

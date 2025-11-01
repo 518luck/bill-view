@@ -1,12 +1,17 @@
 import ZPopup from '@/components/ZPopup'
+import { useForm, Controller } from 'react-hook-form'
+import { Button, Space, Switch } from 'antd-mobile'
+
 import styles from './styles.module.less'
 import Flex from '@/components/Flex'
 import Text from '@/components/Text'
-import { useForm, Controller } from 'react-hook-form'
-import { Space, Switch } from 'antd-mobile'
 import ZInput from '@/components/ZInput'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { EditPrepaymentSchema } from './schema/edit-prepayment.schema'
+import { useUpdateDebtPieChartMutation } from '@/api'
+import {
+  UpdateSavingsPrepaymentSchema,
+  type UpdateSavingsPrepaymentRequest,
+} from '@/container/Debts/schema/update-savings-prepayment.schema'
 
 interface UpdateSavingsPrepaymentProps {
   visible: boolean
@@ -18,14 +23,26 @@ const UpdateSavingsPrepayment = ({
 }: UpdateSavingsPrepaymentProps) => {
   const {
     control,
-    // trigger,
-    // getValues,
-    // reset,
+    trigger,
+    getValues,
+    reset,
     formState: { errors },
-  } = useForm({
-    resolver: zodResolver(EditPrepaymentSchema),
-    defaultValues: {},
+  } = useForm<UpdateSavingsPrepaymentRequest>({
+    resolver: zodResolver(UpdateSavingsPrepaymentSchema),
+    defaultValues: {
+      balance: 0,
+    },
   })
+
+  const { mutate: updateDebtPieChart, isPending } =
+    useUpdateDebtPieChartMutation()
+  const handleSubmit = async () => {
+    const valid = await trigger()
+    if (!valid) return
+    const values = getValues()
+    updateDebtPieChart(values)
+  }
+
   return (
     <ZPopup
       visible={visible}
@@ -42,49 +59,91 @@ const UpdateSavingsPrepayment = ({
         <Text size='large'>编辑饼图数据</Text>
       </Flex>
 
-      <Space align='center' className={styles.row}>
-        <Text size='large'>本月应还：</Text>
-        <div>
+      <div>
+        <Space align='center' className={styles.row}>
+          <Text size='large'>添加余粮：</Text>
+          <div>
+            <Controller
+              name='balance'
+              control={control}
+              render={({ field }) => (
+                <ZInput
+                  {...field}
+                  value={field.value?.toString() ?? ''}
+                  onChange={(val) => {
+                    const cleanValue = val.replace(/[^\d.]/g, '')
+                    if (cleanValue === '') {
+                      field.onChange(0)
+                    } else {
+                      field.onChange(Number(cleanValue))
+                    }
+                  }}
+                  placeholder='添加余粮金额'
+                />
+              )}
+            />
+            {errors.balance && (
+              <Text size='small' type='danger'>
+                {errors.balance?.message}
+              </Text>
+            )}
+          </div>
+        </Space>
+        <Flex justify='center'>
+          <Text type='secondary' size='small'>
+            该余粮为固定金额，仅用于每月债务占比的计算，不影响实际收支数据。
+          </Text>
+        </Flex>
+      </div>
+
+      <div>
+        <Space align='center' className={styles.row}>
+          <Text size='large'>混入账单：</Text>
           <Controller
-            name='current_month_due'
+            name='include_bills'
             control={control}
             render={({ field }) => (
-              <ZInput
-                {...field}
-                value={field.value?.toString() ?? ''}
-                onChange={(val) => {
-                  const cleanValue = val.replace(/[^\d.]/g, '')
-                  if (cleanValue === '') {
-                    field.onChange(0)
-                  } else {
-                    field.onChange(Number(cleanValue))
-                  }
-                }}
-                placeholder='本月应还金额'
-              />
+              <Switch checked={field.value} onChange={field.onChange} />
             )}
           />
-          {errors.current_month_due && (
-            <Text size='small' type='danger'>
-              {errors.current_month_due?.message}
-            </Text>
-          )}
-        </div>
-      </Space>
+        </Space>
+        <Flex justify='center'>
+          <Text type='secondary' size='small'>
+            开启后，将把所有账单明细纳入余粮与预支计算中。
+          </Text>
+        </Flex>
+      </div>
 
-      <Space align='center' className={styles.row}>
-        <Text size='large'>本月应还：</Text>
-        <div>
-          <Switch />
-        </div>
-      </Space>
+      <div>
+        <Space align='center' className={styles.row}>
+          <Text size='large'>当月债务：</Text>
+          <Controller
+            name='monthly_only'
+            control={control}
+            render={({ field }) => (
+              <Switch checked={field.value} onChange={field.onChange} />
+            )}
+          />
+        </Space>
+        <Flex justify='center'>
+          <Text type='secondary' size='small'>
+            开启后，仅按本月需偿还的债务计算预支，不包含全部债务总额。
+          </Text>
+        </Flex>
+      </div>
 
-      <Space align='center' className={styles.row}>
-        <Text size='large'>本月应还：</Text>
-        <div>
-          <Switch />
-        </div>
-      </Space>
+      <Flex justify='between'>
+        <Button
+          onClick={() => {
+            setVisible(false)
+            reset()
+          }}>
+          取消
+        </Button>
+        <Button onClick={handleSubmit} loading={isPending}>
+          提交
+        </Button>
+      </Flex>
     </ZPopup>
   )
 }
