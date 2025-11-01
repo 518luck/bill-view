@@ -6,7 +6,12 @@ import styles from './styles.module.less'
 import PieChart from '@/container/Debts/PieChart'
 import AdvanceListItem from '@/container/Debts/AdvanceListItem'
 import Flex from '@/components/Flex'
-import { useGetDebts, useDeleteDebtMutation, type debtsResponse } from '@/api'
+import {
+  useGetDebts,
+  useDeleteDebtMutation,
+  useGetDebtPieChart,
+  type debtsResponse,
+} from '@/api'
 import UpdateSavings from '@/container/Debts/UpdateSavings'
 import AddPrepayment from '@/container/Debts/AddPrepayment'
 import RepayPrepayment from '@/container/Debts/RepayPrepayment'
@@ -31,6 +36,7 @@ const Debts = () => {
   // 当前选中的预支项
   const [currentDebt, setCurrentDebt] = useState<debtsResponse>()
 
+  // 获取所有预支
   const { data: debts = [] } = useGetDebts()
   // 计算本月共需要偿还的金额
   const monthRepay = debts.reduce(
@@ -43,9 +49,16 @@ const Debts = () => {
     0
   )
 
-  // 预支占比 后期用api代替
-  const advance = 20
+  // 获取资产债务饼图数据
+  const { data: pieChartData } = useGetDebtPieChart()
 
+  // 预支占比
+  const advance = (
+    ((pieChartData?.debt || 0) / (pieChartData?.balance || 0)) *
+    100
+  ).toFixed(1)
+
+  // 删除预支
   const { mutate: deleteDebt } = useDeleteDebtMutation()
   const handleSwipeAction = (action: Action, item: debtsResponse) => {
     if (action.key === 'delete') {
@@ -58,9 +71,23 @@ const Debts = () => {
   }
 
   useEffect(() => {
-    setPercent(advance)
-    // 根据advance调整颜色，advance越高，红色越少，渐变为橙色或绿色
-    const hue = Math.min(120, (advance / 100) * 120) // 控制色相，0度为红色，120度为绿色
+    setPercent(Number(advance))
+    // 根据advance调整颜色，advance越高，红色越多，越少红色越少
+    // 低于20%-10%为橙色，低于10%逐渐变为绿色
+    let hue
+    const advanceNum = Number(advance)
+
+    if (advanceNum <= 10) {
+      // 低于10%: 从绿色(120度)逐渐变为橙色(60度)
+      hue = 60 + (advanceNum / 10) * 60 // 60-120度范围
+    } else if (advanceNum <= 20) {
+      // 10%-20%: 从橙色(60度)逐渐变为红色(0度)
+      hue = (20 - advanceNum) * 6 // 0-60度范围
+    } else {
+      // 高于20%: 保持红色
+      hue = 0 // 0度为红色
+    }
+
     setProgressColor(`hsl(${hue}, 100%, 50%)`)
   }, [advance])
   const rightActions: Action[] = [
@@ -78,7 +105,7 @@ const Debts = () => {
   return (
     <div className={cs(styles.commonBackground, styles.deficit)}>
       <div className={styles.header}>
-        <PieChart />
+        <PieChart pieChartData={pieChartData} />
         <div className={styles.PreAllocationRatio}>
           <span>预支占比 : {advance}%</span>
           <ProgressBar

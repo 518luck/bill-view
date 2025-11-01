@@ -10,11 +10,13 @@ import {
 import {
   createDebt,
   deleteDebt,
+  getDebtPieChart,
   getDebts,
   repayPrepayment,
   updateDebt,
   type createDebtRequest,
   type createDebtResponse,
+  type debtPieChartResponse,
   type debtsResponse,
   type deleteDebtResponse,
   type repayPrepaymentRequest,
@@ -157,5 +159,16 @@ export const useUpdateDebtMutation = (
       onError?.(error, variables, context, mutation)
     },
     ...restOptions,
+  })
+}
+
+// 获取资产债务饼图数据
+export const useGetDebtPieChart = (
+  options?: UseQueryOptions<debtPieChartResponse, ApiError>
+) => {
+  return useQuery({
+    queryKey: ['debtPieChart'],
+    queryFn: () => getDebtPieChart(),
+    ...options,
   })
 }

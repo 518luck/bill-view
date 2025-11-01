@@ -82,3 +82,14 @@ export const updateDebt = (
 ): Promise<updateDebtResponse> => {
   return axios.patch(`/debts/${id}`, request)
 }
+
+//获取资产债务饼图数据
+export interface debtPieChartResponse {
+  balance: number // 资产金额
+  debt: number // 债务金额
+  statusCode?: number
+  message?: string
+}
+export const getDebtPieChart = (): Promise<debtPieChartResponse> => {
+  return axios.get('/debts/asset-debt-pie')
+}

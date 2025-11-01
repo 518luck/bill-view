@@ -2,8 +2,13 @@ import { useRef, useEffect } from 'react'
 
 import * as echarts from 'echarts'
 import styles from './styles.module.less'
+import { type debtPieChartResponse } from '@/api'
 
-const PieChart = () => {
+const PieChart = ({
+  pieChartData,
+}: {
+  pieChartData?: debtPieChartResponse
+}) => {
   const domRef = useRef<HTMLDivElement>(null)
   const chartRef = useRef<echarts.ECharts | null>(null)
 
@@ -37,10 +42,13 @@ const PieChart = () => {
         },
         data: [
           {
-            name: '余粮 : 288 元',
+            name: `余粮 : ${pieChartData?.balance || 0}`,
             itemStyle: { color: 'rgba(123, 58, 235, 1)' },
           },
-          { name: '预支 : 72 元', itemStyle: { color: '#E74C3C' } },
+          {
+            name: `预支 : ${pieChartData?.debt || 0}`,
+            itemStyle: { color: '#E74C3C' },
+          },
         ],
       },
       series: [
@@ -51,8 +59,8 @@ const PieChart = () => {
           startAngle: 45,
           data: [
             {
-              value: 72,
-              name: '预支 : 72 元',
+              value: pieChartData?.debt || 0,
+              name: `预支 : ${pieChartData?.debt || 0}`,
               itemStyle: {
                 borderWidth: 0,
                 color: {
@@ -75,8 +83,8 @@ const PieChart = () => {
               },
             },
             {
-              value: 288,
-              name: '余粮 : 288 元',
+              value: pieChartData?.balance || 0,
+              name: `余粮 : ${pieChartData?.balance || 0}`,
               itemStyle: {
                 color: {
                   type: 'radial',
@@ -109,7 +117,7 @@ const PieChart = () => {
       ],
     }
     chartRef.current?.setOption(option)
-  }, [])
+  }, [pieChartData])
 
   return <div className={styles.pie_chart} ref={domRef} />
 }
