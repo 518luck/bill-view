@@ -14,6 +14,7 @@ import {
   getDebts,
   repayPrepayment,
   updateDebt,
+  updateDebtPieChart,
   type createDebtRequest,
   type createDebtResponse,
   type debtPieChartResponse,
@@ -21,6 +22,8 @@ import {
   type deleteDebtResponse,
   type repayPrepaymentRequest,
   type repayPrepaymentResponse,
+  type updateDebtPieChartRequest,
+  type updateDebtPieChartResponse,
   type updateDebtRequest,
   type updateDebtResponse,
 } from '@/api'
@@ -174,5 +177,40 @@ export const useGetDebtPieChart = (
     queryKey: ['debtPieChart'],
     queryFn: () => getDebtPieChart(),
     ...options,
+  })
+}
+
+// 修改资产债务饼图数据
+export const useUpdateDebtPieChartMutation = (
+  options?: UseMutationOptions<
+    updateDebtPieChartResponse,
+    ApiError,
+    updateDebtPieChartRequest
+  >
+): UseMutationResult<
+  updateDebtPieChartResponse,
+  ApiError,
+  updateDebtPieChartRequest
+> => {
+  const queryClient = useQueryClient()
+
+  const { onSuccess, onError, ...restOptions } = options || {}
+
+  return useMutation({
+    mutationFn: (request) => updateDebtPieChart(request),
+    onSuccess: (data, variables, context, mutation) => {
+      queryClient.invalidateQueries({ queryKey: ['debtPieChart'] })
+
+      Toast.show({ icon: 'success', content: data.message || '更新成功' })
+      onSuccess?.(data, variables, context, mutation)
+    },
+    onError: (error, variables, context, mutation) => {
+      Toast.show({
+        icon: 'fail',
+        content: error?.message || '更新失败',
+      })
+      onError?.(error, variables, context, mutation)
+    },
+    ...restOptions,
   })
 }

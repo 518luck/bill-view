@@ -12,7 +12,7 @@ import {
   useGetDebtPieChart,
   type debtsResponse,
 } from '@/api'
-import UpdateSavings from '@/container/Debts/UpdateSavings'
+import UpdateSavingsPrepayment from '@/container/Debts/UpdateSavingsPrepayment'
 import AddPrepayment from '@/container/Debts/AddPrepayment'
 import RepayPrepayment from '@/container/Debts/RepayPrepayment'
 import EditPrepayment from '@/container/Debts/EditPrepayment'
@@ -166,7 +166,10 @@ const Debts = () => {
           ))}
         </div>
       </div>
-      <UpdateSavings visible={visibleSavings} setVisible={setVisibleSavings} />
+      <UpdateSavingsPrepayment
+        visible={visibleSavings}
+        setVisible={setVisibleSavings}
+      />
       <AddPrepayment
         visible={visibleAddPrepayment}
         setVisible={setVisibleAddPrepayment}
