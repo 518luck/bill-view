@@ -110,3 +110,16 @@ export const updateDebtPieChart = (
 ): Promise<updateDebtPieChartResponse> => {
   return axios.patch(`/debts/asset-debt-pie`, request)
 }
+
+//获取资产债务配置信息
+export interface getDebtPieChartConfigResponse {
+  monthly_only: boolean // 选择当月还是全部负债进行核算
+  include_bills: boolean // 是否让账单参与核算
+  balance: number //是否有多的余额资产
+  statusCode?: number
+  message?: string
+}
+export const getDebtPieChartConfig =
+  (): Promise<getDebtPieChartConfigResponse> => {
+    return axios.get('/debts/asset-debt-pie/config')
+  }

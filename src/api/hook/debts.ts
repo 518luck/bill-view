@@ -1,4 +1,5 @@
 import {
+  queryOptions,
   useMutation,
   useQuery,
   useQueryClient,
@@ -11,6 +12,7 @@ import {
   createDebt,
   deleteDebt,
   getDebtPieChart,
+  getDebtPieChartConfig,
   getDebts,
   repayPrepayment,
   updateDebt,
@@ -212,5 +214,19 @@ export const useUpdateDebtPieChartMutation = (
       onError?.(error, variables, context, mutation)
     },
     ...restOptions,
+  })
+}
+
+// 获取资产债务配置信息
+const debtPieChartConfigQuery = () =>
+  queryOptions({
+    queryKey: ['debtPieChartConfig'],
+    queryFn: getDebtPieChartConfig,
+  })
+
+export const useGetDebtPieChartConfig = (options?: { enabled?: boolean }) => {
+  return useQuery({
+    ...debtPieChartConfigQuery(),
+    ...options,
   })
 }

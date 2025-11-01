@@ -53,6 +53,7 @@ const Debts = () => {
     (acc, cur) => acc + Number(cur.current_month_due),
     0
   )
+
   //计算总共欠款金额
   const totalDebt = debts.reduce(
     (acc, cur) => acc + Number(cur.total_amount),
@@ -166,20 +167,24 @@ const Debts = () => {
           ))}
         </div>
       </div>
+
       <UpdateSavingsPrepayment
         visible={visibleSavings}
         setVisible={setVisibleSavings}
       />
+
       <AddPrepayment
         visible={visibleAddPrepayment}
         setVisible={setVisibleAddPrepayment}
       />
+
       <RepayPrepayment
         visible={visibleRepayPrepayment}
         setVisible={setVisibleRepayPrepayment}
         currentDebt={currentDebt}
         setCurrentDebt={setCurrentDebt}
       />
+
       <EditPrepayment
         visible={visibleEditPrepayment}
         setVisible={setVisibleEditPrepayment}

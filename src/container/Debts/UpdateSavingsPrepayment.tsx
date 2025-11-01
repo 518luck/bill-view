@@ -7,11 +7,12 @@ import Flex from '@/components/Flex'
 import Text from '@/components/Text'
 import ZInput from '@/components/ZInput'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useUpdateDebtPieChartMutation } from '@/api'
+import { useUpdateDebtPieChartMutation, useGetDebtPieChartConfig } from '@/api'
 import {
   UpdateSavingsPrepaymentSchema,
   type UpdateSavingsPrepaymentRequest,
 } from '@/container/Debts/schema/update-savings-prepayment.schema'
+import { useEffect } from 'react'
 
 interface UpdateSavingsPrepaymentProps {
   visible: boolean
@@ -34,6 +35,22 @@ const UpdateSavingsPrepayment = ({
     },
   })
 
+  // 获取资产债务配置信息
+  const { data: config } = useGetDebtPieChartConfig({
+    enabled: visible,
+  })
+
+  useEffect(() => {
+    if (config) {
+      reset({
+        balance: Number(config?.balance) || 0,
+        monthly_only: config?.monthly_only ?? false,
+        include_bills: config?.include_bills ?? false,
+      })
+    }
+  }, [config, reset])
+
+  // 更新资产债务配置
   const { mutate: updateDebtPieChart, isPending } =
     useUpdateDebtPieChartMutation({
       onSuccess: () => {
