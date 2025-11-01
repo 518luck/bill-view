@@ -6,7 +6,7 @@ import dayjs from 'dayjs'
 import styles from './styles.module.less'
 import LineChart from './LinChart'
 import ButtonCard from './ButtonCard'
-import { useGetMonthBills, type monthBillsResponse } from '@/api'
+import { useGetMonthBills, useGetDebts, type monthBillsResponse } from '@/api'
 import { DatePicker } from 'antd-mobile'
 export type chartMetadata = [string, number] | []
 
@@ -56,12 +56,14 @@ const FinancialData = () => {
   const canvasLineRef = useCanvasMeteorLine()
   const [isDatePickerVisible, setIsDatePickerVisible] = useState(false)
   const [selectedDate, setSelectedDate] = useState(dayjs())
+  // 获取选中日期的账单数据
   const { data } = useGetMonthBills({
     date_str: selectedDate.format('YYYY-MM-DD'),
   })
-
   const total = calculateNetIncome(data || []).netIncome.toFixed(2)
 
+  // 获取选中日期的资产债务数据
+  const { data: debts = [] } = useGetDebts()
   return (
     <div className={styles.commonBackground}>
       <div className={styles.header}>
@@ -92,7 +94,7 @@ const FinancialData = () => {
 
       <div className={styles.bottom}>
         <ButtonCard
-          number={'03'}
+          number={debts?.length || 0}
           text='贷款未偿合计'
           numberColor='red'
           linkPath='/debts'
