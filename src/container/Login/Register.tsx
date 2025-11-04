@@ -116,12 +116,12 @@ const Register = () => {
 
       <Form ref={formRef}>
         <div className={styles.message}>
-          <div className={styles.message_label}>账号</div>
+          <div className={styles.message_label}>邮箱</div>
           <div className={styles.message_input}>
             <Form.Item
               name='account'
               rules={[{ required: true, message: '账号不能为空' }]}>
-              <Input placeholder='请输入账号' />
+              <Input placeholder='请输入邮箱' />
             </Form.Item>
           </div>
         </div>
