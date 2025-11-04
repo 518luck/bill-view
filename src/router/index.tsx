@@ -12,6 +12,7 @@ const Debts = lazy(() => import('@/container/Debts'))
 const NotFound = lazy(() => import('@/container/NotFound'))
 const Tally = lazy(() => import('@/container/Tally'))
 const IconPicker = lazy(() => import('@/container/IconPicker'))
+const Register = lazy(() => import('@/container/Login/Register'))
 
 // 创建受保护路由的辅助函数
 const createProtectedRoute = (Component: React.ComponentType) => (
@@ -41,6 +42,14 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<div>加载中...</div>}>
             <Login />
+          </Suspense>
+        ),
+      },
+      {
+        path: '/register',
+        element: (
+          <Suspense fallback={<div>加载中...</div>}>
+            <Register />
           </Suspense>
         ),
       },

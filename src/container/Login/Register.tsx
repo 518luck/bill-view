@@ -1,21 +1,18 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Button, Input, Toast, Form, Checkbox } from 'antd-mobile'
+import { Button, Input, Toast, Form } from 'antd-mobile'
 import gsap from 'gsap'
 import classNames from 'classnames'
-import Captcha from 'react-captcha-code'
 
 import styles from './styles.module.less'
 import logo from '@/assets/svg/logo.svg'
-import arrows from '@/assets/svg/arrows.svg'
-import { useCanvasBreathingEffect, useJellyAnimation } from '@/hook'
+import { useCanvasBreathingEffect } from '@/hook'
 import { useLoginMutation } from '@/api'
 import { useAuthStore } from '@/store/login'
-import { showDevelopingToast } from '@/utils'
 
 import type { FormInstance } from 'antd-mobile/es/components/form'
 
-const Login = () => {
+const Register = () => {
   const text = '小账童'
   const navigate = useNavigate()
   const {
@@ -33,10 +30,7 @@ const Login = () => {
     },
   })
 
-  const [captcha, setCaptcha] = useState('') //验证码
-  const [showCaptcha, setShowCaptcha] = useState(false) //是否显示验证码
   const canvasRef = useCanvasBreathingEffect()
-  const captchaRef = useJellyAnimation(showCaptcha)
   const textRef = useRef<HTMLSpanElement>(null)
   const formRef = useRef<FormInstance>(null)
 
@@ -69,42 +63,14 @@ const Login = () => {
           remember: rememberPassword,
         })
       }
-
-      // 显示验证码
-      if (savedCredentials.account && savedCredentials.password) {
-        setShowCaptcha(true)
-      }
     }
   }, [savedCredentials, rememberPassword])
 
   // 监听表单值变化判断是否显示验证码
-  const handleFormWatchValuesChange = (
-    _: Record<string, string>,
-    allValues: Record<string, string>
-  ) => {
-    if (allValues.account && allValues.password) {
-      setShowCaptcha(true)
-    } else {
-      setShowCaptcha(false)
-    }
-  }
-
-  const handleChange = useCallback((captcha: string) => {
-    setCaptcha(captcha)
-    formRef.current?.setFieldValue('verifyCaptcha', captcha)
-  }, [])
 
   const handleLogin = async () => {
     try {
       const values = await formRef.current?.validateFields()
-
-      if (captcha !== values.verifyCaptcha) {
-        Toast.show({
-          icon: 'fail',
-          content: '验证码错误',
-        })
-        return
-      }
 
       if (values.remember) {
         setCredentials(values.account, values.password)
@@ -148,7 +114,7 @@ const Login = () => {
       </div>
       <div className={styles.describe}>数字之间，藏着人生的喜怒哀乐。</div>
 
-      <Form onValuesChange={handleFormWatchValuesChange} ref={formRef}>
+      <Form ref={formRef}>
         <div className={styles.message}>
           <div className={styles.message_label}>账号</div>
           <div className={styles.message_input}>
@@ -171,62 +137,11 @@ const Login = () => {
           </div>
         </div>
 
-        {showCaptcha && (
-          <div ref={captchaRef} className={styles.captcha_box}>
-            <div>
-              <Form.Item name='verifyCaptcha'>
-                <Input placeholder='请输入验证码' />
-              </Form.Item>
-            </div>
-            <div className={styles.captcha}>
-              <Captcha
-                bgColor='#202338'
-                charNum={4}
-                onChange={handleChange}
-                className={styles.captcha_style}
-              />
-              <span>看不清,点击切换</span>
-            </div>
-          </div>
-        )}
-
         <div className={styles.interaction}>
           <div className={styles.interaction_loginBtn}>
             <Button onClick={handleLogin} loading={isPending}>
-              登录
-            </Button>
-          </div>
-
-          <div className={styles.interaction_arrows}>
-            <img src={arrows} alt='arrows' />
-          </div>
-
-          <div className={styles.interaction_registerBtn}>
-            <Button
-              onClick={() => {
-                navigate('/register')
-              }}
-              className={styles.interaction_registerBtn_text}>
               注册
             </Button>
-          </div>
-        </div>
-
-        <div className={styles.footer}>
-          <div className={styles.footer_checkbox}>
-            <Form.Item name='remember'>
-              <Checkbox
-                checked={rememberPassword}
-                onChange={(checked) => setRememberPassword(checked)}>
-                记住我
-              </Checkbox>
-            </Form.Item>
-          </div>
-          <div
-            onClick={() => {
-              showDevelopingToast()
-            }}>
-            忘记密码
           </div>
         </div>
       </Form>
@@ -234,4 +149,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Register
