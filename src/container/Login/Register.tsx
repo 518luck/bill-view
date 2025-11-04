@@ -8,24 +8,15 @@ import styles from './styles.module.less'
 import logo from '@/assets/svg/logo.svg'
 import { useCanvasBreathingEffect } from '@/hook'
 import { useLoginMutation } from '@/api'
-import { useAuthStore } from '@/store/login'
 
 import type { FormInstance } from 'antd-mobile/es/components/form'
 
 const Register = () => {
   const text = '小账童'
   const navigate = useNavigate()
-  const {
-    setToken,
-    savedCredentials,
-    rememberPassword,
-    setCredentials,
-    setRememberPassword,
-  } = useAuthStore()
 
   const { mutate: loginMutate, isPending } = useLoginMutation({
-    onSuccess: (responseData) => {
-      setToken(responseData.token)
+    onSuccess: () => {
       navigate('/tally')
     },
   })
@@ -46,37 +37,12 @@ const Register = () => {
     })
   }, [])
 
-  // 自动填充账号密码
-  useEffect(() => {
-    if (savedCredentials && rememberPassword) {
-      // 检查账号密码是否为空
-      if (!savedCredentials.account || !savedCredentials.password) return
-
-      // 只有当表单字段都为空时才自动填充
-      if (
-        !formRef.current?.getFieldValue('account') ||
-        !formRef.current?.getFieldValue('password')
-      ) {
-        formRef.current?.setFieldsValue({
-          account: savedCredentials.account,
-          password: savedCredentials.password,
-          remember: rememberPassword,
-        })
-      }
-    }
-  }, [savedCredentials, rememberPassword])
-
   // 监听表单值变化判断是否显示验证码
 
   const handleLogin = async () => {
     try {
       const values = await formRef.current?.validateFields()
 
-      if (values.remember) {
-        setCredentials(values.account, values.password)
-      } else {
-        setRememberPassword(false)
-      }
       loginMutate({ account: values.account, password: values.password })
 
       /* eslint-disable @typescript-eslint/no-explicit-any */
