@@ -1,29 +1,47 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Button, Input, Toast, Form } from 'antd-mobile'
+import { Button, Input } from 'antd-mobile'
 import gsap from 'gsap'
-import classNames from 'classnames'
+import { useForm, Controller } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { registerSchema, type RegisterSchema } from './schema/register.schema'
 
 import styles from './styles.module.less'
 import logo from '@/assets/svg/logo.svg'
 import { useCanvasBreathingEffect } from '@/hook'
-import { useLoginMutation } from '@/api'
-
-import type { FormInstance } from 'antd-mobile/es/components/form'
+import { useRegisterMutation, useSendCodeMutation } from '@/api'
+import Text from '@/components/Text'
+import Flex from '@/components/Flex'
 
 const Register = () => {
+  const {
+    control,
+    reset,
+    trigger,
+    getValues,
+    formState: { errors },
+  } = useForm<RegisterSchema>({
+    resolver: zodResolver(registerSchema),
+    defaultValues: { email: '', verificationCode: '', password: '' },
+  })
   const text = '小账童'
   const navigate = useNavigate()
+  const [countdown, setCountdown] = useState(0)
 
-  const { mutate: loginMutate, isPending } = useLoginMutation({
-    onSuccess: () => {
-      navigate('/tally')
-    },
-  })
+  // 注册API
+  const { mutate: registerMutate, isPending: registerPending } =
+    useRegisterMutation({
+      onSuccess: () => {
+        navigate('/tally')
+        reset()
+      },
+    })
+  // 发送验证码API
+  const { mutate: sendCodeMutate, isPending: sendCodePending } =
+    useSendCodeMutation()
 
   const canvasRef = useCanvasBreathingEffect()
   const textRef = useRef<HTMLSpanElement>(null)
-  const formRef = useRef<FormInstance>(null)
 
   // 文字动画
   useEffect(() => {
@@ -37,29 +55,30 @@ const Register = () => {
     })
   }, [])
 
-  // 监听表单值变化判断是否显示验证码
+  // 注册
+  const handleRegister = async () => {
+    const isValid = await trigger(['email', 'verificationCode', 'password'])
+    if (!isValid) return
+    const values = getValues()
+    registerMutate(values)
+  }
 
-  const handleLogin = async () => {
-    try {
-      const values = await formRef.current?.validateFields()
-
-      loginMutate({ account: values.account, password: values.password })
-
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (error: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      if (error?.errorFields.length >= 2) {
-        Toast.show({
-          icon: 'fail',
-          content: '请输入账号和密码',
-        })
-      } else {
-        Toast.show({
-          icon: 'fail',
-          content: error.errorFields[0].errors[0],
-        })
-      }
-    }
+  // 发送验证码
+  const handleSendCode = async () => {
+    const isValid = await trigger(['email'])
+    if (!isValid) return
+    const values = getValues(['email'])
+    sendCodeMutate({ email: values?.[0] })
+    setCountdown(60)
+    const timer = setInterval(() => {
+      setCountdown((prev) => {
+        if (prev <= 1) {
+          clearInterval(timer)
+          return 0
+        }
+        return prev - 1
+      })
+    }, 1000)
   }
 
   return (
@@ -80,37 +99,89 @@ const Register = () => {
       </div>
       <div className={styles.describe}>数字之间，藏着人生的喜怒哀乐。</div>
 
-      <Form ref={formRef}>
+      <Flex direction='column' justify='center' align='center' gap={12}>
         <div className={styles.message}>
           <div className={styles.message_label}>邮箱</div>
           <div className={styles.message_input}>
-            <Form.Item
-              name='account'
-              rules={[{ required: true, message: '账号不能为空' }]}>
-              <Input placeholder='请输入邮箱' />
-            </Form.Item>
+            <Controller
+              name='email'
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <Input
+                  placeholder='可用于登录和找回密码'
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
+            />
+            {errors.email?.message && (
+              <Text type='danger' size='small'>
+                {errors.email.message}
+              </Text>
+            )}
           </div>
         </div>
 
-        <div className={classNames(styles.message)}>
+        <div className={styles.message}>
           <div className={styles.message_passwordText}>密码</div>
           <div className={styles.message_input}>
-            <Form.Item
+            <Controller
               name='password'
-              rules={[{ required: true, message: '密码不能为空' }]}>
-              <Input placeholder='请输入密码' />
-            </Form.Item>
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <Input
+                  placeholder='请设置登录密码'
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
+            />
+            {errors.password?.message && (
+              <Text type='danger' size='small'>
+                {errors.password.message}
+              </Text>
+            )}
           </div>
         </div>
 
-        <div className={styles.interaction}>
-          <div className={styles.interaction_loginBtn}>
-            <Button onClick={handleLogin} loading={isPending}>
-              注册
+        <div className={styles.message}>
+          <div className={styles.message_verifyCode}></div>
+          <div className={styles.message_verifyContext}>
+            <div className={styles.message_verifyContext_verifyInput}>
+              <Controller
+                name='verificationCode'
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <Input
+                    placeholder='请输入验证码'
+                    value={value}
+                    onChange={onChange}
+                  />
+                )}
+              />
+              {errors.verificationCode?.message && (
+                <Text type='danger' size='small'>
+                  {errors.verificationCode.message}
+                </Text>
+              )}
+            </div>
+            <Button
+              onClick={handleSendCode}
+              loading={sendCodePending}
+              disabled={countdown > 0}>
+              {countdown > 0 ? `${countdown}秒后重新发送` : '发送验证码'}
             </Button>
           </div>
         </div>
-      </Form>
+      </Flex>
+
+      <div className={styles.interaction}>
+        <div className={styles.interaction_register_btn}>
+          <Button onClick={handleRegister} loading={registerPending}>
+            注册
+          </Button>
+        </div>
+      </div>
     </div>
   )
 }

@@ -1,4 +1,11 @@
 @import url('@/styles/fonts.less');
+@import url('@/styles/global.less');
+.text {
+  width: 338px;
+  padding-left: 18px;
+  font-weight: 700;
+  font-size: 16px;
+}
 
 .canvas_bg {
   position: fixed;
@@ -12,7 +19,6 @@
 }
 
 .login {
-
   &_title {
     display: flex;
     justify-content: center;
@@ -22,7 +28,7 @@
     &_text {
       font-size: 24px;
       font-family: 'YouSheBiaoTiYuan';
-      color: #7B3AEB;
+      color: #7b3aeb;
     }
   }
 
@@ -50,20 +56,19 @@
 
   &_label {
     margin: 20px 0 1px 0;
-    width: 338px;
-    padding-left: 18px;
-    font-weight: 700;
+    .text;
   }
 
   &_passwordText {
     margin: 10px 0 1px 0;
-    width: 338px;
-    padding-left: 18px;
-    font-weight: 700;
+    .text;
+  }
+  &_verifyCode {
+    margin: 10px 0 1px 0;
+    .text;
   }
 
   &_input {
-
     :global {
       .adm-input {
         input {
@@ -78,6 +83,40 @@
           caret-color: #ffffff;
           color: #ffffff;
           padding: 0 15px;
+        }
+      }
+    }
+  }
+
+  &_verifyContext {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    width: 338px;
+    :global {
+      .adm-button {
+        .adm-button-primary-mixin();
+        width: 150px;
+        background-color: #7d39eb82;
+      }
+    }
+    &_verifyInput {
+      :global {
+        .adm-input {
+          input {
+            width: 150px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.17);
+            backdrop-filter: blur(4px);
+            border-radius: 50px;
+          }
+
+          .adm-input-element {
+            caret-color: #ffffff;
+            color: #ffffff;
+            padding: 0 15px;
+          }
         }
       }
     }
@@ -113,12 +152,10 @@
     span {
       font-size: 12px;
       font-weight: 600;
-      color: #7B3AEB;
+      color: #7b3aeb;
       cursor: pointer;
     }
   }
-
-
 }
 
 .interaction {
@@ -127,7 +164,6 @@
   align-items: center;
   margin: 20px auto 0;
   width: 338px;
-
 
   &_loginBtn {
     :global {
@@ -144,7 +180,14 @@
       }
     }
   }
-
+  &_register_btn {
+    :global {
+      .adm-button {
+        .adm-button-primary-mixin();
+        width: 340px;
+      }
+    }
+  }
 
   &_registerBtn {
     &_text {
@@ -161,7 +204,7 @@
         width: 40px;
         height: 40px;
         border-radius: 50px;
-        background-color: #7D39EB;
+        background-color: #7d39eb;
         --border-width: 0px;
       }
     }
@@ -188,7 +231,7 @@
       }
 
       .adm-checkbox {
-        --icon-size: 16px
+        --icon-size: 16px;
       }
 
       .adm-list-item {
